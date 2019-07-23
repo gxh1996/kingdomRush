@@ -1,0 +1,168 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "buttonUp",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5833333333333334,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "logo": {
+        "props": {
+          "scale": [
+            {
+              "frame": 0,
+              "value": {
+                "__type__": "cc.Vec2",
+                "x": 1,
+                "y": 1
+              }
+            }
+          ]
+        }
+      },
+      "aboutbutton/lChain": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            },
+            {
+              "frame": 0.05,
+              "value": false
+            }
+          ]
+        }
+      },
+      "aboutbutton/rChain": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            },
+            {
+              "frame": 0.05,
+              "value": false
+            }
+          ]
+        }
+      },
+      "aboutbutton/aboutButton": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            },
+            {
+              "frame": 0.18333333333333332,
+              "value": false
+            }
+          ]
+        }
+      },
+      "startGameButton": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            }
+          ],
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                -80
+              ]
+            },
+            {
+              "frame": 0.26666666666666666,
+              "value": [
+                0,
+                -80
+              ]
+            },
+            {
+              "frame": 0.43333333333333335,
+              "value": [
+                0,
+                82
+              ]
+            }
+          ]
+        }
+      },
+      "aboutbutton": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                -164
+              ]
+            },
+            {
+              "frame": 0.05,
+              "value": [
+                0,
+                -138
+              ]
+            },
+            {
+              "frame": 0.18333333333333332,
+              "value": [
+                0,
+                -66
+              ]
+            }
+          ],
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            },
+            {
+              "frame": 0.18333333333333332,
+              "value": true
+            }
+          ]
+        }
+      },
+      "storeBoard": {
+        "props": {
+          "position": [
+            {
+              "frame": 0.43333333333333335,
+              "value": [
+                0,
+                -317
+              ]
+            },
+            {
+              "frame": 0.55,
+              "value": [
+                0,
+                60
+              ]
+            },
+            {
+              "frame": 0.5833333333333334,
+              "value": [
+                0,
+                50
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}
