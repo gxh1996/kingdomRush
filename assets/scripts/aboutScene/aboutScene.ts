@@ -1,6 +1,7 @@
 import LoadingDoorAnim from "../common/loadingDoorAnim";
 import SoundsManager from "../common/module/soundsManager";
 import HomeScene from "../homeScene/homeScene";
+import GameDataStorage from "../common/module/gameDataManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -34,12 +35,13 @@ export default class AboutScene extends cc.Component {
                 loadingDoorAnimScr.setState(false);
 
                 let homeScene: HomeScene = cc.find("Canvas").getComponent("homeScene");
-                homeScene.playLogoDown = false;
+                homeScene.fristEntry = false;
                 loadingDoorAnimScr.openDoor();
             });
         }, this);
         this.loadingDoorAnim.closeDoor(func);
 
+        GameDataStorage.preserveGameData();
     }
 
 }

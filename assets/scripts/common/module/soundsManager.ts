@@ -13,6 +13,12 @@ export default class SoundsManager {
             this.ls.setItem("isBGMMute", 0);
             this.ls.setItem("isEffectMute", 0);
         }
+        else {
+            if (this.getIsBGMMute())
+                cc.audioEngine.setMusicVolume(0);
+            if (this.getIsEffectMute())
+                cc.audioEngine.setEffectsVolume(0);
+        }
     }
 
     setIsBGMMute(v: boolean) {

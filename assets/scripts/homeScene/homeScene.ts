@@ -1,6 +1,8 @@
 import LoadingDoorAnim from "../common/loadingDoorAnim";
 import SoundsManager from "../common/module/soundsManager"
 import StartAnim from "./startAnim";
+import GameDataStorage from "../common/module/gameDataManager";
+import { User } from "../common/module/gameDataManager"
 
 const { ccclass, property } = cc._decorator;
 
@@ -20,9 +22,9 @@ export default class HomeScene extends cc.Component {
     private isAboutButton: boolean = false;
     private soundsManager: SoundsManager = null;
     /**
-     * 刚进入游戏播放logoDown动画
+     * 第一次进入游戏
      */
-    playLogoDown: boolean = true;
+    fristEntry: boolean = true;
     private clips: cc.AnimationClip[] = null;
     onLoad() {
         this.soundsManager = new SoundsManager();
@@ -30,12 +32,19 @@ export default class HomeScene extends cc.Component {
     }
 
     start() {
+        console.log(cc.sys.localStorage, GameDataStorage.getGameConfig(), GameDataStorage.getUsers());
         this.soundsManager.playBGM("sounds/home_scene_bg");
-        if (this.playLogoDown)
+        if (this.fristEntry) {
             this.startAnim.logoDown();
+            GameDataStorage.init();
+
+        }
 
     }
 
+    /**
+     * 点击 开始游戏 按钮
+     */
     startGame() {
         if (this.isStartGame) //保证播放开门动画期间，按开始游戏按钮 不重复开门
             return;
@@ -62,5 +71,21 @@ export default class HomeScene extends cc.Component {
         }, this);
         this.loadingDoorAnim.closeDoor(func);
 
+        GameDataStorage.preserveGameData();
+    }
+
+    /**
+     * 跳转到 选关 场景
+     */
+    selectLevelScene(usersI: number) {
+        let users: User[] = GameDataStorage.getUsers();
+        GameDataStorage.setCurrentUser(users[usersI])
+        this.soundsManager.playEffect("sounds/click");
+        let func: cc.ActionInstant = cc.callFunc(function () {
+            cc.director.loadScene("selectLevelScene");
+        }, this);
+        this.loadingDoorAnim.closeDoor(func);
+
+        GameDataStorage.preserveGameData();
     }
 }
