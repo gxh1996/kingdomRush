@@ -1,4 +1,4 @@
-import { User } from "../common/module/gameDataManager";
+import GameDataStorage, { User } from "../common/module/gameDataManager";
 import SoundsManager from "../common/module/soundsManager";
 import SelectLevelScene from "./selectLevelScene";
 
@@ -7,17 +7,16 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class LevelManager extends cc.Component {
 
-    @property({ type: cc.Prefab })
-    private levelEntryPrefab: cc.Prefab = null;
-
     private levels: cc.Node[] = null;
     private isLevelButton: boolean = false;
     private soundsManager: SoundsManager = null;
     private selectLevelScene: SelectLevelScene = null;
+    private levelEntry: cc.Node = null;
     onLoad() {
         this.levels = this.node.children;
         this.soundsManager = new SoundsManager();
         this.selectLevelScene = cc.find("Canvas").getComponent("selectLevelScene");
+        this.levelEntry = this.levels[this.levels.length - 1];
     }
 
     start() {
@@ -66,16 +65,17 @@ export default class LevelManager extends cc.Component {
             let stars: cc.Node[] = level.children;
             let getStarNum: number = levelsReview[i];
             for (let j = 0; j < getStarNum; j++) {
-                stars[j + 1].active = true;
+                // stars[j + 1].active = true;
+                let emptyStar: cc.Node = stars[j + 1].getChildByName("emptyStar");
+                emptyStar.active = false;
             }
             level.active = true;
         }
         //更新没有闯的第一个新关
         let nextLevel: cc.Node = this.levels[visitedN];
         let pos: cc.Vec2 = nextLevel.getPosition();
-        let Entry: cc.Node = cc.instantiate(this.levelEntryPrefab);
-        this.node.addChild(Entry);
-        Entry.setPosition(pos);
+        this.levelEntry.setPosition(pos);
+        this.levelEntry.active = true;
     }
 
 }

@@ -47,14 +47,13 @@ export default class Store extends cc.Component {
      * 更新存档节点
      * @param storeNode 存档节点 
      * @param user 用户数据
-     * @param gameConfig 游戏配置信息
      */
     private updateStore(storeNode: cc.Node, user: User) {
         let nameLabel: cc.Label = storeNode.getChildByName("nameLabel").getComponent(cc.Label);
         let startNum: cc.Label = storeNode.getChildByName("startNum").getComponent(cc.Label);
 
         nameLabel.string = user.getUsername();
-        startNum.string = `${user.getStartSum()}/${this.gameConfig.getStarSum()}`;
+        startNum.string = `${user.getStarSum()}/${this.gameConfig.getStarSum()}`;
     }
 
     /**

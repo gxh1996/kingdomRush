@@ -42,19 +42,17 @@ export class User {
      */
     private initUserData = {
         username: "无",
-        rushLevelsSum: 0, //玩家闯过了多少关
-        levelsReview: [], //每关得的分数
-        currentStarSum: 0, //当前玩家一共得到多少个星星
-        towersLevel: { //tower当前等级
-            arrow: 0,
-            barrack: 0,
-            magiclan: 0,
-            artillery: 0
-        },
-        skillsLevel: { //技能当前等级
-            bomb: 0, //炸弹技能
-            dispatchTroops: 0,//出兵技能
-        },
+        levelsReview: [1, 3, 2], //每关得的星星
+        currentHaveStarNum: 6, //当前能用的星星数
+        skillsLevel: [0, 0, 0, 0, 0, 0]
+        // { //当前等级
+        //     arrow: 0,
+        //     barrack: 0,
+        //     magiclan: 0,
+        //     artillery: 0,
+        //     bomb: 0, //炸弹技能
+        //     dispatchTroops: 0,//出兵技能
+        // },
     }
     /**
      * 用户数据
@@ -85,19 +83,44 @@ export class User {
     }
 
     /**
+     * 重置技能
+     */
+    resetSkill() {
+        this.userData.skillsLevel.fill(0);
+        this.userData.currentHaveStarNum = this.getStarSum();
+    }
+
+    /**
+     * 拥有的星星数
+     */
+    getCurrentHaveStarNum(): number {
+        return this.userData.currentHaveStarNum;
+    }
+
+    /**
+     * 减去拥有的星星
+     * @param n 星星数
+     */
+    subHavedStar(n: number) {
+        this.userData.currentHaveStarNum -= n;
+    }
+
+    addHavedStar(n: number) {
+        this.userData.currentHaveStarNum += n;
+        this.userData.currentStarSum += n;
+    }
+
+    /**
      * 当前玩家一共得到多少个星星
      * @returns start sum 
      */
-    getStartSum(): number {
+    getStarSum(): number {
         if (this.userData === null)
             return;
-        return this.userData.currentStarSum;
-    }
-
-    setStartSum(n: number) {
-        if (this.userData === null)
-            return;
-        this.userData.currentStarSum = n;
+        let s: number = 0;
+        for (let i = 0; i < this.userData.levelsReview.length; i++)
+            s += this.userData.levelsReview[i];
+        return s;
     }
 
     /**
@@ -108,14 +131,7 @@ export class User {
         if (this.userData === null)
             return;
 
-        return this.userData.rushLevelsSum;
-    }
-
-    setRushLevelsSum(rushLevelsSum: number) {
-        if (this.userData === null)
-            return;
-
-        this.userData.rushLevelsSum = rushLevelsSum;
+        return this.userData.levelsReview.length;
     }
 
     /**
@@ -129,43 +145,27 @@ export class User {
         return this.userData.levelsReview;
     }
 
-    setLevelsReview(levelsReview: number[]) {
-        if (this.userData === null)
-            return;
-
-        this.userData.levelsReview = levelsReview;
+    /**
+     * Sets level review
+     * @param levelN 第几关，0开始
+     * @param review 得到的星星数
+     */
+    setLevelReview(levelN: number, review: number) {
+        if (levelN > this.userData.rushLevelsSum)
+            this.userData.rushLevelsSum = levelN;
+        if (this.userData.levelsReview[levelN] === undefined || this.userData.levelsReview[levelN] < review)
+            this.userData.levelsReview[levelN] = review;
     }
 
     /**
-     * 当前塔的等级
+     * 当前技能的等级,0开始
      * @returns rush levels sum 
      */
-    getTowersLevel(): number[] {
-        if (this.userData === null)
-            return;
-
-        return this.userData.towersLevel;
-    }
-
-    setTowersLevel(towersLevel: number[]) {
-        if (this.userData === null)
-            return;
-
-        this.userData.towersLevel = towersLevel;
-    }
-
     getSkillsLevel(): number[] {
         if (this.userData === null)
             return;
 
         return this.userData.skillsLevel;
-    }
-
-    setSkillsLevel(skillsLevel: number[]) {
-        if (this.userData === null)
-            return;
-
-        this.userData.skillsLevel = skillsLevel;
     }
 
     preseverData() {
@@ -178,19 +178,25 @@ export class GameConfig {
      * 初始游戏数据配置
      */
     private initGameConfig = { //配置数据
-        currentUsernames: [], //当前用户
+        currentUsernames: [], //存在的用户
         initChip: 2000, //每关的初始金币
         initBlood: 20, //每关的初始血量
-        towerUpNeedStar: { //tower升级需要的星星
-            arrow: [0, 1, 1, 2, 2, 3],
-            barrack: [0, 1, 1, 2, 2, 3],
-            magiclan: [0, 1, 1, 2, 2, 3],
-            artillery: [0, 1, 1, 2, 2, 3]
-        },
-        skillsUpNeedStar: { //技能升级需要的星星
-            bomb: [0, 1, 1, 2, 3, 3], //炸弹技能
-            dispatchTroops: [0, 1, 1, 2, 3, 4],//出兵技能
-        },
+        skillsUpNeedStar: [
+            [1, 1, 2, 2, 3],
+            [1, 1, 2, 2, 3],
+            [1, 1, 2, 2, 3],
+            [1, 1, 2, 2, 3],
+            [1, 1, 2, 3, 3],
+            [1, 1, 2, 3, 4]
+        ],
+        // { //tower升级需要的星星
+        //     arrow: [0, 1, 1, 2, 2, 3],
+        //     barrack: [0, 1, 1, 2, 2, 3],
+        //     magiclan: [0, 1, 1, 2, 2, 3],
+        //     artillery: [0, 1, 1, 2, 2, 3],
+        //     bomb: [0, 1, 1, 2, 3, 3], //炸弹技能
+        //     dispatchTroops: [0, 1, 1, 2, 3, 4],//出兵技能
+        // },
         levelsSum: 19, //一共有多少关
         starSum: 57, //一共最多得到57个星星
     };
@@ -209,6 +215,10 @@ export class GameConfig {
         this.gameConfig.currentUsernames = usernames;
     }
 
+    /**
+     * 得到当前所有的用户的名字
+     * @returns current usernames 
+     */
     getCurrentUsernames(): string[] {
         return this.gameConfig.currentUsernames;
     }
@@ -235,7 +245,7 @@ export class GameConfig {
         return this.gameConfig.towerUpNeedStar;
     }
 
-    getSkillsUpNeedStar(): object {
+    getSkillsUpNeedStar(): number[][] {
         return this.gameConfig.skillsUpNeedStar;
     }
 
@@ -265,7 +275,7 @@ export class GameConfig {
 }
 
 export default class GameDataStorage {
-    private static gameConfig: GameConfig = new GameConfig();
+    private static gameConfig: GameConfig;
     private static users: User[] = [];
     private static currentUser = null;
 
@@ -273,6 +283,7 @@ export default class GameDataStorage {
      * 游戏打开时必须执行一次
      */
     static init() {
+        this.gameConfig = new GameConfig();
         let usernames: string[] = this.gameConfig.getCurrentUsernames();
         for (let i = 0; i < usernames.length; i++)
             this.users.push(new User(usernames[i]));

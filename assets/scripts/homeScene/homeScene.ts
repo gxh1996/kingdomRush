@@ -32,12 +32,12 @@ export default class HomeScene extends cc.Component {
     }
 
     start() {
-        console.log(cc.sys.localStorage, GameDataStorage.getGameConfig(), GameDataStorage.getUsers());
+        // cc.sys.localStorage.clear();
+        console.log(cc.sys.localStorage);
         this.soundsManager.playBGM("sounds/home_scene_bg");
         if (this.fristEntry) {
             this.startAnim.logoDown();
             GameDataStorage.init();
-
         }
 
     }

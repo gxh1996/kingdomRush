@@ -18,16 +18,19 @@ export default class SelectLevelScene extends cc.Component {
     @property({ type: LevelManager })
     private levelManager: LevelManager = null;
 
+    @property({ type: cc.Animation })
+    private skillsBoardAnimation: cc.Animation = null;
+
 
     private user: User = null;
     private soundsManager: SoundsManager = null;
     private isBackButton: boolean = false;
     private gameConfig: GameConfig = null;
-    private isLevelButton: boolean = false;
     onLoad() {
         this.soundsManager = new SoundsManager();
+        // GameDataStorage.init(); //debug
         this.gameConfig = GameDataStorage.getGameConfig();
-
+        // GameDataStorage.setCurrentUser(new User(this.gameConfig.getCurrentUsernames()[0])); //debug
     }
 
     start() {
@@ -43,9 +46,9 @@ export default class SelectLevelScene extends cc.Component {
     /**
      * 更新成绩板 
      */
-    private updateScoreLabel() {
+    updateScoreLabel() {
         let max: number = this.gameConfig.getStarSum();
-        let num: number = this.user.getStartSum();
+        let num: number = this.user.getStarSum();
         this.scoreLabel.string = num.toString() + "/" + max.toString();
     }
 
@@ -67,6 +70,7 @@ export default class SelectLevelScene extends cc.Component {
             });
         }, this);
         this.loadingDoorAnim.closeDoor(func);
+        GameDataStorage.preserveGameData();
     }
 
     toLevelScene() {
@@ -85,5 +89,10 @@ export default class SelectLevelScene extends cc.Component {
 
         GameDataStorage.preserveGameData();
     }
+
+    upgradeButton() {
+        this.skillsBoardAnimation.play("skillsBoardDown");
+    }
+
     // update (dt) {}
 }
