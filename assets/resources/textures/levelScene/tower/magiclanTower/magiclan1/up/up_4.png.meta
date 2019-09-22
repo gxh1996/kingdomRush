@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "9fa8271c-deed-4295-a32c-2461c8ec0fb3",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "up_4": {
+      "ver": "1.0.4",
+      "uuid": "c99b9918-a165-49f0-9a67-09b161940e85",
+      "rawTextureUuid": "9fa8271c-deed-4295-a32c-2461c8ec0fb3",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 3,
+      "offsetY": 0.5,
+      "trimX": 8,
+      "trimY": 2,
+      "width": 20,
+      "height": 25,
+      "rawWidth": 30,
+      "rawHeight": 30,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

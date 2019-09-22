@@ -42,12 +42,12 @@ export class User {
      */
     private initUserData = {
         username: "无",
-        levelsReview: [1, 3, 2], //每关得的星星
-        currentHaveStarNum: 6, //当前能用的星星数
+        levelsReview: [], //每关得的星星
+        currentHaveStarNum: 0, //当前能用的星星数
         skillsLevel: [0, 0, 0, 0, 0, 0]
         // { //当前等级
         //     arrow: 0,
-        //     barrack: 0,
+        //     barrack: 0, 兵营
         //     magiclan: 0,
         //     artillery: 0,
         //     bomb: 0, //炸弹技能
@@ -179,8 +179,8 @@ export class GameConfig {
      */
     private initGameConfig = { //配置数据
         currentUsernames: [], //存在的用户
-        initChip: 2000, //每关的初始金币
-        initBlood: 20, //每关的初始血量
+        initChip: 200, //每关的初始金币
+        initBlood: 4, //每关的初始血量
         skillsUpNeedStar: [
             [1, 1, 2, 2, 3],
             [1, 1, 2, 2, 3],
@@ -199,6 +199,39 @@ export class GameConfig {
         // },
         levelsSum: 19, //一共有多少关
         starSum: 57, //一共最多得到57个星星
+        towerAttack: [
+            [8, 10, 14, 18, 22], //arrowTower 
+            [6, 8, 10, 15, 16], //artilleryTower
+        ],
+        soldierData: [
+            {
+                speed: 50,
+                HP: 30,
+                attack: 5,
+            },
+            {
+                speed: 50,
+                HP: 40,
+                attack: 6,
+            },
+            {
+                speed: 50,
+                HP: 50,
+                attack: 7,
+            },
+            {
+                speed: 60,
+                HP: 50,
+                attack: 8,
+            },
+        ],
+        mosterData: [
+            {
+                speed: 50,
+                HP: 30,
+                attack: 5,
+            }
+        ]
     };
     private ls = cc.sys.localStorage;
     private gameConfig = null;
@@ -266,6 +299,22 @@ export class GameConfig {
     }
 
     /**
+     * 得到士兵数据
+     * @returns  
+     */
+    getSoldierData() {
+        return this.gameConfig.soldierData;
+    }
+
+    getMonsterData() {
+        return this.gameConfig.mosterData;
+    }
+
+    getTowerAttackArray() {
+        return this.gameConfig.towerAttack;
+    }
+
+    /**
      * 保存游戏配置数据
      */
     preserveData() {
@@ -277,7 +326,7 @@ export class GameConfig {
 export default class GameDataStorage {
     private static gameConfig: GameConfig;
     private static users: User[] = [];
-    private static currentUser = null;
+    private static currentUser: User = null;
 
     /**
      * 游戏打开时必须执行一次

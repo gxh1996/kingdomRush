@@ -1,13 +1,14 @@
 {
-  "ver": "2.2.0",
+  "ver": "2.3.1",
   "uuid": "0a6f08a7-fa9a-4bc7-8ebc-0b47fd095bb2",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "platformSettings": {},
   "subMetas": {
     "musicON": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "5efea112-2ef0-490b-87d7-4582571932aa",
       "rawTextureUuid": "0a6f08a7-fa9a-4bc7-8ebc-0b47fd095bb2",
       "trimType": "auto",

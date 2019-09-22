@@ -3,6 +3,7 @@ import SoundsManager from "../common/module/soundsManager";
 import GameDataStorage, { User, GameConfig } from "../common/module/gameDataManager";
 import HomeScene from "../homeScene/homeScene";
 import LevelManager from "./levelManager";
+import LevelScene from "../levelScene/levelScene";
 
 const { ccclass, property } = cc._decorator;
 
@@ -28,9 +29,7 @@ export default class SelectLevelScene extends cc.Component {
     private gameConfig: GameConfig = null;
     onLoad() {
         this.soundsManager = new SoundsManager();
-        // GameDataStorage.init(); //debug
         this.gameConfig = GameDataStorage.getGameConfig();
-        // GameDataStorage.setCurrentUser(new User(this.gameConfig.getCurrentUsernames()[0])); //debug
     }
 
     start() {
@@ -73,7 +72,7 @@ export default class SelectLevelScene extends cc.Component {
         GameDataStorage.preserveGameData();
     }
 
-    toLevelScene() {
+    toLevelScene(level) {
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("levelScene", function () {
                 let loadingDoorAnim: cc.Node = cc.find("Canvas/loadingDoorAnim");
@@ -81,8 +80,9 @@ export default class SelectLevelScene extends cc.Component {
                 loadingDoorAnimScr.setState(false);
 
                 //传入关卡数
+                let levelScene: LevelScene = cc.find("Canvas").getComponent("levelScene");
+                levelScene.levelNum = Number(level);
 
-                loadingDoorAnimScr.openDoor();
             });
         }, this);
         this.loadingDoorAnim.closeDoor(func);
