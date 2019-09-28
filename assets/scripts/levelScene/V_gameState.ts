@@ -4,31 +4,23 @@ const { ccclass, property } = cc._decorator;
 export default class V_gameState extends cc.Component {
 
     @property({ type: cc.Label })
-    private round: cc.Label = null;
+    private hp: cc.Label = null;
 
-    private HP: cc.Label = null;
+    @property({ type: cc.Label })
     private gold: cc.Label = null;
 
-    onLoad() {
-        this.HP = this.node.getChildByName("HP").getComponent(cc.Label);
-        this.gold = this.node.getChildByName("gold").getComponent(cc.Label);
+    @property({ type: cc.Label })
+    private round: cc.Label = null;
+
+    setHP(hp: number) {
+        this.hp.string = hp.toString();
     }
 
-    setHP(HP: number) {
-        this.HP.string = HP.toString();
+    setGold(g: number) {
+        this.gold.string = g.toString();
     }
 
-    setGold(gold: number) {
-        this.gold.string = gold.toString();
+    setRound(curR: number, maxR: number) {
+        this.round.string = `${curR}/${maxR}`;
     }
-
-    /**
-     * Sets round
-     * @param cRound 当前回合 
-     * @param maxRound 最大回合
-     */
-    setRound(cRound: number, maxRound: number) {
-        this.round.string = "round: " + cRound + "/" + maxRound;
-    }
-    // update (dt) {}
 }

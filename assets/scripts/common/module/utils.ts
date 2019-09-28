@@ -11,4 +11,9 @@ export default class Utils {
         return min + Math.floor(Math.random() * (max - min + 1));
     }
 
+    static remvoeItemOfArray(array: any[], item: any) {
+        let i: number = array.indexOf(item);
+        array.splice(i, 1);
+    }
+
 }

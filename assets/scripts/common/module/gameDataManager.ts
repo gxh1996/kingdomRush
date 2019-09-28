@@ -1,41 +1,3 @@
-/*
-    游戏配置数据：
-    每关玩家的  
-    initChip: 2000, 初始金币
-    initBlood: 20, 初始血
-    skillsUpConfig:{ //技能升级所需星星
-    
-    }
-
-    towersUpConfig:{ //塔升级所需星星
-    
-    }
-
-
-    有3个玩家存档。每个存档都有：
-        
-        
-
-        玩家闯关数据：
-        一共有19关，每关最多可得3个星星，共57个星星。
-        rushLevels: 玩家闯到了多少关
-        levelsInfo: []，每关得多少分
-
-        currentStars: 当前玩家得到多少个星星
-        玩家技能等级数据：
-        skillsLevel:{
-            bomb: 炸弹技能
-                放兵技能
-        } 一共有6种技能，每种技能升到了多少级。
-
-        玩家塔等级数据：
-        towersLevel：{
-            arrow: 弓箭
-            barrack: 兵营
-            magiclan: 术士
-            artillery: 火炮
-        }
-*/
 export class User {
     /**
      * 初始用户数据
@@ -208,21 +170,25 @@ export class GameConfig {
                 speed: 50,
                 HP: 30,
                 attack: 5,
+                rangeOfScan: 60
             },
             {
                 speed: 50,
                 HP: 40,
                 attack: 6,
+                rangeOfScan: 65
             },
             {
                 speed: 50,
                 HP: 50,
                 attack: 7,
+                rangeOfScan: 70
             },
             {
                 speed: 60,
                 HP: 50,
                 attack: 8,
+                rangeOfScan: 75
             },
         ],
         mosterData: [

@@ -1,5 +1,5 @@
 import FrameAnimation from "../../../common/frameAnimation";
-import Monster from "../../monster";
+import Monster from "../../monster/monster";
 
 const { ccclass, property } = cc._decorator;
 
@@ -7,12 +7,13 @@ const { ccclass, property } = cc._decorator;
 export default class ArtilleryBullet extends cc.Component {
 
     private attack: number = 0;
-    private harmRadian: number = 30;
+    private harmRadian: number;
     private frameAnim: FrameAnimation = null;
     /**
      * 怪物列表
      */
     private monsterArray: Monster[];
+
     onLoad() {
         this.frameAnim = this.node.getComponent("frameAnimation");
         this.monsterArray = cc.find("Canvas/towerMap").getComponent("monsterFactory").getMonsterArray();
@@ -26,10 +27,11 @@ export default class ArtilleryBullet extends cc.Component {
     /**
      * 设置炮的攻击力和速度
      * @param attack 
-     * @param speed 
+     * @param bombRange 炸弹爆炸范围
      */
-    init(attack: number) {
+    init(attack: number, bombRange: number) {
         this.attack = attack;
+        this.harmRadian = bombRange;
     }
 
     /**

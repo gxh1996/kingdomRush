@@ -12,12 +12,13 @@
     [
       false,
       true,
-      false
+      false,
+      true
     ],
     [
       false,
       false,
-      false,
+      true,
       false
     ]
   ],
@@ -42,9 +43,9 @@
   "fit-width": false,
   "group-list": [
     "default",
-    "arrow",
+    "Bullet",
     "Enemy",
-    "soldier"
+    "Soldier"
   ],
   "last-module-event-record-time": 0,
   "simulator-orientation": true,

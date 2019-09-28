@@ -38,8 +38,6 @@ export default class Arrower extends cc.Component {
     private speedOfShoot: number;
     private monsterArray: Monster[];
 
-
-
     onLoad() {
         this.frameAnimation = this.node.getComponent("frameAnimation");
         // this.arrowTower = this.node.parent.getComponent("arrowTower");

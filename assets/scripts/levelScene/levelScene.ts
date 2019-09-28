@@ -2,11 +2,12 @@ import SoundsManager from "../common/module/soundsManager";
 import GameDataStorage, { GameConfig, User } from "../common/module/gameDataManager";
 import LoadingDoorAnim from "../common/loadingDoorAnim";
 import MonsterFactory from "./monster/monsterFactory";
-import Level from "./levelInfo";
 import V_gameState from "./V_gameState";
 import SettlementFace from "./settlementFace";
 import Utils from "../common/module/utils";
 import Monster from "./monster/monster";
+import Builder from "./builder";
+import LevelDataManager, { Level } from "./levelInfo";
 
 const { ccclass, property } = cc._decorator;
 
@@ -31,39 +32,63 @@ export default class LevelScene extends cc.Component {
     @property({ type: V_gameState })
     private V_gameState: V_gameState = null;
 
+    @property({})
+    private isDebug: boolean = false;
 
 
+    /* 关卡信息 */
     levelNum: number = 1;
-
-    //玩家信息
-    private maxHP: number;
-    private HP: number = 1;
-    private cash: number = 1;
-    private maxRound: number = 0;
     /**
      * 在进行第几波
      */
     private roundIndex = 1;
-
-    private gameConfig: GameConfig = null;
-    private isBackButton: boolean = false;
-    private soundsManager: SoundsManager = null;
-    private isExitButton: boolean = false;
-    private VPMap: cc.Node = null;
-    private builderMap: cc.Node = null;
-    private startGame: boolean = false;
-    private levelData: Level;
-    private cT: number = 0;
-    private settlementFace: SettlementFace = null;
     /**
-     * 怪物列表
+     * 最大回合数
      */
-    private monsterArray: Monster[];
+    private maxRound: number = 0;
+    /**
+     * 关卡信息
+     */
+    levelData: Level;
+
+    /* 玩家信息 */
+    private maxHP: number;
+    private HP: number = 1;
+    /**
+     * 金币数
+     */
+    private cash: number = 1;
     /**
      * 游戏得分
      */
     private gameReview: number = 0;
     private user: User = null;
+
+    /* 控制 */
+    private isBackButton: boolean = false;
+    private isExitButton: boolean = false;
+    private startGame: boolean = false;
+    /**
+     * 计时，用于控制游戏回合阶段
+     */
+    private cT: number = 0;
+
+    private gameConfig: GameConfig = null;
+    private soundsManager: SoundsManager = null;
+    /**
+     * 放置动画路径的根节点
+     */
+    private VPMap: cc.Node = null;
+    /**
+     * 放置空地的根节点
+     */
+    private builderMap: cc.Node = null;
+    private settlementFace: SettlementFace = null;
+    /**
+     * 怪物列表
+     */
+    private monsterArray: Monster[];
+
     onLoad() {
         // cc.sys.localStorage.clear();
         // GameDataStorage.init();
@@ -73,19 +98,22 @@ export default class LevelScene extends cc.Component {
         this.gameConfig = GameDataStorage.getGameConfig();
         this.VPMap = cc.find("Canvas/VPMap");
         this.builderMap = cc.find("Canvas/builderMap");
+
         cc.loader.loadResDir("levelInfo/level" + this.levelNum + "/VPMap", cc.Prefab, function (e, res: any[]) {
             //添加地图路径
             for (let i = 0; i < res.length; i++) {
                 this.VPMap.addChild(cc.instantiate(res[i]));
             }
-            this.levelData = Level.getLevelData(this.levelNum);
+            this.levelData = LevelDataManager.getLevelData(this.levelNum);
 
             //添加空地（用于建塔）
-            let posArr: cc.Vec2[] = this.levelData.getBuilders();
+            let posArr: cc.Vec2[] = this.levelData.builders;
             for (let i = 0; i < posArr.length; i++) {
                 let n: cc.Node = cc.instantiate(this.builderPrefab);
+                let b: Builder = n.getComponent("builder");
                 this.builderMap.addChild(n);
                 n.setPosition(posArr[i]);
+                b.init(i);
             }
 
             this.init();
@@ -93,30 +121,39 @@ export default class LevelScene extends cc.Component {
             this.loadingDoorAnim.openDoor();
             this.startGame = true;
         }.bind(this));
+
         this.monsterArray = this.monsterFactory.getMonsterArray();
         this.user = GameDataStorage.getCurrentUser();
     }
 
     start() {
+        console.log(`#进入关卡${this.levelNum}`);
         this.soundsManager.playBGM("sounds/gameBGM/game_bg" + Utils.getRandomInterger(1, 5));
-        console.log(this.levelNum);
 
         //打开碰撞检测系统
         let manager: cc.CollisionManager = cc.director.getCollisionManager();
         manager.enabled = true;
+        if (this.isDebug) {
+            manager.enabledDebugDraw = true;
+            manager.enabledDrawBoundingBox = true;
+        }
     }
 
+    /**
+     * 初始化玩家状态，回合数
+     */
     private init() {
-        //设置玩家信息
+        //设置玩家和回合信息
         this.HP = this.maxHP = this.gameConfig.getInitBlood();
         this.cash = this.gameConfig.getInitChip();
-        this.maxRound = this.levelData.getRound();
+        this.maxRound = this.levelData.noOfRound.length;
 
         //更新界面显示
         this.V_gameState.setHP(this.HP);
         this.V_gameState.setGold(this.cash);
         this.V_gameState.setRound(1, this.maxRound);
 
+        //初始化回合控制
         this.roundIndex = 1;
         this.cT = 0;
     }
@@ -132,7 +169,7 @@ export default class LevelScene extends cc.Component {
     }
 
 
-
+    /* 按钮绑定 */
     backButton() {
         if (this.isBackButton) //保证播放开门动画期间，按按钮 不重复开门
             return;
@@ -191,16 +228,21 @@ export default class LevelScene extends cc.Component {
     resetButton() {
         cc.director.resume();
 
+        //判断是在哪个面板点击的按钮，隐藏该面板
         if (this.setFace.active) {
             this.setFace.runAction(cc.fadeOut(0.2));
             this.scheduleOnce(function () {
                 this.setFace.active = false;
             }, 0.2)
         }
-        this.settlementFace.hiddenSettleFace();
+        else
+            this.settlementFace.hiddenSettleFace();
 
+        //重置游戏
         this.monsterFactory.clearMonsters();
         this.init();
+        this.resetLand();
+
         this.startGame = true;
     }
 
@@ -225,19 +267,31 @@ export default class LevelScene extends cc.Component {
         GameDataStorage.preserveGameData();
     }
 
-    update(dt) {
+    /**
+     * 重置空地,删除建在上面的塔
+     */
+    private resetLand() {
+        let childre: cc.Node[] = this.builderMap.children;
+        childre.forEach(e => {
+            let builder: Builder = e.getComponent("builder");
+            builder.deleteTower();
+            builder.hiddenBuildFaceImmediately();
+        });
+    }
 
-        if (!this.startGame)
-            return;
-
-        if (this.roundIndex <= this.levelData.getRound()) {
+    /**
+     * 刷新回合，生成怪物
+     */
+    private refreshRound(dt: number) {
+        //回合计时控制
+        if (this.roundIndex <= this.maxRound) {
             this.cT += dt;
-            if (this.cT >= this.levelData.getTimeOfRound()[this.roundIndex - 1]) { //开始进行这一波
+            if (this.cT >= this.levelData.timeOfRound[this.roundIndex - 1]) { //开始进行这一波
                 //更新显示的回合数
                 this.V_gameState.setRound(this.roundIndex, this.maxRound);
 
                 //生成这一波   
-                let no: number[][] = this.levelData.getNoOfRound();
+                let no: number[][] = this.levelData.noOfRound;
                 let mNums: number[] = no[this.roundIndex - 1];
                 for (let i = 0; i < mNums.length; i++) {
                     this.monsterFactory.createMonster(no[this.roundIndex - 1][i]);
@@ -259,4 +313,12 @@ export default class LevelScene extends cc.Component {
             // this.user.setLevelReview(this.levelNum - 1, this.gameReview);
         }
     }
+
+    update(dt) {
+        if (!this.startGame)
+            return;
+
+        this.refreshRound(dt);
+    }
 }
+

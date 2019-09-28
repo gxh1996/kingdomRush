@@ -40,10 +40,13 @@ export default class Artillery extends cc.Component {
     })
     private bulletPrefab: cc.Prefab[] = [];
 
-    private level: number = 1;
-    private speed: number = 300;
-    private shootRange: number = 150;
     private frameAnimation: FrameAnimation = null;
+    private gameConfig: GameConfig;
+    private monsterArray: Monster[];
+    private bg: cc.Node = null;
+
+
+    /* 数据 */
     private addBulletData = [
         {
             startPos: cc.v2(-20, 10), //bg下的节点坐标
@@ -68,23 +71,33 @@ export default class Artillery extends cc.Component {
             addBulletDelay: 1.4
 
         },
-        { //一下为等级为4塔的两种子弹
-            endPos: cc.v2(-1, 28),
-            shootDelay: 1.6,
-        },
-        {
-            endPos: cc.v2(-21, 28),
-            shootDelay: 3.7,
-        },
-
     ]
-    private shootable: boolean = true;
-    private gameConfig: GameConfig;
-    private attacks;
-    attack: number;
-    private monsterArray: Monster[];
+    /**
+     * 各等级塔的攻击力
+     */
+    private attacks: number[];
+    /**
+     * 塔的世界坐标
+     */
     private wPos: cc.Vec2 = null;
-    private bg: cc.Node = null;
+
+    /* 塔的属性 */
+    level: number = 1;
+    maxLevel: number = 3;
+    private speedOfBullet: number = 300;
+    /**
+     * 炸弹爆炸范围
+     */
+    private bombRange: number = 50;
+    private shootRange: number = 150;
+    /**
+     * 攻击力
+     */
+    attack: number;
+
+    /* 控制 */
+    private shootable: boolean = true;
+
     onLoad() {
         this.bg = this.node.getChildByName("bg");
         this.frameAnimation = this.bg.getComponent("frameAnimation");
@@ -97,6 +110,10 @@ export default class Artillery extends cc.Component {
         this.init();
     }
 
+    /**
+     * 初始化攻击力、动画、
+     * @returns  
+     */
     init() {
         this.attack = this.attacks[this.level - 1];
         this.frameAnimation.setFrameArray(this.towers[this.level - 1].frames);
@@ -111,51 +128,40 @@ export default class Artillery extends cc.Component {
         }
     }
 
-    getLevel(): number {
-        return this.level;
-    }
-
     /**
      * 射击
      * @param des 世界坐标
+     * @param time 子弹到des的时间
      */
-    private shoot(des: cc.Vec2, time) {
+    private shoot(des: cc.Vec2, time: number) {
         if (!this.shootable)
             return;
         this.shootable = false;
 
-        if (this.level === 4) {
-            this.frameAnimation.play(false);
-            this.scheduleOnce(function () {
-                let artillery: ArtilleryBullet = cc.instantiate(this.bulletPrefab[this.level - 1]).getComponent("artilleryBullet");
-                this.node.addChild(artillery.node);
-                artillery.init(this.attack);
-                let wPos: cc.Vec2 = this.bg.convertToWorldSpaceAR(this.addBulletData[this.level - 1].endPos);
-                artillery.moveTo(wPos, des, time);
-            }.bind(this), this.addBulletData[this.level - 1].shootDelay);
-            this.scheduleOnce(function () {
-                let artillery: ArtilleryBullet = cc.instantiate(this.bulletPrefab[this.level]).getComponent("artilleryBullet");
-                this.node.addChild(artillery.node);
-                artillery.init(this.attack);
-                let bg: cc.Node = this.node.getChildByName("bg");
-                let wPos: cc.Vec2 = bg.convertToWorldSpaceAR(this.addBulletData[this.level].endPos);
-                artillery.moveTo(wPos, des, time);
-            }.bind(this), this.addBulletData[this.level].shootDelay);
-        }
-        else {
-            this.frameAnimation.play(false);
-            this.scheduleOnce(function () {
-                let artillery: ArtilleryBullet = cc.instantiate(this.bulletPrefab[this.level - 1]).getComponent("artilleryBullet");
-                this.node.addChild(artillery.node);
-                artillery.init(this.attack);
-                let bg: cc.Node = this.node.getChildByName("bg");
-                let wPos: cc.Vec2 = bg.convertToWorldSpaceAR(this.addBulletData[this.level - 1].endPos);
-                artillery.moveTo(wPos, des, time);
-            }.bind(this), this.addBulletData[this.level - 1].shootDelay);
-            this.scheduleOnce(this.addBulletAnim, this.addBulletData[this.level - 1].addBulletDelay);
-        }
+        this.frameAnimation.play(false);
+        this.addBulletAnim();
+        this.scheduleOnce(function () {
+            this.shootBullet(des, time);
+            this.shootable = true;
+        }.bind(this), this.addBulletData[this.level - 1].shootDelay);
     }
 
+    /**
+     * 射出子弹
+     */
+    private shootBullet(des: cc.Vec2, time: number) {
+        let a: ArtilleryBullet = this.createBullet();
+        let wPos: cc.Vec2 = this.bg.convertToWorldSpaceAR(this.addBulletData[this.level - 1].endPos);
+        a.moveTo(wPos, des, time);
+    }
+
+    private createBullet(): ArtilleryBullet {
+        let artillery: ArtilleryBullet = cc.instantiate(this.bulletPrefab[this.level - 1]).getComponent("artilleryBullet");
+        this.node.addChild(artillery.node);
+        artillery.init(this.attack, this.bombRange);
+        let bg: cc.Node = this.node.getChildByName("bg");
+        return artillery;
+    }
 
     /**
      * 根据怪物此时的位置，预判子弹到达后，怪物的新位置
@@ -167,7 +173,7 @@ export default class Artillery extends cc.Component {
         let walk: Walk = monster.getWalkScript();
         //从填弹到子弹飞行到cP的时间
         let bulletStartPos: cc.Vec2 = this.bg.convertToWorldSpaceAR(this.addBulletData[this.level - 1].endPos);
-        let time: number = cP.sub(bulletStartPos).mag() / this.speed + this.addBulletData[this.level - 1].shootDelay;
+        let time: number = cP.sub(bulletStartPos).mag() / this.speedOfBullet + this.addBulletData[this.level - 1].shootDelay;
 
         let mP: cc.Vec2 = walk.getPosInTime(time);
         let mWP: cc.Vec2 = monster.node.parent.convertToWorldSpaceAR(mP);
@@ -189,7 +195,6 @@ export default class Artillery extends cc.Component {
             let a: cc.ActionInterval = cc.bezierTo(0.5, [this.addBulletData[this.level - 1].startPos, this.addBulletData[this.level - 1].ctrlPos, this.addBulletData[this.level - 1].endPos]);
             let func: cc.ActionInstant = cc.callFunc(function () {
                 this.addBulletNodes[0].scale = 0;
-                this.shootable = true;
             }, this);
             let seq: cc.ActionInterval = cc.sequence(a, func);
             this.addBulletNodes[0].runAction(seq);
@@ -206,7 +211,7 @@ export default class Artillery extends cc.Component {
      * 升级
      */
     upgrade() {
-        if (this.level === 4)
+        if (this.level === this.maxLevel)
             return;
         this.level++;
         this.init();

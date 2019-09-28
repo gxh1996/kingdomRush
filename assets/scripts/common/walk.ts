@@ -1,4 +1,3 @@
-import Move from "./move";
 import FrameAnimation from "./frameAnimation";
 
 const { ccclass, property } = cc._decorator;
@@ -49,16 +48,12 @@ export default class Walk extends cc.Component {
 
     onLoad() {
         this.frameAnim = this.node.getChildByName("bg").getComponent("frameAnimation");
-
-
     }
 
     start() {
         this.frameAnim.setFrameArray(this.downWalkFrames);
         this.walkState = WalkState.Down;
     }
-
-
 
     /**
      * Starts walk
@@ -77,14 +72,6 @@ export default class Walk extends cc.Component {
         this.initPathTime();
         this.moveTo(this.path[++this.pathIndex]);
     }
-
-    // /**
-    //  * Gets move path
-    //  * @returns move path 
-    //  */
-    // getMovePath(): cc.Vec2[] {
-    //     return this.path;
-    // }
 
     pauseWalk() {
         this.frameAnim.stop();
@@ -243,8 +230,5 @@ export default class Walk extends cc.Component {
         else if (dir.x > 0 && dir.y < 0) //在第四象限
             rot += 360;
         return rot;
-    }
-
-    update(dt) {
     }
 }

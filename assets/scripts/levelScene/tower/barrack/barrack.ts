@@ -1,6 +1,9 @@
 import FrameAnimation from "../../../common/frameAnimation";
 import Soldier from "./soldier";
 import GameDataStorage from "../../../common/module/gameDataManager";
+import LevelDataManager from "../../levelInfo";
+import LevelScene from "../../levelScene";
+import Utils from "../../../common/module/utils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -32,13 +35,34 @@ export default class Barrack extends cc.Component {
     })
     private tower4: cc.SpriteFrame[] = [];
 
-    private level: number = 1;
+    private BGFrameAnim: FrameAnimation = null;
+    private personMap: cc.Node = null;
+
+
+    /* 塔的属性 */
+    level: number = 1;
+    private maxNumOfSoldier: number = 3;
+    private tOfCreateSoldier: number = 2;
+
+    /* 数据 */
+    /**
+     * 可用的驻点编号
+     */
+    private availableStationNo: number[] = null;
     /**
      * 塔的帧动画图片
      */
     private towerFrames = [];
-    private BGFrameAnim: FrameAnimation = null;
-    private soldiers: Soldier[] = [];
+    stationOfSoldier: cc.Vec2[];
+    private soldierPool: cc.NodePool;
+    private createdSoldiers: Soldier[] = [];
+
+    /* 控制 */
+    /**
+     * 是否在造兵
+     */
+    private creSoldEnable: boolean = true;
+
     onLoad() {
         this.towerFrames.push(this.tower1);
         this.towerFrames.push(this.tower2);
@@ -46,45 +70,51 @@ export default class Barrack extends cc.Component {
         this.towerFrames.push(this.tower4);
 
         this.BGFrameAnim = this.node.getChildByName("bg").getComponent("frameAnimation");
+        this.personMap = cc.find("Canvas/personMap");
+        this.createSoldierPool();
     }
 
     start() {
         this.init();
     }
 
-    getLevel(): number {
-        return this.level;
-    }
-
+    /**
+     * 根据等级设置 动画。
+     */
     init() {
         this.BGFrameAnim.setFrameArray(this.towerFrames[this.level - 1]);
         this.BGFrameAnim.setSpriteFrame(this.towerFrames[this.level - 1][0]);
+
+        this.availableStationNo = [0, 1, 2];
     }
 
+    private createSoldierPool() {
+        this.soldierPool = new cc.NodePool();
+        for (let i = 0; i < this.maxNumOfSoldier; i++) {
+            let n: cc.Node = cc.instantiate(this.soldierPrefab);
+            this.soldierPool.put(n);
+        }
+    }
 
     /**
-     * 出兵
-     * @param station 兵的驻点 世界坐标
+     * 士兵被杀
+     * @param soldier 
      */
-    private outSoldier(station: cc.Vec2) {
-        this.BGFrameAnim.play(false, false);
-        this.scheduleOnce(function () {
-            let s: Soldier = this.createSoldier();
-            this.soldiers.push(s);
-            s.setState(this.level, station);
-        }.bind(this), 0.8);
-    }
-
-    private createSoldier(): Soldier {
-        let node: cc.Node = cc.instantiate(this.soldierPrefab);
-        let s: Soldier = node.getComponent("soldier");
-        this.node.addChild(node);
-        node.setPosition(this.outSoldierPos);
-        return s;
+    soldierKilled(soldier: Soldier) {
+        this.availableStationNo.push(soldier.stationNo);
+        Utils.remvoeItemOfArray(this.createdSoldiers, soldier);
+        this.soldierPool.put(soldier.node);
     }
 
     destroySelf() {
-        this.node.removeFromParent();
+        //删除塔生成的所有士兵
+        this.createdSoldiers.forEach((v: Soldier) => {
+            v.destroySelf();
+        })
+
+        //清空对象池
+        this.soldierPool.clear();
+
         this.node.destroy();
     }
 
@@ -98,5 +128,49 @@ export default class Barrack extends cc.Component {
         this.init();
     }
 
-    // update (dt) {}
+    private autoOutSoldier() {
+        if (this.creSoldEnable && this.createdSoldiers.length < 3) {
+            this.creSoldEnable = false;
+            this.scheduleOnce(this.outSoldier.bind(this), this.tOfCreateSoldier);
+        }
+    }
+    /**
+     * 出兵
+     * @param station 兵的驻点 世界坐标
+     */
+    private outSoldier() {
+        this.BGFrameAnim.play(false, false, false, function () {
+            let s: Soldier = this.createSoldier();
+            s.walkToPos(this.stationOfSoldier[s.stationNo]);
+
+            this.BGFrameAnim.play(false, false, true, function () {
+                this.creSoldEnable = true;
+            }.bind(this))
+        }.bind(this));
+    }
+    private createSoldier(): Soldier {
+        let node: cc.Node = this.getSoldierInPool();
+        let s: Soldier = node.getComponent("soldier");
+        this.createdSoldiers.push(s);
+        this.personMap.addChild(node);
+
+        let outPos: cc.Vec2 = this.node.convertToWorldSpaceAR(this.outSoldierPos);
+        outPos = this.personMap.convertToNodeSpaceAR(outPos);
+        node.setPosition(outPos);
+
+        s.init(this.level, this, this.availableStationNo.pop());
+        return s;
+    }
+    private getSoldierInPool(): cc.Node {
+        let n: cc.Node;
+        if (this.soldierPool.size() > 0)
+            n = this.soldierPool.get();
+        else
+            n = cc.instantiate(this.soldierPrefab);
+        return n;
+    }
+
+    update(dt) {
+        this.autoOutSoldier();
+    }
 }

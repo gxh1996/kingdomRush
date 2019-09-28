@@ -77,6 +77,9 @@
         "__id__": 10
       },
       {
+        "__id__": 11
+      },
+      {
         "__id__": 13
       },
       {
@@ -439,14 +442,7 @@
     "_children": [],
     "_active": true,
     "_level": 2,
-    "_components": [
-      {
-        "__id__": 11
-      },
-      {
-        "__id__": 12
-      }
-    ],
+    "_components": [],
     "_prefab": null,
     "_opacity": 255,
     "_color": {
@@ -493,21 +489,69 @@
     "_id": "9a1sZnn9JGM4vXHpej2zEA"
   },
   {
-    "__type__": "6138fxs+4VFYrG5yshoOB2G",
-    "_name": "",
+    "__type__": "cc.Node",
+    "_name": "personMap",
     "_objFlags": 0,
-    "node": {
-      "__id__": 10
+    "_parent": {
+      "__id__": 2
     },
-    "_enabled": false,
-    "_id": "042v9QlsNBnK4SQlfK5p7m"
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 12
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "groupIndex": 0,
+    "_id": "6cogCXyg9Dq4Wc8jEoH7YM"
   },
   {
     "__type__": "fe408t71SRIeYSayhsudyzg",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 10
+      "__id__": 11
     },
     "_enabled": true,
     "monsterPrefab": [
@@ -518,7 +562,7 @@
     "animationPath": {
       "__id__": 8
     },
-    "_id": "47jzHdnTtJ0oCB97hoEt7X"
+    "_id": "fbHGaathVHSaIZdvnbNfJz"
   },
   {
     "__type__": "cc.Node",
@@ -1022,17 +1066,23 @@
     "_id": "babf46rB1CjKEO7yZlshdO"
   },
   {
-    "__type__": "a5140s4pc1JHqri5J6W7V++",
+    "__type__": "2923afG7tNMVZBvUd6/RnLm",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 14
     },
     "_enabled": true,
+    "hp": {
+      "__id__": 18
+    },
+    "gold": {
+      "__id__": 20
+    },
     "round": {
       "__id__": 22
     },
-    "_id": "05ONfhbEROsYQXimib7+SJ"
+    "_id": "fbhtMYZI9H455mDePmOE2y"
   },
   {
     "__type__": "cc.Node",
@@ -7599,6 +7649,7 @@
     "V_gameState": {
       "__id__": 23
     },
+    "isDebug": true,
     "_id": "b6J0xuQ6hH7a0MdhdfEAI5"
   }
 ]

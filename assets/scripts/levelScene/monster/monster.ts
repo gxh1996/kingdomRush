@@ -70,7 +70,10 @@ export default class Monster extends cc.Component {
         this.state = State.walk;
         this.walk.startWalk(this.movePath, this.speed, function () {
             this.levelScene.subHP();
+            this.monsterArray.splice(this.monsterArray.indexOf(this), 1);
             this.destroySelf();
+            console.log("怪物逃脱");
+
         }.bind(this));
     }
 
@@ -175,18 +178,17 @@ export default class Monster extends cc.Component {
             this.state = State.dead;
         }
         this.BGFrameAnim.play(false, false, false, function () {
-
             let a: cc.ActionInterval = cc.fadeOut(1.0);
             this.node.runAction(a);
         }.bind(this));
 
+        console.log("怪物死亡");
     }
 
     /**
      * 删除节点，并不从怪物列表中移除
      */
     destroySelf() {
-        this.node.removeFromParent();
         this.node.destroy();
     }
 

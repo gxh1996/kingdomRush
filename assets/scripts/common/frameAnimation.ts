@@ -150,21 +150,22 @@ export default class FrameAnimation extends cc.Component {
                     if (this.isLoop) //要循环播放
                         this.nextIndex = 0;
                     else {
+                        this.isPlay = false;
+
+                        //播放完后的处理
                         if (this.idle) //有不播放动画时的图片
                             this.sprite.spriteFrame = this.idle;
                         else if (this.isFirstFrameInEnd)
                             this.sprite.spriteFrame = this.spriteFrames[0]; //复原为第一帧
 
+                        //重置
                         if (this.isInvertedPlay) {
                             this.spriteFrames.reverse();
                             this.isInvertedPlay = false;
                         }
 
-                        if (this.backFunc !== null) {
+                        if (this.backFunc !== null)
                             this.backFunc();
-                            this.backFunc = null;
-                        }
-                        this.isPlay = false;
                         return;
                     }
                 }

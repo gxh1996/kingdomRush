@@ -15,15 +15,24 @@ export default class ArrowTower extends cc.Component {
     })
     private offsetY: cc.Vec2[] = [];
 
-    @property({
-        type: cc.Node
-    })
-    private graphics: cc.Node = null;
-
+    /* 塔的属性 */
     /**
      * 塔的等级
      */
-    private level: number = 1;
+    level: number = 1;
+    maxLevel: number = 4;
+    private attack: number;
+    /**
+     * 箭的速度
+     */
+    private speedOfArrow: number = 200;
+    shootRange: number = 150;
+    /**
+     * 射手射速
+     */
+    private speedOfShoot: number = 1;
+
+
     private leftArrower: Arrower = null;
     private rightArrower: Arrower = null;
     /**
@@ -31,23 +40,18 @@ export default class ArrowTower extends cc.Component {
      */
     private towerBG: cc.Sprite = null;
     private frameAnimations: FrameAnimation[] = [];
+    private gameConfig: GameConfig;
+
+    /* 控制 */
     /**
      * false为士兵朝下
      */
     private toward: boolean = false;
-    private gameConfig: GameConfig;
-    private attacks: number[];
-    private attack: number;
-    /**
-     * 箭的速度
-     */
-    private speedOfArrow: number = 200;
+
+    /* 数据 */
     private wPos: cc.Vec2;
-    private shootRange: number = 150;
-    /**
-     * 射手射速
-     */
-    private speedOfShoot: number = 1;
+    private attacks: number[];
+
 
     onLoad() {
         let l: cc.Node = this.node.getChildByName("leftPerson");
@@ -69,22 +73,6 @@ export default class ArrowTower extends cc.Component {
 
     private init() {
         this.initArrower();
-        this.showShootRange();
-    }
-
-    getLevel(): number {
-        return this.level;
-    }
-
-    /**
-     * 在屏幕上显示射程范围
-     */
-    private showShootRange() {
-        let g: cc.Graphics = this.graphics.addComponent(cc.Graphics);
-        g.strokeColor = g.fillColor = new cc.Color(0, 100, 0, 50);
-        g.circle(0, 0, this.shootRange);
-        g.stroke();
-        g.fill();
     }
 
     private initArrower() {

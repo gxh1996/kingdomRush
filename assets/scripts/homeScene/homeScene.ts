@@ -3,6 +3,7 @@ import SoundsManager from "../common/module/soundsManager"
 import StartAnim from "./startAnim";
 import GameDataStorage from "../common/module/gameDataManager";
 import { User } from "../common/module/gameDataManager"
+import LevelDataManager from "../levelScene/levelInfo";
 
 const { ccclass, property } = cc._decorator;
 
@@ -27,7 +28,10 @@ export default class HomeScene extends cc.Component {
     fristEntry: boolean = true;
     private clips: cc.AnimationClip[] = null;
     onLoad() {
+        //初始化 模块
         this.soundsManager = new SoundsManager();
+        LevelDataManager.initLevelData();
+
         this.clips = this.startAnim.node.getComponent(cc.Animation).getClips();
     }
 
