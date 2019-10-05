@@ -78,7 +78,7 @@ export default class MagiclanBullet extends cc.Component {
         if (group === "Enemy") {
             this.node.stopAllActions();
             let m: Monster = node.getComponent("monster");
-            m.subHP(this.attack);
+            m.injure(this.attack);
 
             this.playBombAnim();
         }

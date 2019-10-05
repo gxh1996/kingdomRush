@@ -167,36 +167,53 @@ export class GameConfig {
         ],
         soldierData: [
             {
-                speed: 50,
                 HP: 30,
-                attack: 5,
-                rangeOfScan: 60
+                speedOfMove: 50,
+                intervalOfAttack: 1,
+                aggressivity: 5,
+                rangeOfAttack: 15,
+                rangeOfInvestigate: 80,
+                intervalOfThink: 1
             },
             {
-                speed: 50,
-                HP: 40,
-                attack: 6,
-                rangeOfScan: 65
+                HP: 30,
+                speedOfMove: 50,
+                intervalOfAttack: 1,
+                aggressivity: 5,
+                rangeOfAttack: 15,
+                rangeOfInvestigate: 80,
+                intervalOfThink: 1
             },
             {
-                speed: 50,
-                HP: 50,
-                attack: 7,
-                rangeOfScan: 70
+                HP: 30,
+                speedOfMove: 50,
+                intervalOfAttack: 1,
+                aggressivity: 5,
+                rangeOfAttack: 15,
+                rangeOfInvestigate: 80,
+                intervalOfThink: 1
             },
             {
-                speed: 60,
-                HP: 50,
-                attack: 8,
-                rangeOfScan: 75
+                HP: 30,
+                speedOfMove: 50,
+                intervalOfAttack: 1,
+                aggressivity: 5,
+                rangeOfAttack: 15,
+                rangeOfInvestigate: 80,
+                intervalOfThink: 1
             },
+
         ],
         mosterData: [
             {
-                speed: 50,
                 HP: 30,
-                attack: 5,
-            }
+                speedOfMove: 30,
+                intervalOfAttack: 1,
+                aggressivity: 10,
+                rangeOfAttack: 15,
+                rangeOfInvestigate: 50,
+                intervalOfThink: 1
+            },
         ]
     };
     private ls = cc.sys.localStorage;

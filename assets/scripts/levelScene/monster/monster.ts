@@ -1,15 +1,17 @@
-import FrameAnimation from "../../common/frameAnimation";
-import Move from "../../common/move";
+import Creature from "../creature";
+import CombatLogic from "../combatLogic";
+import Soldier from "../tower/barrack/soldier";
 import GameDataStorage, { GameConfig } from "../../common/module/gameDataManager";
-import Walk from "../../common/walk";
+import Utils from "../../common/module/utils";
+import MonsterFactory from "./monsterFactory";
 import LevelScene from "../levelScene";
-
+import Move from "../../common/move";
 const { ccclass, property } = cc._decorator;
 
+enum WalkState { Down, left, up, right }
 
-enum State { attack, dead, walk, idle };
 @ccclass
-export default class Monster extends cc.Component {
+export default class Monster extends Creature {
 
     @property({
         type: [cc.SpriteFrame],
@@ -22,191 +24,341 @@ export default class Monster extends cc.Component {
     })
     private deadFrame: cc.SpriteFrame[] = [];
 
-    @property({ type: cc.ProgressBar })
-    private bloodBar: cc.ProgressBar = null;
-    /**
-     * 怪物编号
-     */
-    private number: number = null;
-    private speed: number = 40;
-    private attack: number = 5;
-    private maxHP: number = 20;
-    private cHP: number = 20;
-    /**
-     * 需要移动的路径 世界坐标
-     */
-    private movePath: cc.Vec2[];
-    private state: State = State.idle;
-    private bg: cc.Node = null;
-    private BGFrameAnim: FrameAnimation = null;
-    private gameConfig: GameConfig = null;
-    private monsterData;
-    private isFindEnemy: boolean = false;
-    private walk: Walk;
-    /**
-     * 怪物列表
-     */
-    private monsterArray: Monster[];
+    @property({
+        type: [cc.SpriteFrame]
+    })
+    private downWalkFrames: cc.SpriteFrame[] = [];
+
+    @property({
+        type: [cc.SpriteFrame]
+    })
+    private rightWalkFrames: cc.SpriteFrame[] = [];
+
+    @property({
+        type: [cc.SpriteFrame]
+    })
+    private upWalkFrames: cc.SpriteFrame[] = [];
+
+
+    /* 引用对象 */
+    private monsterFactory: MonsterFactory = null;
     private levelScene: LevelScene = null;
 
+    /* 属性 */
+    monsterNo: number = null;
+
+    /* 数据 */
+    public static monstersOfAlive: Monster[] = [];
+    /**
+     * {HP,speedOfMove,intervalOfAttack,aggressivity,rangeOfAttack,rangeOfInvestigate}
+     */
+    private monsterData: any = null;
+    /**
+     * 移动路径 世界
+     */
+    private path: cc.Vec2[] = null;
+    /**
+     * 每段路需要的时间，[0]:path[0]->path[1]
+     */
+    private pathTime: number[] = [];
+
+    /* 控制 */
+    /**
+     * 要移动的目的地的path指针
+     */
+    private pathIndex: number = 0;
+    /**
+     * 路径移动的递归开关
+     * 控制递归与对外说明
+     */
+    swiOfRecursionInPW: boolean = false;
+    /**
+     * 是否在路径上移动
+     * 控制 是否需要回归路径点上S
+     */
+    private moveInPath: boolean = true;
+    private stateOfFA: WalkState = null;
+
     onLoad() {
-        this.bg = this.node.getChildByName("bg");
-        this.BGFrameAnim = this.bg.getComponent("frameAnimation");
-        this.gameConfig = GameDataStorage.getGameConfig();
-        this.monsterData = this.gameConfig.getMonsterData();
-        this.walk = this.node.getComponent("walk");
+        //对象/组件的赋值
+        this.combatLogic = new CombatLogic(this, Soldier.soldiersOfAlive);
+        this.monsterFactory = cc.find("Canvas/personMap").getComponent("monsterFactory");
         this.levelScene = cc.find("Canvas").getComponent("levelScene");
+        this._move = new Move(this.node);
+
+        //怪物数据
+        let gameConfig: GameConfig = GameDataStorage.getGameConfig();
+        this.monsterData = gameConfig.getMonsterData();
     }
 
-    start() {
-        this.init();
-    }
+    init(monsterNo: number, path: cc.Vec2[]) {
+        //初始化属性
+        this.monsterNo = monsterNo;
+        let md: any = this.monsterData[monsterNo];
+        this.maxHp = this.cHP = md.HP;
+        this.speedOfMove = md.speedOfMove;
+        this.intervalOfAttack = md.intervalOfAttack;
+        this.aggressivity = md.aggressivity;
+        this.rangeOfAttack = md.rangeOfAttack;
+        this.rangeOfInvestigate = md.rangeOfInvestigate;
+        this.intervalOfThink = md.intervalOfThink;
 
-    private init() {
-        this.speed = this.monsterData[this.number].speed;
-        this.cHP = this.maxHP = this.monsterData[this.number].HP;
-        this.attack = this.monsterData[this.number].attack;
+        //初始化数据
+        this.path = path;
+        this.initPathTime();
 
-        this.state = State.walk;
-        this.walk.startWalk(this.movePath, this.speed, function () {
-            this.levelScene.subHP();
-            this.monsterArray.splice(this.monsterArray.indexOf(this), 1);
-            this.destroySelf();
-            console.log("怪物逃脱");
+        //初始化视图
+        this.frameAnim.setSpriteFrame(this.downWalkFrames[0]);
+        this.refreshBloodBar();
+        this.node.setPosition(this.node.parent.convertToNodeSpaceAR(this.path[0]));
 
-        }.bind(this));
-    }
-
-    getSpeed(): number {
-        return this.speed;
-    }
-
-    getWalkScript(): Walk {
-        return this.walk;
+        //初始化控制参数
+        this.pathIndex = 1;
+        this.swiOfRecursionInPW = false;
+        this.moveInPath = true;
+        this.stateOfFA = null;
+        this.initCreature();
     }
 
     /**
-     * Gets move path
-     * @returns move path 世界坐标 
+     * 从现在开始，经time后的坐标
+     * @param t 
+     * @returns pos 节点坐标
      */
-    getMovePath(): cc.Vec2[] {
-        return this.movePath;
+    getPosInTime(t: number): cc.Vec2 {
+        let cI: number = this.pathIndex; //当前目的点的path指针
+        let cP: cc.Vec2 = this.node.getPosition();
+        let ct: number = this.path[cI].sub(cP).mag() / this.speedOfMove;
+        t -= ct;
+
+        while (true) {
+            ct = this.pathTime[cI + 1];
+            t -= ct;
+            if (t < 0)
+                break;
+            cI++;
+        }
+
+        //多出的一点时间不足以抵达下一个点，就不要了
+        return this.path[cI];
+    }
+    /**
+     * 初始化pathTime
+     */
+    private initPathTime() {
+        for (let i = 0; i < this.path.length - 1; i++) {
+            let l: number = this.path[i + 1].sub(this.path[i]).mag();
+            this.pathTime[i] = l / this.speedOfMove;
+        }
     }
 
     /**
-     * Sets
-     * @param n 怪物编号
-     * @param path 移动路径 世界坐标
-     * @param monsterArray 怪物列表
+     * 不会自动停止播放行走动画
+     * @param des 世界
      */
-    set(n: number, path: cc.Vec2[], monsterArray) {
-        this.number = n;
-        this.movePath = path;
-        this.monsterArray = monsterArray;
+    walk(des: cc.Vec2, func: Function = null, t: number = null) {
+        let dis: cc.Vec2 = des.sub(this.getWPos());
+        this.playWalk(dis);
+
+        this.move(des, func, t);
     }
 
-    subHP(n: number) {
-        //防止死后还被攻击,执行了下面的代码    
-        if (this.cHP === 0)
+    protected stopWalk() {
+        this.frameAnim.stop();
+        this.stateOfFA = null;
+        this._move.stopMove();
+    }
+
+    /**
+     * 播放行走动画,自动判断是否需要重置动画
+     * @param l 行走方向
+     */
+    private playWalk(l: cc.Vec2) {
+        let state: WalkState = this.getWalkState(l);
+        if (state === this.stateOfFA)
             return;
 
-        this.cHP -= n;
-        if (this.cHP <= 0) {
-            this.cHP = 0;
-            this.monsterArray.splice(this.monsterArray.indexOf(this), 1);
-            this.walk.stopWalk();
-            this.deadAnim();
+        this.stateOfFA = state;
+        switch (state) {
+            case WalkState.Down: {
+                this.frameAnim.setFrameArray(this.downWalkFrames);
+                break;
+            }
+            case WalkState.up: {
+                this.frameAnim.setFrameArray(this.upWalkFrames);
+                break;
+            }
+            case WalkState.left: {
+                this.frameAnim.setFrameArray(this.rightWalkFrames);
+                this.node.scaleX = -1;
+                break;
+            }
+            case WalkState.right: {
+                this.frameAnim.setFrameArray(this.rightWalkFrames);
+                this.node.scaleX = 1;
+            }
         }
-        this.updateBloodBar();
+        this.frameAnim.play(true);
     }
-
     /**
-     * 是否受到范围伤害
-     * @param pos 爆炸点 世界坐标
-     * @param radian 爆炸范围
+     * 得到 人物应该使用哪种行走
+     * @param l 移动方向
+     * @returns walk state 
      */
-    isInjuredInScope(pos: cc.Vec2, radian: number): boolean {
-        let centerP: cc.Vec2 = this.getPosInWorld();
-        let w: number = this.bg.width;
+    private getWalkState(l: cc.Vec2): WalkState {
+        let degree: number = this.getDegree(l);
+        if (degree >= 30 && degree <= 150) {
+            return WalkState.up;
+        }
+        else if (degree >= 210 && degree <= 330) {
+            return WalkState.Down;
+        }
+        else if (l.x > 0)
+            return WalkState.right;
+        else
+            return WalkState.left;
+    }
+    /**
+     * Gets degree
+     * @param dir 方向向量
+     * @returns degree [0,360)
+     */
+    private getDegree(dir: cc.Vec2): number {
+        let rot: number;
+        if (dir.x === 0 && dir.y > 0) //y上半轴
+            rot = 90;
+        else if (dir.x === 0 && dir.y < 0) //y下半轴
+            rot = 270;
+        else {
+            let r: number = Math.atan(dir.y / dir.x);
+            let d: number = r * 180 / Math.PI;
+            rot = d;
+        }
 
-        let l: number = pos.sub(centerP).mag();
-        if (w + radian >= l)
-            return true;
-        return false;
+        if (rot === 0) //在x轴上
+            if (dir.x > 0)
+                rot = 0;
+            else
+                rot = 180;
+        else if (dir.x < 0 && dir.y > 0 || dir.x < 0 && dir.y < 0) //在第二三象限
+            rot += 180;
+        else if (dir.x > 0 && dir.y < 0) //在第四象限
+            rot += 360;
+        return rot;
+    }
+
+    protected refreshState() {
+        this.refreshBloodBar();
+
+        //死亡    
+        if (this.cHP === 0) {
+            Utils.remvoeItemOfArray(Monster.monstersOfAlive, this);
+            this.isAlive = false;
+            this.die(this.deadFrame, this.destroySelf.bind(this));
+        }
+    }
+
+    destroySelf() {
+        this.monsterFactory.destroyMonster(this);
     }
 
     /**
-     * 脚坐标
+     * 使用前需 this.swiOfRecursionInPW = true
      * @returns  
      */
-    getPosInWorld() {
-        let P: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
-        return P;
-    }
+    protected walkInPath() {
+        if (!this.swiOfRecursionInPW)
+            return;
 
-    private updateBloodBar() {
-        let p: number = this.cHP / this.maxHP;
-        this.bloodBar.progress = p;
-    }
-
-    private attackAnim() {
-        //V
-        if (this.state === State.walk)
-            this.walk.pauseWalk();
-        if (this.state !== State.attack) {
-            let frame: cc.SpriteFrame[] = this.attackFrame;
-            this.BGFrameAnim.setFrameArray(frame);
-            this.state = State.attack;
+        if (!this.moveInPath) { //回归路径点
+            this.pathIndex = this.getPosOfMinDisWithPath();
+            this.walk(this.path[this.pathIndex], this.walkCallBack.bind(this));
+            this.moveInPath = true;
         }
-        this.BGFrameAnim.play(false, function () {
-            this.state = State.idle;
-        }.bind(this));
+        else //从路径点移动到路径点
+            this.walk(this.path[this.pathIndex], this.walkCallBack.bind(this), this.pathTime[this.pathIndex - 1])
 
-
+    }
+    private walkCallBack() {
+        if (this.pathIndex === this.path.length - 1) {
+            console.log("怪物跳脱");
+            this.levelScene.subHP();
+            this.stopWalkInPath();
+            this.destroySelf();
+        }
+        this.pathIndex++;
+        this.walkInPath();
+    }
+    /**
+     * 得到离路径上最近的路径点指针
+     */
+    private getPosOfMinDisWithPath(): number {
+        let cwp: cc.Vec2 = this.getWPos();
+        let l: number = Utils.getDisOfTwoPos(cwp, this.path[this.pathIndex]);
+        let j: number = this.pathIndex;
+        for (let i = this.pathIndex + 1; i < this.path.length; i++) {
+            let tl: number = Utils.getDisOfTwoPos(cwp, this.path[i]);
+            if (tl < l) {
+                l = tl;
+                j = i;
+            }
+            else
+                break;
+        }
+        return j;
     }
 
     /**
-     * 死亡
+     * 关闭walkInPath()的递归移动，停止行走
      */
-    private deadAnim() {
-        //V
-        if (this.state === State.walk)
-            this.walk.pauseWalk();
-        if (this.state !== State.dead) {
-            let frame: cc.SpriteFrame[] = this.deadFrame;
-            this.BGFrameAnim.setFrameArray(frame);
-            this.state = State.dead;
-        }
-        this.BGFrameAnim.play(false, false, false, function () {
-            let a: cc.ActionInterval = cc.fadeOut(1.0);
-            this.node.runAction(a);
+    private stopWalkInPath() {
+        this.swiOfRecursionInPW = false;
+        this.moveInPath = false;
+        this.stopWalk();
+    }
+
+
+    track(pos: cc.Vec2) {
+        this.isTracking = true;
+        this.walk(pos, function () {
+            this.isTracking = true;
+            this.stopWalk();
+        }.bind(this))
+    }
+    stopTrack() {
+        this.isTracking = false;
+        this.stopWalk();
+    }
+    refreshTrackTarget(pos: cc.Vec2) {
+        this.walk(pos, function () {
+            this.isTracking = true;
+            this.stopWalk();
+        }.bind(this))
+    }
+
+    attack(m: Creature) {
+        this.isAttacking = true;
+
+        this.frameAnim.setFrameArray(this.attackFrame);
+        this.frameAnim.play(false, false, false, function () {
+            m.injure(this.aggressivity);
+            this.isAttacking = false;
         }.bind(this));
 
-        console.log("怪物死亡");
     }
 
-    /**
-     * 删除节点，并不从怪物列表中移除
-     */
-    destroySelf() {
-        this.node.destroy();
+    nonComLogic() {
+        this.isNonComState = true;
+        //已经在执行路径上行走了
+        if (this.swiOfRecursionInPW)
+            return;
+        this.swiOfRecursionInPW = true;
+        this.walkInPath();
+    }
+    stopNonComLogic() {
+        this.stopWalkInPath();
+        this.isNonComState = false;
     }
 
-    update(dt) {
-        if (this.isFindEnemy) { //发现敌人
-            if (this.state !== State.attack) { //不处于攻击状态
-                if (this.state === State.walk)
-                    this.walk.pauseWalk();
 
-                this.attackAnim();
-
-            }
-        }
-        else { //没有发现敌人
-            if (this.state !== State.walk && this.state != State.dead) {
-                this.state = State.walk;
-                this.walk.continueWalk();
-            }
-        }
-    }
 }

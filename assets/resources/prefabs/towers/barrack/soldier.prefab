@@ -29,13 +29,10 @@
     "_components": [
       {
         "__id__": 13
-      },
-      {
-        "__id__": 14
       }
     ],
     "_prefab": {
-      "__id__": 15
+      "__id__": 14
     },
     "_opacity": 255,
     "_color": {
@@ -57,8 +54,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -49.5,
-      "y": -15.5,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_scale": {
@@ -112,8 +109,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 35,
-      "height": 23
+      "width": 14,
+      "height": 18
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -165,7 +162,7 @@
       "__uuid__": "e3aacde7-594c-412e-8afd-751ac0418b6e"
     },
     "_type": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 1,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -174,7 +171,7 @@
     },
     "_fillStart": 0,
     "_fillRange": 0,
-    "_isTrimmedMode": false,
+    "_isTrimmedMode": true,
     "_atlas": null,
     "_id": ""
   },
@@ -438,27 +435,6 @@
     "sync": false
   },
   {
-    "__type__": "cc.BoxCollider",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "tag": 0,
-    "_offset": {
-      "__type__": "cc.Vec2",
-      "x": 1,
-      "y": 9
-    },
-    "_size": {
-      "__type__": "cc.Size",
-      "width": 13,
-      "height": 17
-    },
-    "_id": ""
-  },
-  {
     "__type__": "723bapX0cVMWLHqO6N7iHb6",
     "_name": "",
     "_objFlags": 0,
@@ -466,6 +442,12 @@
       "__id__": 1
     },
     "_enabled": true,
+    "bloodBar": {
+      "__id__": 11
+    },
+    "frameAnim": {
+      "__id__": 4
+    },
     "soldier1Attack": [
       {
         "__uuid__": "f0d3a8e8-f373-4859-876b-caf35761b226"
@@ -619,10 +601,6 @@
         "__uuid__": "7c004cdf-55ba-4338-959f-aee0d14e7b02"
       }
     ],
-    "bloodBar": {
-      "__id__": 11
-    },
-    "vision": null,
     "_id": ""
   },
   {

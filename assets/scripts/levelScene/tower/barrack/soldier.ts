@@ -1,16 +1,16 @@
-import FrameAnimation from "../../../common/frameAnimation";
+import Creature from "../../creature";
 import GameDataStorage, { GameConfig } from "../../../common/module/gameDataManager";
-import Walk from "../../../common/walk";
-import Monster from "../../monster/monster";
+import CombatLogic from "../../combatLogic";
 import Barrack from "./barrack";
-import MonsterFactory from "../../monster/monsterFactory";
+import Monster from "../../monster/monster";
+import Move from "../../../common/move";
+import Utils from "../../../common/module/utils";
 
 const { ccclass, property } = cc._decorator;
 
-enum State { attack, dead, walk, idle };
 
 @ccclass
-export default class Soldier extends cc.Component {
+export default class Soldier extends Creature {
 
     @property({
         type: [cc.SpriteFrame],
@@ -60,314 +60,194 @@ export default class Soldier extends cc.Component {
     })
     private soldier3Walk: cc.SpriteFrame[] = [];
 
-    @property({ type: cc.ProgressBar })
-    private bloodBar: cc.ProgressBar = null;
-
-    /**
-     * [等级][攻击，死亡，行走][图片]
-     */
-    private frames = [];
-    private BGFrameAnim: FrameAnimation = null;
-    private gameConfig: GameConfig = null;
-    private barrack: Barrack = null;
-
     /* 属性 */
-    private level: number = 1;
-    private attack;
-    private cHP;
-    private maxHP;
-    /**
-     * 动画组件里当前存放的是什么动画
-     */
-    private curAnimState: State = State.idle;
-    //一出生就会走向驻点
-    // private playerState: State = State.walk;
-    private speed: number;
-    /**
-     * 视野范围
-     */
-    private rangeOfVision: number = 40;
-    private intervalOfThink: number = 2;
-    private intervalOfAttack: number = 2;
+    private level: number = null;
 
     /* 数据 */
     /**
-     * 属于几号驻点
+     * 动画的帧集 [level][attck, die, walk] [cc.SpriteFrame]
      */
-    stationNo: number;
+    private framesOfAnim: cc.SpriteFrame[][][] = null;
     /**
-     * 驻点 世界坐标
+     * 驻点坐标 世界
      */
     private station: cc.Vec2 = null;
-    private soldierData;
+    stationNo: number = null;
     /**
-     * 攻击目标
+     * {HP,speedOfMove,intervalOfAttack,aggressivity,rangeOfAttack,rangeOfInvestigate}
      */
-    private attackTarget: Monster = null;
-    private monsters: Monster[] = null;
+    private soldierData: any = null;
 
+    /* 记录 */
+    /**
+     * 用于给敌人遍历场上士兵用
+     * 士兵加到节点上时push,士兵死亡时pop
+     */
+    static soldiersOfAlive: Soldier[] = [];
+
+    /* 引用对象 */
+    private barrack: Barrack = null;
 
     /* 控制 */
-    // private isFindEnemy: boolean = false;
-    // private isTouchEnemy: boolean = false;
-    // private isWalkToEnemy: boolean = false;
+    private isToStation: boolean = false;
+    private isPlayingWalk: boolean = false;
     /**
-     * 是否在驻点
+     * 士兵攻击图片少，攻速太快，控制速度
      */
-    // private inStation: boolean = false;
-    // private enableScan: boolean = true;
-    private thinkEnable: boolean = false;
     private attackEnable: boolean = true;
 
     onLoad() {
-        this.BGFrameAnim = this.node.getChildByName("bg").getComponent("frameAnimation");
+        //整理帧动画集
+        this.framesOfAnim = [[this.soldier1Attack, this.soldier1Dead, this.soldier1Walk], [this.soldier2Attack, this.soldier2Dead, this.soldier2Walk], [this.soldier3Attack, this.soldier3Dead, this.soldier3Walk]];
 
-        this.frames.push([this.soldier1Attack, this.soldier1Dead, this.soldier1Walk]);
-        this.frames.push([this.soldier2Attack, this.soldier2Dead, this.soldier2Walk]);
-        this.frames.push([this.soldier3Attack, this.soldier3Dead, this.soldier3Walk]);
+        //士兵数据
+        let gameConfig: GameConfig = GameDataStorage.getGameConfig();
+        this.soldierData = gameConfig.getSoldierData();
 
-        this.gameConfig = GameDataStorage.getGameConfig();
-        this.soldierData = this.gameConfig.getSoldierData();
-        let mf: MonsterFactory = cc.find("Canvas/personMap").getComponent("monsterFactory");
-        this.monsters = mf.getMonsterArray();
+        //节点/组件赋值
+        this.combatLogic = new CombatLogic(this, Monster.monstersOfAlive);
+        this._move = new Move(this.node);
     }
 
-    // /**
-    //  * Sets State
-    //  * @param level  
-    //  * @param station 驻点 世界坐标
-    //  */
-    // setState(level: number, station: cc.Vec2) {
-    //     this.level = level;
-    //     this.station = station;
-    // }
-
-    subHP(n: number) {
-        this.cHP -= n;
-        this.updateBloodBar();
-    }
-
-    private updateBloodBar() {
-        let p: number = this.cHP / this.maxHP;
-        this.bloodBar.progress = p;
-    }
-
-    /**
-     * Inits soldier
-     * @param level 根据等级初始化 动画、血量、攻击力、速度
-     * @param barrack 
-     * @param stationNo 驻点编号
-     */
-    init(level: number, barrack: Barrack, stationNo: number) {
+    init(stationNo: number, station: cc.Vec2, level: number, barrack: Barrack) {
+        //初始化属性
         this.level = level;
+        let sd: any = this.soldierData[this.level];
+        this.maxHp = this.cHP = sd.HP;
+        this.speedOfMove = sd.speedOfMove;
+        this.intervalOfAttack = sd.intervalOfAttack;
+        this.aggressivity = sd.aggressivity;
+        this.rangeOfAttack = sd.rangeOfAttack;
+        this.rangeOfInvestigate = sd.rangeOfInvestigate;
+        this.intervalOfThink = sd.intervalOfThink;
 
-        let frames: cc.SpriteFrame[] = this.frames[this.level - 1][State.walk];
-        this.BGFrameAnim.setIdle(frames[0]);
-        this.BGFrameAnim.setSpriteFrame(frames[0]);
-
-        this.curAnimState = State.idle;
-        this.cHP = this.maxHP = this.soldierData[this.level - 1].HP;
-        this.attack = this.soldierData[this.level - 1].attack;
-        this.speed = this.soldierData[this.level - 1].speed;
-
-        this.rangeOfVision = this.soldierData[this.level - 1].rangeOfScan;
-
-        this.barrack = barrack;
+        //初始化数据
         this.stationNo = stationNo;
-        this.station = this.barrack.stationOfSoldier[this.stationNo];
+        this.station = station;
 
-        this.thinkEnable = true;
+        //初始化视图
+        this.frameAnim.setSpriteFrame(this.framesOfAnim[level][2][0]);
+        this.refreshBloodBar();
+
+        //初始化引用对象
+        this.barrack = barrack;
+
+        //初始化控制参数
+        this.isPlayingWalk = false;
+        this.isToStation = false;
+        this.attackEnable = true;
+        this.initCreature();
     }
 
-    private playWalk() {
-        if (this.curAnimState !== State.walk) {
-            this.setAnimState(State.walk)
+    /**
+     * @param des 世界
+     */
+    protected walk(des: cc.Vec2, func: Function = null) {
+        this.updateDir(des);
+        if (!this.isPlayingWalk) {
+            this.frameAnim.setFrameArray(this.framesOfAnim[this.level][2]);
+            this.frameAnim.play(true);
+            this.isPlayingWalk = true;
         }
-        this.BGFrameAnim.play(true, true);
+        this.move(des, function () {
+            this.frameAnim.stop();
+            this.isPlayingWalk = false;
+            if (func !== null)
+                func();
+        }.bind(this))
     }
 
-    /**
-     * Walks to pos
-     * @param pos 世界坐标
-     * @param func 回调函数 
-     */
-    walkToPos(pos: cc.Vec2) {
-        let cp: cc.Vec2 = this.node.getPosition();
-        pos = this.node.parent.convertToNodeSpaceAR(pos);
-        let dis: cc.Vec2 = pos.sub(cp);
-        let t: number = dis.mag() / this.speed;
-
-        let a: cc.ActionInterval = cc.moveTo(t, pos);
-        let back: cc.ActionInstant = cc.callFunc(() => {
-            this.BGFrameAnim.stop();
-            // this.playerState = State.idle;
-        }, this);
-        this.node.runAction(cc.sequence(a, back));
-        this.playWalk();
-        // this.playerState = State.walk;
+    protected stopWalk() {
+        this.frameAnim.stop();
+        this.isPlayingWalk = false;
+        this._move.stopMove();
     }
 
+    protected refreshState() {
+        this.refreshBloodBar();
 
-    /**
-     * 设置动画组件 的动画
-     * @param as 
-     */
-    private setAnimState(as: number) {
-        let frame: cc.SpriteFrame[] = this.frames[this.level - 1][as];
-        this.BGFrameAnim.setFrameArray(frame);
-        this.BGFrameAnim.setSpriteFrame(frame[0]);
-        this.BGFrameAnim
-        this.curAnimState = State.walk;
-
-    }
-
-    /**
-     * 攻击一次
-     * @param m 
-     */
-    private attackOnce(m: Monster) {
-        if (this.curAnimState !== State.attack)
-            this.setAnimState(State.attack);
-        this.BGFrameAnim.play(false, true, false, function () {
-            if (m === null)
-                return;
-            m.subHP(this.attack);
-            // this.playerState = State.idle;
-        }.bind(this));
-        // this.playerState = State.attack;
-    }
-
-    /**
-     * 死亡
-     */
-    private dead() {
-        this.thinkEnable = false;
-
-        if (this.curAnimState !== State.dead)
-            this.setAnimState(State.dead);
-
-        this.BGFrameAnim.play(false, false, false, function () {
-            let a: cc.ActionInterval = cc.fadeOut(1);
-            let func: cc.ActionInstant = cc.callFunc(function () {
-                this.destroySelf();
-            }, this);
-            let seq: cc.ActionInterval = cc.sequence(a, func);
-            this.node.runAction(seq);
-        }.bind(this));
-
+        //死亡    
+        if (this.cHP === 0) {
+            Utils.remvoeItemOfArray(Soldier.soldiersOfAlive, this);
+            this.isAlive = false;
+            this.die(this.framesOfAnim[this.level][1], this.destroySelf.bind(this));
+        }
     }
 
     destroySelf() {
         this.barrack.soldierKilled(this);
     }
 
-    onCollisionEnter(other: cc.Collider, self: cc.Collider) {
-        if (this.attackTarget !== null)
-            return;
-
-        let node: cc.Node = other.node;
-        let group: string = node.group;
-        if (group !== "Enemy")
-            return;
-
-        let m: Monster = node.getComponent("monster");
-        this.attackTarget = m;
-    }
-
-    onCollisionEnd(other: cc.Collider, self: cc.Collider) {
-        let node: cc.Node = other.node;
-        let group: string = node.group;
-
-        if (group !== "Enemy")
-            return;
-
-        let m: Monster = node.getComponent("monster");
-        if (this.attackTarget === m)
-            this.attackTarget = null;
-    }
-
-    private AIThink() {
-        if (this.thinkEnable) {
-            this.thinkEnable = false;
-            this.scheduleOnce(function () { this.thinkEnable = true; }.bind(this), this.intervalOfThink);
-
-            if (this.attackTarget) {
-                if (this.attackEnable) {
-                    this.attackEnable = false;
-                    this.scheduleOnce(function () { this.attackEnable = true; }.bind(this), this.intervalOfAttack);
-
-                    this.attackOnce(this.attackTarget);
-                }
-            }
-            else {
-                let m: Monster = this.findMonInVision();
-                if (m === null) { //没有敌人在可视范围内
-                    if (!this.inStation())
-                        this.walkToPos(this.station);
-                }
-                else
-                    this.walkToPos(m.getPosInWorld());
-            }
-        }
-
-
-    }
     /**
-     * @returns 没有返回null 
+     * 向驻点移动
      */
-    private findMonInVision(): Monster {
-        let t: any = this.getMonsterOfMinDistance();
-        let m: Monster = t[0];
-        let l: number = t[1];
-
-        //不在视野内
-        if (l > this.rangeOfVision)
-            return null;
-        return m;
+    private toStation() {
+        this.isToStation = true;
+        this.walk(this.station, function () {
+            this.isToStation = false;
+        }.bind(this));
     }
-    /**
-     * 获得离士兵距离最短的怪物和其距离
-     * @returns [Monster, number]
-     */
-    private getMonsterOfMinDistance(): any {
-        if (this.monsters.length <= 0)
-            return;
 
-        let sp: cc.Vec2 = this.node.getPosition();
-        let minL: number = this.getDisWithMonster(sp, this.monsters[0]);
-        let ret: Monster = this.monsters[0];
-
-        let l: number;
-        for (let i = 1; i < this.monsters.length; i++) {
-            l = this.getDisWithMonster(sp, this.monsters[i]);
-            if (l < minL) {
-                minL = l;
-                ret = this.monsters[i];
-            }
-        }
-
-        return [ret, minL];
-    }
-    /**
-     * 得到与怪物的距离
-     * @param sp 当前节点坐标
-     * @param m 
-     * @returns dis with monster 
-     */
-    private getDisWithMonster(sp: cc.Vec2, m: Monster): number {
-        let mp: cc.Vec2 = m.node.getPosition();
-        let l: number = mp.sub(sp).mag();
-        return l;
-    }
     private inStation(): boolean {
-        let swp: cc.Vec2 = this.node.convertToWorldSpaceAR(cc.v2(0, 0));
-        let l: number = swp.sub(this.station).mag();
+        let cwp: cc.Vec2 = this.getWPos();
+        let l: number = cwp.sub(this.station).mag();
         if (l < 2)
             return true;
         return false;
     }
 
-    update(dt) {
-        this.AIThink();
+    /**
+     * Tracks soldier
+     * @param pos 世界
+     */
+    track(pos: cc.Vec2) {
+        this.isTracking = true;
+        this.walk(pos, function () {
+            this.isTracking = false;
+        }.bind(this));
     }
+    stopTrack() {
+        this.stopWalk();
+        this.isTracking = false;
+    }
+    refreshTrackTarget(pos: cc.Vec2) {
+        this.walk(pos, function () {
+            this.isTracking = false;
+        }.bind(this));
+    }
+
+    attack(m: Creature) {
+        if (this.isAttacking)
+            return;
+        if (!this.attackEnable)
+            return;
+        this.attackEnable = false;
+        this.scheduleOnce(function () { this.attackEnable = true; }.bind(this), 1);
+
+        this.isAttacking = true;
+        this.frameAnim.setFrameArray(this.framesOfAnim[this.level][0]);
+        this.frameAnim.play(false, false, false, function () {
+            m.injure(this.aggressivity);
+            this.isAttacking = false;
+        }.bind(this));
+    }
+
+    nonComLogic() {
+        this.isNonComState = true;
+        if (this.inStation())
+            return;
+        if (this.isToStation)
+            return;
+
+        this.toStation();
+    }
+    stopNonComLogic() {
+        this.isNonComState = false;
+        if (this.isToStation) {
+            this.stopWalk();
+            this.isToStation = false;
+        }
+    }
+
+
 }

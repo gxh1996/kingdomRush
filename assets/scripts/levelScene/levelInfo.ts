@@ -12,8 +12,8 @@ export default class LevelDataManager {
         let level1: Level = new Level();
         level1.builders = [cc.v2(-81, -45), cc.v2(-168, 98)];
         //每回合出动哪些怪物
-        level1.noOfRound = [[0, 0], [0], [0, 0, 0, 0]];
-        level1.timeOfRound = [5, 10, 10];
+        level1.noOfRound = [[0], [0, 0], [0, 0, 0]];
+        level1.timeOfRound = [5, 8, 8];
         level1.stationOfSoldier = [[cc.v2(187, 243), cc.v2(166, 246), cc.v2(144, 231)], [cc.v2(274, 375), cc.v2(308, 380), cc.v2(320, 363)]];
 
         this.levelDatas.push(level1);

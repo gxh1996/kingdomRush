@@ -115,12 +115,11 @@ export default class Arrower extends cc.Component {
      * @returns null表示超出射程;[怪物预测位置,世界; 子弹达到预测位置的时间]
      */
     private forecastMovePos(monster: Monster, cP: cc.Vec2): number[] {
-        let walk: Walk = monster.getWalkScript();
 
         //箭飞行到cP的时间
         let time: number = cP.sub(this.wPosOfArrower).mag() / this.speedOfArrow;
 
-        let mP: cc.Vec2 = walk.getPosInTime(time + this.playTimeOfshootArrow);
+        let mP: cc.Vec2 = monster.getPosInTime(time + this.playTimeOfshootArrow);
         let mWP: cc.Vec2 = monster.node.parent.convertToWorldSpaceAR(mP);
         if (!this.inShootRange(mWP))
             return null;

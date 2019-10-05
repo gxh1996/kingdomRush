@@ -170,12 +170,11 @@ export default class Artillery extends cc.Component {
      * @returns 怪物预测位置,世界; 子弹达到预测位置的时间
      */
     private forecastMovePos(monster: Monster, cP: cc.Vec2): number[] {
-        let walk: Walk = monster.getWalkScript();
         //从填弹到子弹飞行到cP的时间
         let bulletStartPos: cc.Vec2 = this.bg.convertToWorldSpaceAR(this.addBulletData[this.level - 1].endPos);
         let time: number = cP.sub(bulletStartPos).mag() / this.speedOfBullet + this.addBulletData[this.level - 1].shootDelay;
 
-        let mP: cc.Vec2 = walk.getPosInTime(time);
+        let mP: cc.Vec2 = monster.getPosInTime(time);
         let mWP: cc.Vec2 = monster.node.parent.convertToWorldSpaceAR(mP);
         if (!this.inShootRange(mWP))
             return null;
@@ -232,7 +231,7 @@ export default class Artillery extends cc.Component {
         if (this.shootable) {
             for (let i = 0; i < this.monsterArray.length; i++) {
                 let m: Monster = this.monsterArray[i];
-                let mP: cc.Vec2 = m.getPosInWorld();
+                let mP: cc.Vec2 = m.getWPos();
                 if (this.inShootRange(mP)) {
                     let d: number[] = this.forecastMovePos(m, mP);
                     if (d !== null)

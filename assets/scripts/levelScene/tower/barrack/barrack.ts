@@ -1,8 +1,5 @@
 import FrameAnimation from "../../../common/frameAnimation";
 import Soldier from "./soldier";
-import GameDataStorage from "../../../common/module/gameDataManager";
-import LevelDataManager from "../../levelInfo";
-import LevelScene from "../../levelScene";
 import Utils from "../../../common/module/utils";
 
 const { ccclass, property } = cc._decorator;
@@ -42,7 +39,10 @@ export default class Barrack extends cc.Component {
     /* 塔的属性 */
     level: number = 1;
     private maxNumOfSoldier: number = 3;
-    private tOfCreateSoldier: number = 2;
+    /**
+     * 出兵时间
+     */
+    private tOfCreateSoldier: number = 3;
 
     /* 数据 */
     /**
@@ -76,16 +76,24 @@ export default class Barrack extends cc.Component {
 
     start() {
         this.init();
+
+
     }
 
     /**
      * 根据等级设置 动画。
      */
     init() {
+        this.availableStationNo = [0, 1, 2];
+        this.refreshFrameAnim();
+    }
+
+    /**
+     * 更新帧动画
+     */
+    private refreshFrameAnim() {
         this.BGFrameAnim.setFrameArray(this.towerFrames[this.level - 1]);
         this.BGFrameAnim.setSpriteFrame(this.towerFrames[this.level - 1][0]);
-
-        this.availableStationNo = [0, 1, 2];
     }
 
     private createSoldierPool() {
@@ -108,9 +116,8 @@ export default class Barrack extends cc.Component {
 
     destroySelf() {
         //删除塔生成的所有士兵
-        this.createdSoldiers.forEach((v: Soldier) => {
-            v.destroySelf();
-        })
+        while (this.createdSoldiers.length > 0)
+            this.createdSoldiers[0].destroySelf();
 
         //清空对象池
         this.soldierPool.clear();
@@ -125,11 +132,11 @@ export default class Barrack extends cc.Component {
         if (this.level === 4)
             return;
         this.level++;
-        this.init();
+        this.refreshFrameAnim();
     }
 
     private autoOutSoldier() {
-        if (this.creSoldEnable && this.createdSoldiers.length < 3) {
+        if (this.creSoldEnable && this.createdSoldiers.length < this.maxNumOfSoldier) {
             this.creSoldEnable = false;
             this.scheduleOnce(this.outSoldier.bind(this), this.tOfCreateSoldier);
         }
@@ -141,7 +148,6 @@ export default class Barrack extends cc.Component {
     private outSoldier() {
         this.BGFrameAnim.play(false, false, false, function () {
             let s: Soldier = this.createSoldier();
-            s.walkToPos(this.stationOfSoldier[s.stationNo]);
 
             this.BGFrameAnim.play(false, false, true, function () {
                 this.creSoldEnable = true;
@@ -152,19 +158,23 @@ export default class Barrack extends cc.Component {
         let node: cc.Node = this.getSoldierInPool();
         let s: Soldier = node.getComponent("soldier");
         this.createdSoldiers.push(s);
+        Soldier.soldiersOfAlive.push(s);
         this.personMap.addChild(node);
 
         let outPos: cc.Vec2 = this.node.convertToWorldSpaceAR(this.outSoldierPos);
         outPos = this.personMap.convertToNodeSpaceAR(outPos);
         node.setPosition(outPos);
 
-        s.init(this.level, this, this.availableStationNo.pop());
+        let i: number = this.availableStationNo.pop();
+        s.init(i, this.stationOfSoldier[i], this.level, this);
         return s;
     }
     private getSoldierInPool(): cc.Node {
         let n: cc.Node;
-        if (this.soldierPool.size() > 0)
+        if (this.soldierPool.size() > 0) {
             n = this.soldierPool.get();
+            n.opacity = 255;
+        }
         else
             n = cc.instantiate(this.soldierPrefab);
         return n;

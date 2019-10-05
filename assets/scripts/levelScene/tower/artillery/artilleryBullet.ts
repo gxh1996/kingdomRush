@@ -9,15 +9,9 @@ export default class ArtilleryBullet extends cc.Component {
     private attack: number = 0;
     private harmRadian: number;
     private frameAnim: FrameAnimation = null;
-    /**
-     * 怪物列表
-     */
-    private monsterArray: Monster[];
 
     onLoad() {
         this.frameAnim = this.node.getComponent("frameAnimation");
-        this.monsterArray = cc.find("Canvas/towerMap").getComponent("monsterFactory").getMonsterArray();
-
     }
 
     start() {
@@ -69,11 +63,20 @@ export default class ArtilleryBullet extends cc.Component {
      * @param pos 爆炸点 世界坐标
      */
     private causeHarm(pos: cc.Vec2) {
-        for (let i = 0; i < this.monsterArray.length; i++) {
-            let mScr: Monster = this.monsterArray[i];
-            if (mScr.isInjuredInScope(pos, this.harmRadian))
-                mScr.subHP(this.attack);
+        for (let i = 0; i < Monster.monstersOfAlive.length; i++) {
+            let mScr: Monster = Monster.monstersOfAlive[i];
+            if (this.isInjuredInScope(pos, mScr.getWPos()))
+                mScr.injure(this.attack);
         }
+    }
+    /**
+     * @param pos 爆炸点 世界 
+     */
+    private isInjuredInScope(pos: cc.Vec2, mwp: cc.Vec2): boolean {
+        let l: number = mwp.sub(pos).mag();
+        if (l <= this.harmRadian)
+            return true;
+        return false;
     }
 
     private destroySelf() {

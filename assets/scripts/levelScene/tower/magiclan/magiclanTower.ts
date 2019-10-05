@@ -227,12 +227,10 @@ export default class ArrowTower extends cc.Component {
      * @returns 怪物预测位置,世界; 子弹达到预测位置的时间
      */
     private forecastMovePos(monster: Monster, cP: cc.Vec2): number[] {
-        let walk: Walk = monster.getWalkScript();
-
         //法球飞行到cP的时间
         let time: number = cP.sub(this.wPOfShoot).mag() / this.speedOfBullet;
 
-        let mP: cc.Vec2 = walk.getPosInTime(time + this.playTOfShoot);
+        let mP: cc.Vec2 = monster.getPosInTime(time + this.playTOfShoot);
         let mWP: cc.Vec2 = monster.node.parent.convertToWorldSpaceAR(mP);
         if (!this.inShootRange(mWP))
             return null;

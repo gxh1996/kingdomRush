@@ -73,6 +73,12 @@ export default class LevelScene extends cc.Component {
      */
     private cT: number = 0;
 
+    /* 数据 */
+    /**
+     * 存在的怪物数组
+     */
+    private monsterArray: Monster[] = null;
+
     private gameConfig: GameConfig = null;
     private soundsManager: SoundsManager = null;
     /**
@@ -84,10 +90,6 @@ export default class LevelScene extends cc.Component {
      */
     private builderMap: cc.Node = null;
     private settlementFace: SettlementFace = null;
-    /**
-     * 怪物列表
-     */
-    private monsterArray: Monster[];
 
     onLoad() {
         // cc.sys.localStorage.clear();
@@ -98,6 +100,7 @@ export default class LevelScene extends cc.Component {
         this.gameConfig = GameDataStorage.getGameConfig();
         this.VPMap = cc.find("Canvas/VPMap");
         this.builderMap = cc.find("Canvas/builderMap");
+        this.monsterArray = Monster.monstersOfAlive;
 
         cc.loader.loadResDir("levelInfo/level" + this.levelNum + "/VPMap", cc.Prefab, function (e, res: any[]) {
             //添加地图路径
@@ -122,7 +125,6 @@ export default class LevelScene extends cc.Component {
             this.startGame = true;
         }.bind(this));
 
-        this.monsterArray = this.monsterFactory.getMonsterArray();
         this.user = GameDataStorage.getCurrentUser();
     }
 
@@ -240,8 +242,8 @@ export default class LevelScene extends cc.Component {
 
         //重置游戏
         this.monsterFactory.clearMonsters();
-        this.init();
         this.resetLand();
+        this.init();
 
         this.startGame = true;
     }
@@ -301,7 +303,7 @@ export default class LevelScene extends cc.Component {
                 this.roundIndex++;
             }
         }
-        else if (this.monsterArray.length === 0 && this.HP > 0) { //所有波怪物全部出发，怪物全部被消灭或离开，并且生命不为0。游戏胜利
+        else if (Monster.monstersOfAlive.length === 0 && this.monsterFactory.creMonList.length === 0 && this.HP > 0) { //所有波怪物全部出发，怪物全部被消灭或离开，并且生命不为0。游戏胜利
             if (this.HP === this.maxHP)
                 this.gameReview = 3;
             else if (this.HP >= this.maxHP / 2)

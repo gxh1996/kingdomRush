@@ -1,71 +1,117 @@
-2019-09-28T05:06:08.002Z - normal: Load ~/.CocosCreator/settings.json
-2019-09-28T05:06:09.181Z - normal: Initializing Asset Database
-2019-09-28T05:06:09.181Z - normal: checking language setting...
-2019-09-28T05:06:09.181Z - normal: Language: zh
-2019-09-28T05:06:09.891Z - success: preview server running at http://localhost:7456
-2019-09-28T05:06:09.891Z - success: protocol editor-framework registered
-2019-09-28T05:06:09.891Z - success: protocol app registered
-2019-09-28T05:06:09.891Z - success: protocol theme registered
-2019-09-28T05:06:09.891Z - success: protocol packages registered
-2019-09-28T05:06:09.891Z - success: protocol uuid registerred
-2019-09-28T05:06:09.891Z - success: protocol db registerred
-2019-09-28T05:06:09.891Z - success: protocol thumbnail registerred
-2019-09-28T05:06:09.891Z - success: protocol unpack registerred
-2019-09-28T05:06:09.891Z - success: protocol disable-commonjs registerred
-2019-09-28T05:06:10.201Z - normal: connected!
-2019-09-28T05:06:10.211Z - normal: Check project E:\Project\cocosProject\kingdomRush
-2019-09-28T05:06:10.211Z - normal: Initializing project E:\Project\cocosProject\kingdomRush
-2019-09-28T05:06:10.621Z - normal: Initializing Cocos2d
-2019-09-28T05:06:11.551Z - normal: Initializing engine extends
-2019-09-28T05:06:11.581Z - success: asset-db-debugger loaded
-2019-09-28T05:06:11.581Z - success: baidu-adapter loaded
-2019-09-28T05:06:11.581Z - success: code-editor loaded
-2019-09-28T05:06:11.581Z - success: color-picker loaded
-2019-09-28T05:06:11.671Z - success: fb-audience-network loaded
-2019-09-28T05:06:11.721Z - success: fb-live-stream loaded
-2019-09-28T05:06:11.731Z - success: google-play-instant loaded
-2019-09-28T05:06:11.731Z - success: huawei-runtime loaded
-2019-09-28T05:06:11.991Z - success: cpk-publish loaded
-2019-09-28T05:06:11.991Z - success: jsb-adapter loaded
-2019-09-28T05:06:12.001Z - success: oppo-runtime loaded
-2019-09-28T05:06:12.001Z - success: package-manager loaded
-2019-09-28T05:06:12.131Z - success: qqplay-adapter loaded
-2019-09-28T05:06:12.131Z - success: runtime-dev-tools loaded
-2019-09-28T05:06:12.141Z - success: sdkbox loaded
-2019-09-28T05:06:12.141Z - success: tester loaded
-2019-09-28T05:06:12.141Z - success: ui-grid loaded
-2019-09-28T05:06:12.151Z - success: ui-kit-preview-extra loaded
-2019-09-28T05:06:12.151Z - success: ui-kit-preview loaded
-2019-09-28T05:06:12.151Z - success: ui-kit loaded
-2019-09-28T05:06:12.151Z - success: ui-tree loaded
-2019-09-28T05:06:12.161Z - success: vivo-runtime loaded
-2019-09-28T05:06:12.161Z - success: weapp-adapter loaded
-2019-09-28T05:06:12.161Z - success: xiaomi-adapter loaded
-2019-09-28T05:06:12.211Z - success: assets loaded
-2019-09-28T05:06:12.211Z - success: builder loaded
-2019-09-28T05:06:12.491Z - success: cocos-services loaded
-2019-09-28T05:06:12.491Z - success: console loaded
-2019-09-28T05:06:12.531Z - success: fb-instant-games loaded
-2019-09-28T05:06:12.531Z - success: game-window loaded
-2019-09-28T05:06:12.541Z - success: google-instant-games loaded
-2019-09-28T05:06:12.541Z - success: hierarchy loaded
-2019-09-28T05:06:12.541Z - success: inspector loaded
-2019-09-28T05:06:12.551Z - success: keystore loaded
-2019-09-28T05:06:12.551Z - success: node-library loaded
-2019-09-28T05:06:12.551Z - success: package-asset loaded
-2019-09-28T05:06:12.551Z - success: preferences loaded
-2019-09-28T05:06:12.561Z - success: project-exporter loaded
-2019-09-28T05:06:12.561Z - success: project-importer loaded
-2019-09-28T05:06:12.561Z - success: project-settings loaded
-2019-09-28T05:06:12.571Z - success: scene loaded
-2019-09-28T05:06:12.571Z - success: simulator-debugger loaded
-2019-09-28T05:06:12.571Z - success: sprite-editor loaded
-2019-09-28T05:06:12.581Z - success: store loaded
-2019-09-28T05:06:12.581Z - success: timeline loaded
-2019-09-28T05:06:12.591Z - success: xiaomi-runtime loaded
-2019-09-28T05:06:12.591Z - success: debug loaded
-2019-09-28T05:06:12.591Z - success: produce_map_grid loaded
-2019-09-28T05:06:16.013Z - normal: Loading packages
-2019-09-28T05:06:16.063Z - normal: Watching packages
-2019-09-28T05:06:16.463Z - info: Cocos Services load base data!
-2019-09-28T05:06:16.763Z - normal: Run Application
+2019-10-05T01:55:10.273Z - normal: Load ~/.CocosCreator/settings.json
+2019-10-05T01:55:11.523Z - normal: Initializing Asset Database
+2019-10-05T01:55:11.563Z - normal: checking language setting...
+2019-10-05T01:55:11.563Z - normal: Language: zh
+2019-10-05T01:55:12.593Z - success: preview server running at http://localhost:7456
+2019-10-05T01:55:12.593Z - success: protocol editor-framework registered
+2019-10-05T01:55:12.593Z - success: protocol app registered
+2019-10-05T01:55:12.593Z - success: protocol theme registered
+2019-10-05T01:55:12.593Z - success: protocol packages registered
+2019-10-05T01:55:12.593Z - success: protocol uuid registerred
+2019-10-05T01:55:12.593Z - success: protocol db registerred
+2019-10-05T01:55:12.593Z - success: protocol thumbnail registerred
+2019-10-05T01:55:12.593Z - success: protocol unpack registerred
+2019-10-05T01:55:12.593Z - success: protocol disable-commonjs registerred
+2019-10-05T01:55:12.743Z - normal: connected!
+2019-10-05T01:55:12.743Z - normal: Check project E:\Project\cocosProject\kingdomRush
+2019-10-05T01:55:12.753Z - normal: Initializing project E:\Project\cocosProject\kingdomRush
+2019-10-05T01:55:13.263Z - normal: Initializing Cocos2d
+2019-10-05T01:55:14.433Z - normal: Initializing engine extends
+2019-10-05T01:55:14.503Z - success: asset-db-debugger loaded
+2019-10-05T01:55:14.503Z - success: baidu-adapter loaded
+2019-10-05T01:55:14.513Z - success: code-editor loaded
+2019-10-05T01:55:14.513Z - success: color-picker loaded
+2019-10-05T01:55:14.653Z - success: fb-audience-network loaded
+2019-10-05T01:55:14.713Z - success: fb-live-stream loaded
+2019-10-05T01:55:14.723Z - success: google-play-instant loaded
+2019-10-05T01:55:14.723Z - success: huawei-runtime loaded
+2019-10-05T01:55:15.043Z - success: cpk-publish loaded
+2019-10-05T01:55:15.043Z - success: jsb-adapter loaded
+2019-10-05T01:55:15.053Z - success: oppo-runtime loaded
+2019-10-05T01:55:15.053Z - success: package-manager loaded
+2019-10-05T01:55:15.213Z - success: qqplay-adapter loaded
+2019-10-05T01:55:15.223Z - success: runtime-dev-tools loaded
+2019-10-05T01:55:15.233Z - success: sdkbox loaded
+2019-10-05T01:55:15.233Z - success: tester loaded
+2019-10-05T01:55:15.243Z - success: ui-grid loaded
+2019-10-05T01:55:15.243Z - success: ui-kit-preview-extra loaded
+2019-10-05T01:55:15.253Z - success: ui-kit-preview loaded
+2019-10-05T01:55:15.253Z - success: ui-kit loaded
+2019-10-05T01:55:15.263Z - success: ui-tree loaded
+2019-10-05T01:55:15.273Z - success: vivo-runtime loaded
+2019-10-05T01:55:15.273Z - success: weapp-adapter loaded
+2019-10-05T01:55:15.283Z - success: xiaomi-adapter loaded
+2019-10-05T01:55:15.343Z - success: assets loaded
+2019-10-05T01:55:15.353Z - success: builder loaded
+2019-10-05T01:55:15.673Z - success: cocos-services loaded
+2019-10-05T01:55:15.673Z - success: console loaded
+2019-10-05T01:55:15.723Z - success: fb-instant-games loaded
+2019-10-05T01:55:15.723Z - success: game-window loaded
+2019-10-05T01:55:15.723Z - success: google-instant-games loaded
+2019-10-05T01:55:15.733Z - success: hierarchy loaded
+2019-10-05T01:55:15.733Z - success: inspector loaded
+2019-10-05T01:55:15.733Z - success: keystore loaded
+2019-10-05T01:55:15.743Z - success: node-library loaded
+2019-10-05T01:55:15.743Z - success: package-asset loaded
+2019-10-05T01:55:15.743Z - success: preferences loaded
+2019-10-05T01:55:15.743Z - success: project-exporter loaded
+2019-10-05T01:55:15.753Z - success: project-importer loaded
+2019-10-05T01:55:15.753Z - success: project-settings loaded
+2019-10-05T01:55:15.753Z - success: scene loaded
+2019-10-05T01:55:15.753Z - success: simulator-debugger loaded
+2019-10-05T01:55:15.763Z - success: sprite-editor loaded
+2019-10-05T01:55:15.763Z - success: store loaded
+2019-10-05T01:55:15.773Z - success: timeline loaded
+2019-10-05T01:55:15.773Z - success: xiaomi-runtime loaded
+2019-10-05T01:55:15.773Z - success: debug loaded
+2019-10-05T01:55:15.783Z - success: produce_map_grid loaded
+2019-10-05T01:55:19.758Z - info: Cocos Services load base data!
+2019-10-05T01:55:23.310Z - normal: Loading packages
+2019-10-05T01:55:23.320Z - normal: Watching packages
+2019-10-05T01:55:23.990Z - normal: Run Application
+2019-10-05T01:55:32.506Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T02:14:41.101Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T02:29:37.974Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T02:33:43.040Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T02:37:06.764Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T02:57:02.721Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T03:13:03.231Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T03:17:02.909Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T04:27:29.369Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T04:42:20.848Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T04:43:13.431Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T04:43:18.423Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T05:24:08.219Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:19:59.306Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:19:59.415Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:25:39.230Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:25:39.323Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:35:54.675Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:35:54.681Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:38:31.773Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:38:31.792Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:42:28.254Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:42:28.261Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:46:46.873Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:46:46.886Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:55:27.374Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T07:55:27.379Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T08:12:24.989Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T08:12:25.070Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T08:19:28.266Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T08:19:28.640Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T08:59:32.104Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T08:59:32.224Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:11:27.530Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:11:27.825Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:15:35.373Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:15:35.378Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:33:24.041Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:33:24.050Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:42:48.494Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:42:48.517Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:47:34.791Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:47:34.802Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:52:44.142Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:52:44.150Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-05T09:54:04.653Z - info: shutdown preview server

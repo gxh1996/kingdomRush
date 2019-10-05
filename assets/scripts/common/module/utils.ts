@@ -16,4 +16,12 @@ export default class Utils {
         array.splice(i, 1);
     }
 
+    /**
+     * 2点间的距离，注意同一节点坐标
+     */
+    static getDisOfTwoPos(p1: cc.Vec2, p2: cc.Vec2): number {
+        let l: number = p1.sub(p2).mag();
+        return l;
+    }
+
 }

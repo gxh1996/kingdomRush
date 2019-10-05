@@ -32,13 +32,10 @@
       },
       {
         "__id__": 14
-      },
-      {
-        "__id__": 15
       }
     ],
     "_prefab": {
-      "__id__": 16
+      "__id__": 15
     },
     "_opacity": 255,
     "_color": {
@@ -61,7 +58,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -14,
+      "y": -14.815,
       "z": 0
     },
     "_scale": {
@@ -115,8 +112,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 36,
-      "height": 38
+      "width": 28.8,
+      "height": 30.4
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -125,8 +122,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 5,
-      "y": 20.7,
+      "x": 1.928,
+      "y": 9.377,
       "z": 0
     },
     "_scale": {
@@ -168,7 +165,7 @@
       "__uuid__": "19cc5a43-81f0-49e5-a900-5a3838c803ac"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -177,7 +174,7 @@
     },
     "_fillStart": 0,
     "_fillRange": 0,
-    "_isTrimmedMode": true,
+    "_isTrimmedMode": false,
     "_atlas": null,
     "_id": ""
   },
@@ -251,8 +248,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 5,
-      "y": 43.7,
+      "x": 0.129,
+      "y": 20.046,
       "z": 0
     },
     "_scale": {
@@ -448,6 +445,12 @@
       "__id__": 1
     },
     "_enabled": true,
+    "bloodBar": {
+      "__id__": 11
+    },
+    "frameAnim": {
+      "__id__": 4
+    },
     "attackFrame": [
       {
         "__uuid__": "3ae38dd3-9312-4152-9f9d-dde6a6346d25"
@@ -515,19 +518,6 @@
         "__uuid__": "728d0f7a-ea28-4bf4-bf77-b10afd83b637"
       }
     ],
-    "bloodBar": {
-      "__id__": 11
-    },
-    "_id": ""
-  },
-  {
-    "__type__": "dc7f6b2L6FB1ZHHAxs3jFyB",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
     "downWalkFrames": [
       {
         "__uuid__": "905302a0-0f41-4a2c-8577-96d64af946b5"
@@ -569,7 +559,7 @@
         "__uuid__": "fa5f0027-fa7c-4800-9dc2-bf8a2d13b785"
       }
     ],
-    "leftWalkFrames": [
+    "rightWalkFrames": [
       {
         "__uuid__": "19cc5a43-81f0-49e5-a900-5a3838c803ac"
       },
@@ -667,13 +657,13 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 4,
-      "y": 21
+      "x": 0.2,
+      "y": 7.8
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 20,
-      "height": 32
+      "width": 15,
+      "height": 17
     },
     "_id": ""
   },

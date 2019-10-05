@@ -36,6 +36,9 @@ export default class HomeScene extends cc.Component {
     }
 
     start() {
+        // cc.sys.localStorage.clear();
+        // GameDataStorage.init();
+
         console.log(cc.sys.localStorage);
         this.soundsManager.playBGM("sounds/home_scene_bg");
         if (this.fristEntry) {
