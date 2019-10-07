@@ -123,11 +123,11 @@ export default class Monster extends Creature {
     /**
      * 从现在开始，经time后的坐标
      * @param t 
-     * @returns pos 节点坐标
+     * @returns pos 世界
      */
     getPosInTime(t: number): cc.Vec2 {
         let cI: number = this.pathIndex; //当前目的点的path指针
-        let cP: cc.Vec2 = this.node.getPosition();
+        let cP: cc.Vec2 = this.getWPos();
         let ct: number = this.path[cI].sub(cP).mag() / this.speedOfMove;
         t -= ct;
 
@@ -252,13 +252,12 @@ export default class Monster extends Creature {
 
         //死亡    
         if (this.cHP === 0) {
-            Utils.remvoeItemOfArray(Monster.monstersOfAlive, this);
-            this.isAlive = false;
-            this.die(this.deadFrame, this.destroySelf.bind(this));
+            this.die(Monster.monstersOfAlive, this);
+            this.playDie(this.deadFrame, this.releaseSelf.bind(this));
         }
     }
 
-    destroySelf() {
+    releaseSelf() {
         this.monsterFactory.destroyMonster(this);
     }
 
@@ -284,7 +283,8 @@ export default class Monster extends Creature {
             console.log("怪物跳脱");
             this.levelScene.subHP();
             this.stopWalkInPath();
-            this.destroySelf();
+            this.die(Monster.monstersOfAlive, this);
+            this.releaseSelf();
         }
         this.pathIndex++;
         this.walkInPath();

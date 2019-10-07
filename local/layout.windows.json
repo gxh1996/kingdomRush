@@ -1,6 +1,7 @@
 {
   "version": "1.1.1",
   "windows": {
+    "worker": {},
     "main": {
       "main": true,
       "url": "app://editor/index.html",
@@ -18,23 +19,23 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 291.6770935058594,
+                "height": 292.16668701171875,
                 "type": "panel",
-                "width": 204
+                "width": 273
               },
               {
                 "active": 0,
                 "children": [
                   "assets"
                 ],
-                "height": 309.65625,
+                "height": 309.16668701171875,
                 "type": "panel",
-                "width": 204
+                "width": 273
               }
             ],
             "height": 603.3333740234375,
             "type": "dock-v",
-            "width": 204
+            "width": 273
           },
           {
             "active": 0,
@@ -43,7 +44,7 @@
             ],
             "height": 603.3333740234375,
             "type": "panel",
-            "width": 653.9896240234375
+            "width": 585
           },
           {
             "active": 0,

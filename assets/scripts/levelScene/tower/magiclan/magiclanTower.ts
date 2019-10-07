@@ -1,7 +1,6 @@
 import FrameAnimation from "../../../common/frameAnimation";
 import MagiclanBullet from "./magiclanBullet";
 import Monster from "../../monster/monster";
-import Walk from "../../../common/walk";
 
 const { ccclass, property } = cc._decorator;
 
@@ -14,7 +13,7 @@ class MagiclanFrames {
 }
 
 @ccclass
-export default class ArrowTower extends cc.Component {
+export default class MagiclanTower extends cc.Component {
 
     @property({
         type: [cc.Vec2],
@@ -62,7 +61,7 @@ export default class ArrowTower extends cc.Component {
      */
     level: number = 1;
     maxLevel: number = 4;
-    private speedOfshoot: number = 1;
+    private speedOfshoot: number = 1.5;
     private speedOfBullet: number = 100;
     private attack: number = 250;
     private shootRange: number = 150;
@@ -88,12 +87,14 @@ export default class ArrowTower extends cc.Component {
      * 发射动画播放时间
      */
     private playTOfShoot: number;
+    private poolOfBullet: cc.NodePool = null;
 
     onLoad() {
         this.magiclanAF = this.node.getChildByName("magiclan").getComponent("frameAnimation");
         this.towerAF = this.node.getChildByName("bg").getComponent("frameAnimation");
         this.bg = this.node.getChildByName("bg");
-        this.monsterArray = cc.find("Canvas/towerMap").getComponent("monsterFactory").getMonsterArray();
+        this.monsterArray = Monster.monstersOfAlive;
+        this.createPoolOfBullet();
     }
 
     start() {
@@ -109,6 +110,31 @@ export default class ArrowTower extends cc.Component {
     private init() {
         this.initMagiclanAF();
         this.initTowerAF();
+    }
+
+    /* 对象池 */
+    private createPoolOfBullet() {
+        if (this.poolOfBullet !== null)
+            return;
+        this.poolOfBullet = new cc.NodePool();
+        for (let i = 0; i < 1; i++) {
+            this.poolOfBullet.put(cc.instantiate(this.bulletPrefab));
+        }
+    }
+    getBullet(): cc.Node {
+        let r: cc.Node = null;
+        if (this.poolOfBullet.size() > 0)
+            r = this.poolOfBullet.get();
+        else
+            r = cc.instantiate(this.bulletPrefab);
+        r.opacity = 255;
+        return r;
+    }
+    releaseBullt(n: cc.Node) {
+        this.poolOfBullet.put(n);
+    }
+    private clearPoolOfBullet() {
+        this.poolOfBullet.clear();
     }
 
     /**
@@ -155,10 +181,15 @@ export default class ArrowTower extends cc.Component {
      * @param des 世界坐标
      * @param time 子弹到des的时间
      */
-    private shoot(des: cc.Vec2, time: number) {
+    private shoot(des: cc.Vec2, time: number = null) {
         if (this.isShoot)
             return;
         this.isShoot = true;
+
+        if (time === null) {
+            let l: number = this.wPos.sub(des).mag();
+            let time = l / this.speedOfBullet;
+        }
 
         //更新法师方向
         let wPos: cc.Vec2 = this.node.convertToWorldSpaceAR(this.magiclanAF.node.getPosition());
@@ -187,15 +218,15 @@ export default class ArrowTower extends cc.Component {
     }
 
     private createBullet(): MagiclanBullet {
-        let bullet: cc.Node = cc.instantiate(this.bulletPrefab);
+        let bullet: cc.Node = this.getBullet();
         let script: MagiclanBullet = bullet.getComponent("magiclanBullet");
-        script.init(this.attack);
         this.node.addChild(bullet);
+        script.init(this.attack);
         return script;
     }
 
     destroySelf() {
-        this.node.removeFromParent();
+        this.clearPoolOfBullet();
         this.node.destroy();
     }
 
@@ -230,8 +261,7 @@ export default class ArrowTower extends cc.Component {
         //法球飞行到cP的时间
         let time: number = cP.sub(this.wPOfShoot).mag() / this.speedOfBullet;
 
-        let mP: cc.Vec2 = monster.getPosInTime(time + this.playTOfShoot);
-        let mWP: cc.Vec2 = monster.node.parent.convertToWorldSpaceAR(mP);
+        let mWP: cc.Vec2 = monster.getPosInTime(time + this.playTOfShoot);
         if (!this.inShootRange(mWP))
             return null;
         return [mWP.x, mWP.y, time];
@@ -244,10 +274,18 @@ export default class ArrowTower extends cc.Component {
                 let mP: cc.Vec2 = m.node.parent.convertToWorldSpaceAR(m.node.getPosition());
 
                 if (this.inShootRange(mP)) {
-                    let d: number[] = this.forecastMovePos(m, mP);
-                    if (d === null)
-                        continue;
-                    this.shoot(cc.v2(d[0], d[1]), d[2]);
+                    if (m.swiOfRecursionInPW) {
+
+                        let d: number[] = this.forecastMovePos(m, mP);
+                        if (d === null)
+                            continue;
+                        this.shoot(cc.v2(d[0], d[1]), d[2]);
+                        break;
+                    }
+                    else {
+                        this.shoot(m.getWPos());
+                        break;
+                    }
                 }
             }
         }

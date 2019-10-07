@@ -1,6 +1,5 @@
 import FrameAnimation from "../../../common/frameAnimation";
 import GameDataStorage, { GameConfig } from "../../../common/module/gameDataManager";
-import Monster from "../../monster/monster";
 import Arrower from "./arrower";
 
 const { ccclass, property } = cc._decorator;
@@ -14,6 +13,11 @@ export default class ArrowTower extends cc.Component {
         tooltip: "各等级的人的Y坐标"
     })
     private offsetY: cc.Vec2[] = [];
+
+    @property({
+        type: cc.Prefab
+    })
+    private arrowPrefab: cc.Prefab = null;
 
     /* 塔的属性 */
     /**
@@ -51,7 +55,7 @@ export default class ArrowTower extends cc.Component {
     /* 数据 */
     private wPos: cc.Vec2;
     private attacks: number[];
-
+    private poolOfArrow: cc.NodePool = null;
 
     onLoad() {
         let l: cc.Node = this.node.getChildByName("leftPerson");
@@ -64,6 +68,7 @@ export default class ArrowTower extends cc.Component {
         this.gameConfig = GameDataStorage.getGameConfig();
         this.attacks = this.gameConfig.getTowerAttackArray()[0];
 
+        this.createPoolOfArrow();
     }
 
     start() {
@@ -73,6 +78,31 @@ export default class ArrowTower extends cc.Component {
 
     private init() {
         this.initArrower();
+    }
+
+    /* 箭对象池 */
+    private createPoolOfArrow() {
+        if (this.poolOfArrow !== null)
+            return;
+        this.poolOfArrow = new cc.NodePool();
+        for (let i = 0; i < 2; i++) {
+            this.poolOfArrow.put(cc.instantiate(this.arrowPrefab));
+        }
+    }
+    getArrowBullet(): cc.Node {
+        let r: cc.Node = null;
+        if (this.poolOfArrow.size() > 0)
+            r = this.poolOfArrow.get();
+        else
+            r = cc.instantiate(this.arrowPrefab);
+        r.opacity = 255;
+        return r;
+    }
+    releaseArrowBullt(n: cc.Node) {
+        this.poolOfArrow.put(n);
+    }
+    private clearPoolOfArrow() {
+        this.poolOfArrow.clear();
     }
 
     private initArrower() {
@@ -118,7 +148,7 @@ export default class ArrowTower extends cc.Component {
     }
 
     destroySelf() {
-        this.node.removeFromParent();
+        this.clearPoolOfArrow();
         this.node.destroy();
     }
 

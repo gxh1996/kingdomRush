@@ -1,117 +1,522 @@
-2019-10-05T01:55:10.273Z - normal: Load ~/.CocosCreator/settings.json
-2019-10-05T01:55:11.523Z - normal: Initializing Asset Database
-2019-10-05T01:55:11.563Z - normal: checking language setting...
-2019-10-05T01:55:11.563Z - normal: Language: zh
-2019-10-05T01:55:12.593Z - success: preview server running at http://localhost:7456
-2019-10-05T01:55:12.593Z - success: protocol editor-framework registered
-2019-10-05T01:55:12.593Z - success: protocol app registered
-2019-10-05T01:55:12.593Z - success: protocol theme registered
-2019-10-05T01:55:12.593Z - success: protocol packages registered
-2019-10-05T01:55:12.593Z - success: protocol uuid registerred
-2019-10-05T01:55:12.593Z - success: protocol db registerred
-2019-10-05T01:55:12.593Z - success: protocol thumbnail registerred
-2019-10-05T01:55:12.593Z - success: protocol unpack registerred
-2019-10-05T01:55:12.593Z - success: protocol disable-commonjs registerred
-2019-10-05T01:55:12.743Z - normal: connected!
-2019-10-05T01:55:12.743Z - normal: Check project E:\Project\cocosProject\kingdomRush
-2019-10-05T01:55:12.753Z - normal: Initializing project E:\Project\cocosProject\kingdomRush
-2019-10-05T01:55:13.263Z - normal: Initializing Cocos2d
-2019-10-05T01:55:14.433Z - normal: Initializing engine extends
-2019-10-05T01:55:14.503Z - success: asset-db-debugger loaded
-2019-10-05T01:55:14.503Z - success: baidu-adapter loaded
-2019-10-05T01:55:14.513Z - success: code-editor loaded
-2019-10-05T01:55:14.513Z - success: color-picker loaded
-2019-10-05T01:55:14.653Z - success: fb-audience-network loaded
-2019-10-05T01:55:14.713Z - success: fb-live-stream loaded
-2019-10-05T01:55:14.723Z - success: google-play-instant loaded
-2019-10-05T01:55:14.723Z - success: huawei-runtime loaded
-2019-10-05T01:55:15.043Z - success: cpk-publish loaded
-2019-10-05T01:55:15.043Z - success: jsb-adapter loaded
-2019-10-05T01:55:15.053Z - success: oppo-runtime loaded
-2019-10-05T01:55:15.053Z - success: package-manager loaded
-2019-10-05T01:55:15.213Z - success: qqplay-adapter loaded
-2019-10-05T01:55:15.223Z - success: runtime-dev-tools loaded
-2019-10-05T01:55:15.233Z - success: sdkbox loaded
-2019-10-05T01:55:15.233Z - success: tester loaded
-2019-10-05T01:55:15.243Z - success: ui-grid loaded
-2019-10-05T01:55:15.243Z - success: ui-kit-preview-extra loaded
-2019-10-05T01:55:15.253Z - success: ui-kit-preview loaded
-2019-10-05T01:55:15.253Z - success: ui-kit loaded
-2019-10-05T01:55:15.263Z - success: ui-tree loaded
-2019-10-05T01:55:15.273Z - success: vivo-runtime loaded
-2019-10-05T01:55:15.273Z - success: weapp-adapter loaded
-2019-10-05T01:55:15.283Z - success: xiaomi-adapter loaded
-2019-10-05T01:55:15.343Z - success: assets loaded
-2019-10-05T01:55:15.353Z - success: builder loaded
-2019-10-05T01:55:15.673Z - success: cocos-services loaded
-2019-10-05T01:55:15.673Z - success: console loaded
-2019-10-05T01:55:15.723Z - success: fb-instant-games loaded
-2019-10-05T01:55:15.723Z - success: game-window loaded
-2019-10-05T01:55:15.723Z - success: google-instant-games loaded
-2019-10-05T01:55:15.733Z - success: hierarchy loaded
-2019-10-05T01:55:15.733Z - success: inspector loaded
-2019-10-05T01:55:15.733Z - success: keystore loaded
-2019-10-05T01:55:15.743Z - success: node-library loaded
-2019-10-05T01:55:15.743Z - success: package-asset loaded
-2019-10-05T01:55:15.743Z - success: preferences loaded
-2019-10-05T01:55:15.743Z - success: project-exporter loaded
-2019-10-05T01:55:15.753Z - success: project-importer loaded
-2019-10-05T01:55:15.753Z - success: project-settings loaded
-2019-10-05T01:55:15.753Z - success: scene loaded
-2019-10-05T01:55:15.753Z - success: simulator-debugger loaded
-2019-10-05T01:55:15.763Z - success: sprite-editor loaded
-2019-10-05T01:55:15.763Z - success: store loaded
-2019-10-05T01:55:15.773Z - success: timeline loaded
-2019-10-05T01:55:15.773Z - success: xiaomi-runtime loaded
-2019-10-05T01:55:15.773Z - success: debug loaded
-2019-10-05T01:55:15.783Z - success: produce_map_grid loaded
-2019-10-05T01:55:19.758Z - info: Cocos Services load base data!
-2019-10-05T01:55:23.310Z - normal: Loading packages
-2019-10-05T01:55:23.320Z - normal: Watching packages
-2019-10-05T01:55:23.990Z - normal: Run Application
-2019-10-05T01:55:32.506Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T02:14:41.101Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T02:29:37.974Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T02:33:43.040Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T02:37:06.764Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T02:57:02.721Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T03:13:03.231Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T03:17:02.909Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T04:27:29.369Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T04:42:20.848Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T04:43:13.431Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T04:43:18.423Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T05:24:08.219Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:19:59.306Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:19:59.415Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:25:39.230Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:25:39.323Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:35:54.675Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:35:54.681Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:38:31.773Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:38:31.792Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:42:28.254Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:42:28.261Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:46:46.873Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:46:46.886Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:55:27.374Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T07:55:27.379Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T08:12:24.989Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T08:12:25.070Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T08:19:28.266Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T08:19:28.640Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T08:59:32.104Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T08:59:32.224Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:11:27.530Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:11:27.825Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:15:35.373Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:15:35.378Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:33:24.041Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:33:24.050Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:42:48.494Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:42:48.517Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:47:34.791Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:47:34.802Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:52:44.142Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:52:44.150Z - warn: Can not instantiate CCClass 'undefined' with arguments.
-2019-10-05T09:54:04.653Z - info: shutdown preview server
+2019-10-07T00:58:53.545Z - normal: Load ~/.CocosCreator/settings.json
+2019-10-07T00:58:54.759Z - normal: Initializing Asset Database
+2019-10-07T00:58:54.920Z - normal: checking language setting...
+2019-10-07T00:58:54.920Z - normal: Language: zh
+2019-10-07T00:58:56.021Z - success: preview server running at http://localhost:7456
+2019-10-07T00:58:56.024Z - success: protocol editor-framework registered
+2019-10-07T00:58:56.024Z - success: protocol app registered
+2019-10-07T00:58:56.024Z - success: protocol theme registered
+2019-10-07T00:58:56.024Z - success: protocol packages registered
+2019-10-07T00:58:56.024Z - success: protocol uuid registerred
+2019-10-07T00:58:56.024Z - success: protocol db registerred
+2019-10-07T00:58:56.024Z - success: protocol thumbnail registerred
+2019-10-07T00:58:56.024Z - success: protocol unpack registerred
+2019-10-07T00:58:56.025Z - success: protocol disable-commonjs registerred
+2019-10-07T00:58:56.253Z - normal: connected!
+2019-10-07T00:58:56.258Z - normal: Check project E:\Project\cocosProject\kingdomRush
+2019-10-07T00:58:56.264Z - normal: Initializing project E:\Project\cocosProject\kingdomRush
+2019-10-07T00:58:56.811Z - normal: Initializing Cocos2d
+2019-10-07T00:58:58.111Z - normal: Initializing engine extends
+2019-10-07T00:58:58.158Z - success: asset-db-debugger loaded
+2019-10-07T00:58:58.160Z - success: baidu-adapter loaded
+2019-10-07T00:58:58.163Z - success: code-editor loaded
+2019-10-07T00:58:58.164Z - success: color-picker loaded
+2019-10-07T00:58:58.282Z - success: fb-audience-network loaded
+2019-10-07T00:58:58.355Z - success: fb-live-stream loaded
+2019-10-07T00:58:58.360Z - success: google-play-instant loaded
+2019-10-07T00:58:58.367Z - success: huawei-runtime loaded
+2019-10-07T00:58:58.691Z - success: cpk-publish loaded
+2019-10-07T00:58:58.693Z - success: jsb-adapter loaded
+2019-10-07T00:58:58.700Z - success: oppo-runtime loaded
+2019-10-07T00:58:58.705Z - success: package-manager loaded
+2019-10-07T00:58:58.870Z - success: qqplay-adapter loaded
+2019-10-07T00:58:58.873Z - success: runtime-dev-tools loaded
+2019-10-07T00:58:58.880Z - success: sdkbox loaded
+2019-10-07T00:58:58.884Z - success: tester loaded
+2019-10-07T00:58:58.887Z - success: ui-grid loaded
+2019-10-07T00:58:58.890Z - success: ui-kit-preview-extra loaded
+2019-10-07T00:58:58.893Z - success: ui-kit-preview loaded
+2019-10-07T00:58:58.895Z - success: ui-kit loaded
+2019-10-07T00:58:58.897Z - success: ui-tree loaded
+2019-10-07T00:58:58.904Z - success: vivo-runtime loaded
+2019-10-07T00:58:58.905Z - success: weapp-adapter loaded
+2019-10-07T00:58:58.906Z - success: xiaomi-adapter loaded
+2019-10-07T00:58:58.961Z - success: assets loaded
+2019-10-07T00:58:58.964Z - success: builder loaded
+2019-10-07T00:58:59.309Z - success: cocos-services loaded
+2019-10-07T00:58:59.315Z - success: console loaded
+2019-10-07T00:58:59.357Z - success: fb-instant-games loaded
+2019-10-07T00:58:59.360Z - success: game-window loaded
+2019-10-07T00:58:59.362Z - success: google-instant-games loaded
+2019-10-07T00:58:59.367Z - success: hierarchy loaded
+2019-10-07T00:58:59.371Z - success: inspector loaded
+2019-10-07T00:58:59.373Z - success: keystore loaded
+2019-10-07T00:58:59.378Z - success: node-library loaded
+2019-10-07T00:58:59.380Z - success: package-asset loaded
+2019-10-07T00:58:59.382Z - success: preferences loaded
+2019-10-07T00:58:59.384Z - success: project-exporter loaded
+2019-10-07T00:58:59.387Z - success: project-importer loaded
+2019-10-07T00:58:59.389Z - success: project-settings loaded
+2019-10-07T00:58:59.394Z - success: scene loaded
+2019-10-07T00:58:59.396Z - success: simulator-debugger loaded
+2019-10-07T00:58:59.397Z - success: sprite-editor loaded
+2019-10-07T00:58:59.403Z - success: store loaded
+2019-10-07T00:58:59.409Z - success: timeline loaded
+2019-10-07T00:58:59.415Z - success: xiaomi-runtime loaded
+2019-10-07T00:58:59.419Z - success: debug loaded
+2019-10-07T00:58:59.425Z - success: produce_map_grid loaded
+2019-10-07T00:59:02.045Z - info: Cocos Services load base data!
+2019-10-07T00:59:12.754Z - normal: Loading packages
+2019-10-07T00:59:12.766Z - normal: Watching packages
+2019-10-07T00:59:13.478Z - normal: Run Application
+2019-10-07T00:59:21.408Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T00:59:21.429Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:12:07.324Z - info: 只有预制节点 "arrow" 及其子节点会被保存。
+2019-10-07T01:33:17.730Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:33:17.732Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:38:13.104Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:38:13.108Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:38:50.232Z - info: 只有预制节点 "arrowtower" 及其子节点会被保存。
+2019-10-07T01:45:43.051Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:45:43.218Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:50:35.787Z - info: 只有预制节点 "arrowtower" 及其子节点会被保存。
+2019-10-07T01:50:36.337Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:50:36.337Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:54:44.700Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T01:54:44.757Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T02:37:09.132Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T02:37:09.399Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T02:40:56.561Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T02:40:56.563Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T02:43:00.938Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T02:43:00.947Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:09:22.395Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:09:22.402Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:14:12.191Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:14:12.269Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:17:01.086Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:17:01.092Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:20:51.544Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:20:51.557Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:25:10.905Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:25:11.008Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:27:02.244Z - info: 只有预制节点 "bullet" 及其子节点会被保存。
+2019-10-07T03:30:13.157Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:30:13.160Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:31:00.598Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:31:00.599Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:31:34.610Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:31:34.610Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:36:44.213Z - info: 只有预制节点 "bullet" 及其子节点会被保存。
+2019-10-07T03:39:28.728Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:39:28.817Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:41:15.567Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:41:15.630Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T03:44:44.635Z - info: 只有预制节点 "builder" 及其子节点会被保存。
+2019-10-07T05:28:42.184Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:28:42.272Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:30:37.196Z - error: [db-task][delete] Failed to delete asset undefined, messages: Error: Asset E:\Project\cocosProject\kingdomRush\assets\res\undefined is not exists
+    at D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17459
+    at i.each (D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17886)
+    at D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:181:20
+    at Object.async.forEachOf.async.eachOf (D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:233:13)
+    at Object.async.forEach.async.each (D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:209:22)
+    at u.l.delete (D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17389)
+    at _tasks.r.queue (D:\CocosCreator\resources\app.asar\asset-db\index.js:1:2264)
+    at D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:987:13
+    at Immediate.process (D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:953:21)
+    at runCallback (timers.js:672:20)
+    at u.o.error (D:\CocosCreator\resources\app.asar\asset-db\lib\utils.js:1:2250)
+    at D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17938
+    at D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17457
+    at i.each (D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17886)
+    at D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:181:20
+    at Object.async.forEachOf.async.eachOf (D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:233:13)
+    at Object.async.forEach.async.each (D:\CocosCreator\resources\app.asar\node_modules\async\lib\async.js:209:22)
+    at u.l.delete (D:\CocosCreator\resources\app.asar\asset-db\lib\tasks.js:1:17389)
+    at _tasks.r.queue (D:\CocosCreator\resources\app.asar\asset-db\index.js:1:2264)
+2019-10-07T05:32:15.522Z - warn: [db-task][sync-changes] Backup unused meta file: db://assets/resources/textures/common.meta
+2019-10-07T05:33:39.973Z - info: 只有预制节点 "loadingDoorAnim" 及其子节点会被保存。
+2019-10-07T05:34:44.521Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:34:44.536Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:34:54.177Z - info: 只有预制节点 "switch" 及其子节点会被保存。
+2019-10-07T05:35:36.505Z - warn: The loadingDoorAnim referenced by component "homeScene" is invalid. Detailed information:
+Node path: "Canvas"
+
+2019-10-07T05:35:51.628Z - warn: The loadingDoorAnim referenced by component "homeScene" is invalid. Detailed information:
+Node path: "Canvas"
+
+2019-10-07T05:46:45.203Z - warn: reference node is destroyed
+2019-10-07T05:46:45.205Z - warn: reference node is destroyed
+2019-10-07T05:46:45.205Z - warn: reference node is destroyed
+2019-10-07T05:46:45.205Z - warn: reference node is destroyed
+2019-10-07T05:46:45.205Z - warn: reference node is destroyed
+2019-10-07T05:46:45.206Z - warn: reference node is destroyed
+2019-10-07T05:46:45.206Z - warn: reference node is destroyed
+2019-10-07T05:46:45.206Z - warn: reference node is destroyed
+2019-10-07T05:46:45.206Z - warn: reference node is destroyed
+2019-10-07T05:46:45.206Z - warn: reference node is destroyed
+2019-10-07T05:46:45.207Z - warn: reference node is destroyed
+2019-10-07T05:46:45.207Z - warn: reference node is destroyed
+2019-10-07T05:46:45.207Z - warn: reference node is destroyed
+2019-10-07T05:46:45.207Z - warn: reference node is destroyed
+2019-10-07T05:46:45.207Z - warn: reference node is destroyed
+2019-10-07T05:46:45.208Z - warn: reference node is destroyed
+2019-10-07T05:46:45.208Z - warn: reference node is destroyed
+2019-10-07T05:46:45.208Z - warn: reference node is destroyed
+2019-10-07T05:46:45.208Z - warn: reference node is destroyed
+2019-10-07T05:46:45.208Z - warn: reference node is destroyed
+2019-10-07T05:46:45.208Z - warn: reference node is destroyed
+2019-10-07T05:46:45.209Z - warn: reference node is destroyed
+2019-10-07T05:46:45.209Z - warn: reference node is destroyed
+2019-10-07T05:46:45.209Z - warn: reference node is destroyed
+2019-10-07T05:46:45.209Z - warn: reference node is destroyed
+2019-10-07T05:46:45.209Z - warn: reference node is destroyed
+2019-10-07T05:46:45.210Z - warn: reference node is destroyed
+2019-10-07T05:46:45.210Z - warn: reference node is destroyed
+2019-10-07T05:46:45.210Z - warn: reference node is destroyed
+2019-10-07T05:46:45.210Z - warn: reference node is destroyed
+2019-10-07T05:46:45.210Z - warn: reference node is destroyed
+2019-10-07T05:46:45.210Z - warn: reference node is destroyed
+2019-10-07T05:46:45.211Z - warn: reference node is destroyed
+2019-10-07T05:46:45.211Z - warn: reference node is destroyed
+2019-10-07T05:46:45.211Z - warn: reference node is destroyed
+2019-10-07T05:46:45.211Z - warn: reference node is destroyed
+2019-10-07T05:46:45.211Z - warn: reference node is destroyed
+2019-10-07T05:46:45.212Z - warn: reference node is destroyed
+2019-10-07T05:46:45.212Z - warn: reference node is destroyed
+2019-10-07T05:46:45.212Z - warn: reference node is destroyed
+2019-10-07T05:46:45.212Z - warn: reference node is destroyed
+2019-10-07T05:46:45.212Z - warn: reference node is destroyed
+2019-10-07T05:46:45.213Z - warn: reference node is destroyed
+2019-10-07T05:46:45.213Z - warn: reference node is destroyed
+2019-10-07T05:46:45.213Z - warn: reference node is destroyed
+2019-10-07T05:46:45.213Z - warn: reference node is destroyed
+2019-10-07T05:46:45.213Z - warn: reference node is destroyed
+2019-10-07T05:46:45.213Z - warn: reference node is destroyed
+2019-10-07T05:46:45.214Z - warn: reference node is destroyed
+2019-10-07T05:46:45.214Z - warn: reference node is destroyed
+2019-10-07T05:46:45.214Z - warn: reference node is destroyed
+2019-10-07T05:46:45.214Z - warn: reference node is destroyed
+2019-10-07T05:46:45.214Z - warn: reference node is destroyed
+2019-10-07T05:46:45.214Z - warn: reference node is destroyed
+2019-10-07T05:46:45.215Z - warn: reference node is destroyed
+2019-10-07T05:46:45.215Z - warn: reference node is destroyed
+2019-10-07T05:46:45.215Z - warn: reference node is destroyed
+2019-10-07T05:46:49.448Z - warn: reference node is destroyed
+2019-10-07T05:46:49.449Z - warn: reference node is destroyed
+2019-10-07T05:46:49.449Z - warn: reference node is destroyed
+2019-10-07T05:46:49.449Z - warn: reference node is destroyed
+2019-10-07T05:46:49.450Z - warn: reference node is destroyed
+2019-10-07T05:46:49.451Z - warn: reference node is destroyed
+2019-10-07T05:46:49.451Z - warn: reference node is destroyed
+2019-10-07T05:46:49.451Z - warn: reference node is destroyed
+2019-10-07T05:46:49.452Z - warn: reference node is destroyed
+2019-10-07T05:46:49.453Z - warn: reference node is destroyed
+2019-10-07T05:46:49.454Z - warn: reference node is destroyed
+2019-10-07T05:46:49.454Z - warn: reference node is destroyed
+2019-10-07T05:46:49.454Z - warn: reference node is destroyed
+2019-10-07T05:46:49.454Z - warn: reference node is destroyed
+2019-10-07T05:46:49.454Z - warn: reference node is destroyed
+2019-10-07T05:46:49.454Z - warn: reference node is destroyed
+2019-10-07T05:46:49.455Z - warn: reference node is destroyed
+2019-10-07T05:46:49.455Z - warn: reference node is destroyed
+2019-10-07T05:46:49.455Z - warn: reference node is destroyed
+2019-10-07T05:46:49.455Z - warn: reference node is destroyed
+2019-10-07T05:46:49.455Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.456Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.457Z - warn: reference node is destroyed
+2019-10-07T05:46:49.458Z - warn: reference node is destroyed
+2019-10-07T05:46:49.458Z - warn: reference node is destroyed
+2019-10-07T05:46:49.458Z - warn: reference node is destroyed
+2019-10-07T05:46:49.458Z - warn: reference node is destroyed
+2019-10-07T05:46:49.458Z - warn: reference node is destroyed
+2019-10-07T05:46:49.459Z - warn: reference node is destroyed
+2019-10-07T05:46:49.459Z - warn: reference node is destroyed
+2019-10-07T05:46:49.459Z - warn: reference node is destroyed
+2019-10-07T05:46:49.459Z - warn: reference node is destroyed
+2019-10-07T05:46:49.459Z - warn: reference node is destroyed
+2019-10-07T05:46:49.459Z - warn: reference node is destroyed
+2019-10-07T05:46:49.460Z - warn: reference node is destroyed
+2019-10-07T05:46:49.460Z - warn: reference node is destroyed
+2019-10-07T05:46:49.460Z - warn: reference node is destroyed
+2019-10-07T05:46:49.460Z - warn: reference node is destroyed
+2019-10-07T05:46:49.460Z - warn: reference node is destroyed
+2019-10-07T05:46:49.460Z - warn: reference node is destroyed
+2019-10-07T05:46:49.461Z - warn: reference node is destroyed
+2019-10-07T05:46:49.461Z - warn: reference node is destroyed
+2019-10-07T05:46:49.461Z - warn: reference node is destroyed
+2019-10-07T05:46:49.461Z - warn: reference node is destroyed
+2019-10-07T05:46:49.461Z - warn: reference node is destroyed
+2019-10-07T05:46:52.947Z - warn: reference node is destroyed
+2019-10-07T05:46:52.948Z - warn: reference node is destroyed
+2019-10-07T05:46:52.948Z - warn: reference node is destroyed
+2019-10-07T05:46:52.948Z - warn: reference node is destroyed
+2019-10-07T05:46:52.948Z - warn: reference node is destroyed
+2019-10-07T05:46:52.949Z - warn: reference node is destroyed
+2019-10-07T05:46:52.949Z - warn: reference node is destroyed
+2019-10-07T05:46:52.949Z - warn: reference node is destroyed
+2019-10-07T05:46:52.949Z - warn: reference node is destroyed
+2019-10-07T05:46:52.949Z - warn: reference node is destroyed
+2019-10-07T05:46:52.950Z - warn: reference node is destroyed
+2019-10-07T05:46:52.950Z - warn: reference node is destroyed
+2019-10-07T05:46:52.951Z - warn: reference node is destroyed
+2019-10-07T05:46:52.951Z - warn: reference node is destroyed
+2019-10-07T05:46:52.951Z - warn: reference node is destroyed
+2019-10-07T05:46:52.951Z - warn: reference node is destroyed
+2019-10-07T05:46:52.951Z - warn: reference node is destroyed
+2019-10-07T05:46:52.952Z - warn: reference node is destroyed
+2019-10-07T05:46:52.954Z - warn: reference node is destroyed
+2019-10-07T05:46:52.955Z - warn: reference node is destroyed
+2019-10-07T05:46:52.955Z - warn: reference node is destroyed
+2019-10-07T05:46:52.955Z - warn: reference node is destroyed
+2019-10-07T05:46:52.956Z - warn: reference node is destroyed
+2019-10-07T05:46:52.956Z - warn: reference node is destroyed
+2019-10-07T05:46:52.956Z - warn: reference node is destroyed
+2019-10-07T05:46:52.956Z - warn: reference node is destroyed
+2019-10-07T05:46:52.956Z - warn: reference node is destroyed
+2019-10-07T05:46:52.957Z - warn: reference node is destroyed
+2019-10-07T05:46:52.957Z - warn: reference node is destroyed
+2019-10-07T05:46:52.957Z - warn: reference node is destroyed
+2019-10-07T05:46:52.957Z - warn: reference node is destroyed
+2019-10-07T05:46:52.957Z - warn: reference node is destroyed
+2019-10-07T05:46:52.957Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.958Z - warn: reference node is destroyed
+2019-10-07T05:46:52.959Z - warn: reference node is destroyed
+2019-10-07T05:46:52.959Z - warn: reference node is destroyed
+2019-10-07T05:46:52.959Z - warn: reference node is destroyed
+2019-10-07T05:46:52.959Z - warn: reference node is destroyed
+2019-10-07T05:46:52.959Z - warn: reference node is destroyed
+2019-10-07T05:46:52.959Z - warn: reference node is destroyed
+2019-10-07T05:46:52.960Z - warn: reference node is destroyed
+2019-10-07T05:46:52.960Z - warn: reference node is destroyed
+2019-10-07T05:46:52.960Z - warn: reference node is destroyed
+2019-10-07T05:46:52.960Z - warn: reference node is destroyed
+2019-10-07T05:46:52.960Z - warn: reference node is destroyed
+2019-10-07T05:46:52.960Z - warn: reference node is destroyed
+2019-10-07T05:46:52.961Z - warn: reference node is destroyed
+2019-10-07T05:46:52.961Z - warn: reference node is destroyed
+2019-10-07T05:46:52.961Z - warn: reference node is destroyed
+2019-10-07T05:46:52.961Z - warn: reference node is destroyed
+2019-10-07T05:46:52.961Z - warn: reference node is destroyed
+2019-10-07T05:48:21.986Z - warn: reference node is destroyed
+2019-10-07T05:48:21.987Z - warn: reference node is destroyed
+2019-10-07T05:48:21.988Z - warn: reference node is destroyed
+2019-10-07T05:48:21.988Z - warn: reference node is destroyed
+2019-10-07T05:48:21.988Z - warn: reference node is destroyed
+2019-10-07T05:48:21.989Z - warn: reference node is destroyed
+2019-10-07T05:48:21.989Z - warn: reference node is destroyed
+2019-10-07T05:48:21.990Z - warn: reference node is destroyed
+2019-10-07T05:48:21.990Z - warn: reference node is destroyed
+2019-10-07T05:48:21.990Z - warn: reference node is destroyed
+2019-10-07T05:48:21.990Z - warn: reference node is destroyed
+2019-10-07T05:48:21.990Z - warn: reference node is destroyed
+2019-10-07T05:48:21.991Z - warn: reference node is destroyed
+2019-10-07T05:48:21.991Z - warn: reference node is destroyed
+2019-10-07T05:48:21.991Z - warn: reference node is destroyed
+2019-10-07T05:48:21.991Z - warn: reference node is destroyed
+2019-10-07T05:48:21.991Z - warn: reference node is destroyed
+2019-10-07T05:48:21.991Z - warn: reference node is destroyed
+2019-10-07T05:48:21.992Z - warn: reference node is destroyed
+2019-10-07T05:48:21.992Z - warn: reference node is destroyed
+2019-10-07T05:48:21.993Z - warn: reference node is destroyed
+2019-10-07T05:48:21.993Z - warn: reference node is destroyed
+2019-10-07T05:48:21.993Z - warn: reference node is destroyed
+2019-10-07T05:48:21.993Z - warn: reference node is destroyed
+2019-10-07T05:48:21.993Z - warn: reference node is destroyed
+2019-10-07T05:48:21.994Z - warn: reference node is destroyed
+2019-10-07T05:48:21.996Z - warn: reference node is destroyed
+2019-10-07T05:48:21.996Z - warn: reference node is destroyed
+2019-10-07T05:48:21.996Z - warn: reference node is destroyed
+2019-10-07T05:48:21.996Z - warn: reference node is destroyed
+2019-10-07T05:48:21.996Z - warn: reference node is destroyed
+2019-10-07T05:48:21.996Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.997Z - warn: reference node is destroyed
+2019-10-07T05:48:21.998Z - warn: reference node is destroyed
+2019-10-07T05:48:21.998Z - warn: reference node is destroyed
+2019-10-07T05:48:21.998Z - warn: reference node is destroyed
+2019-10-07T05:48:21.998Z - warn: reference node is destroyed
+2019-10-07T05:48:21.998Z - warn: reference node is destroyed
+2019-10-07T05:48:21.999Z - warn: reference node is destroyed
+2019-10-07T05:48:22.000Z - warn: reference node is destroyed
+2019-10-07T05:48:22.000Z - warn: reference node is destroyed
+2019-10-07T05:48:22.000Z - warn: reference node is destroyed
+2019-10-07T05:48:22.000Z - warn: reference node is destroyed
+2019-10-07T05:48:22.000Z - warn: reference node is destroyed
+2019-10-07T05:48:22.001Z - warn: reference node is destroyed
+2019-10-07T05:48:22.001Z - warn: reference node is destroyed
+2019-10-07T05:48:22.001Z - warn: reference node is destroyed
+2019-10-07T05:48:22.001Z - warn: reference node is destroyed
+2019-10-07T05:48:22.002Z - warn: reference node is destroyed
+2019-10-07T05:48:22.002Z - warn: reference node is destroyed
+2019-10-07T05:48:22.002Z - warn: reference node is destroyed
+2019-10-07T05:48:28.467Z - warn: reference node is destroyed
+2019-10-07T05:48:28.467Z - warn: reference node is destroyed
+2019-10-07T05:48:28.467Z - warn: reference node is destroyed
+2019-10-07T05:48:28.467Z - warn: reference node is destroyed
+2019-10-07T05:48:28.467Z - warn: reference node is destroyed
+2019-10-07T05:48:28.468Z - warn: reference node is destroyed
+2019-10-07T05:48:28.468Z - warn: reference node is destroyed
+2019-10-07T05:48:28.468Z - warn: reference node is destroyed
+2019-10-07T05:48:28.469Z - warn: reference node is destroyed
+2019-10-07T05:48:28.471Z - warn: reference node is destroyed
+2019-10-07T05:48:28.472Z - warn: reference node is destroyed
+2019-10-07T05:48:28.472Z - warn: reference node is destroyed
+2019-10-07T05:48:28.472Z - warn: reference node is destroyed
+2019-10-07T05:48:28.472Z - warn: reference node is destroyed
+2019-10-07T05:48:28.472Z - warn: reference node is destroyed
+2019-10-07T05:48:28.472Z - warn: reference node is destroyed
+2019-10-07T05:48:28.473Z - warn: reference node is destroyed
+2019-10-07T05:48:28.473Z - warn: reference node is destroyed
+2019-10-07T05:48:28.473Z - warn: reference node is destroyed
+2019-10-07T05:48:28.473Z - warn: reference node is destroyed
+2019-10-07T05:48:28.474Z - warn: reference node is destroyed
+2019-10-07T05:48:28.474Z - warn: reference node is destroyed
+2019-10-07T05:48:28.474Z - warn: reference node is destroyed
+2019-10-07T05:48:28.474Z - warn: reference node is destroyed
+2019-10-07T05:48:28.474Z - warn: reference node is destroyed
+2019-10-07T05:48:28.474Z - warn: reference node is destroyed
+2019-10-07T05:48:28.475Z - warn: reference node is destroyed
+2019-10-07T05:48:28.475Z - warn: reference node is destroyed
+2019-10-07T05:48:28.475Z - warn: reference node is destroyed
+2019-10-07T05:48:28.475Z - warn: reference node is destroyed
+2019-10-07T05:48:28.475Z - warn: reference node is destroyed
+2019-10-07T05:48:28.475Z - warn: reference node is destroyed
+2019-10-07T05:48:28.476Z - warn: reference node is destroyed
+2019-10-07T05:48:28.476Z - warn: reference node is destroyed
+2019-10-07T05:48:28.476Z - warn: reference node is destroyed
+2019-10-07T05:48:28.476Z - warn: reference node is destroyed
+2019-10-07T05:48:28.476Z - warn: reference node is destroyed
+2019-10-07T05:48:28.476Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.477Z - warn: reference node is destroyed
+2019-10-07T05:48:28.478Z - warn: reference node is destroyed
+2019-10-07T05:48:28.478Z - warn: reference node is destroyed
+2019-10-07T05:48:28.478Z - warn: reference node is destroyed
+2019-10-07T05:48:28.478Z - warn: reference node is destroyed
+2019-10-07T05:48:28.478Z - warn: reference node is destroyed
+2019-10-07T05:48:28.478Z - warn: reference node is destroyed
+2019-10-07T05:48:28.479Z - warn: reference node is destroyed
+2019-10-07T05:48:28.479Z - warn: reference node is destroyed
+2019-10-07T05:48:28.479Z - warn: reference node is destroyed
+2019-10-07T05:48:28.479Z - warn: reference node is destroyed
+2019-10-07T05:48:28.479Z - warn: reference node is destroyed
+2019-10-07T05:48:28.479Z - warn: reference node is destroyed
+2019-10-07T05:48:30.147Z - warn: reference node is destroyed
+2019-10-07T05:48:30.147Z - warn: reference node is destroyed
+2019-10-07T05:48:30.147Z - warn: reference node is destroyed
+2019-10-07T05:48:30.148Z - warn: reference node is destroyed
+2019-10-07T05:48:30.148Z - warn: reference node is destroyed
+2019-10-07T05:48:30.148Z - warn: reference node is destroyed
+2019-10-07T05:48:30.148Z - warn: reference node is destroyed
+2019-10-07T05:48:30.148Z - warn: reference node is destroyed
+2019-10-07T05:48:30.148Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.149Z - warn: reference node is destroyed
+2019-10-07T05:48:30.150Z - warn: reference node is destroyed
+2019-10-07T05:48:30.150Z - warn: reference node is destroyed
+2019-10-07T05:48:30.152Z - warn: reference node is destroyed
+2019-10-07T05:48:30.152Z - warn: reference node is destroyed
+2019-10-07T05:48:30.152Z - warn: reference node is destroyed
+2019-10-07T05:48:30.152Z - warn: reference node is destroyed
+2019-10-07T05:48:30.153Z - warn: reference node is destroyed
+2019-10-07T05:48:30.153Z - warn: reference node is destroyed
+2019-10-07T05:48:30.153Z - warn: reference node is destroyed
+2019-10-07T05:48:30.153Z - warn: reference node is destroyed
+2019-10-07T05:48:30.153Z - warn: reference node is destroyed
+2019-10-07T05:48:30.153Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.154Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.155Z - warn: reference node is destroyed
+2019-10-07T05:48:30.156Z - warn: reference node is destroyed
+2019-10-07T05:48:30.156Z - warn: reference node is destroyed
+2019-10-07T05:48:30.156Z - warn: reference node is destroyed
+2019-10-07T05:48:30.156Z - warn: reference node is destroyed
+2019-10-07T05:48:30.156Z - warn: reference node is destroyed
+2019-10-07T05:48:30.156Z - warn: reference node is destroyed
+2019-10-07T05:48:30.157Z - warn: reference node is destroyed
+2019-10-07T05:48:30.157Z - warn: reference node is destroyed
+2019-10-07T05:48:30.157Z - warn: reference node is destroyed
+2019-10-07T05:48:30.157Z - warn: reference node is destroyed
+2019-10-07T05:48:30.157Z - warn: reference node is destroyed
+2019-10-07T05:48:30.158Z - warn: reference node is destroyed
+2019-10-07T05:48:30.158Z - warn: reference node is destroyed
+2019-10-07T05:48:30.159Z - warn: reference node is destroyed
+2019-10-07T05:53:16.218Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:53:16.382Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:53:58.161Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:53:58.162Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:54:14.330Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:54:14.330Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:55:22.873Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T05:55:22.889Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T06:28:45.868Z - warn: reference node is destroyed
+2019-10-07T06:28:45.869Z - warn: reference node is destroyed
+2019-10-07T06:28:45.869Z - warn: reference node is destroyed
+2019-10-07T06:28:45.870Z - warn: reference node is destroyed
+2019-10-07T06:28:45.870Z - warn: reference node is destroyed
+2019-10-07T06:28:45.870Z - warn: reference node is destroyed
+2019-10-07T06:28:45.870Z - warn: reference node is destroyed
+2019-10-07T06:28:45.870Z - warn: reference node is destroyed
+2019-10-07T06:28:47.533Z - warn: reference node is destroyed
+2019-10-07T06:28:47.533Z - warn: reference node is destroyed
+2019-10-07T06:28:47.533Z - warn: reference node is destroyed
+2019-10-07T06:28:47.533Z - warn: reference node is destroyed
+2019-10-07T06:28:47.534Z - warn: reference node is destroyed
+2019-10-07T06:28:47.534Z - warn: reference node is destroyed
+2019-10-07T06:28:47.534Z - warn: reference node is destroyed
+2019-10-07T06:28:47.534Z - warn: reference node is destroyed
+2019-10-07T06:33:43.216Z - info: 只有预制节点 "closeButton" 及其子节点会被保存。
+2019-10-07T06:36:01.185Z - info: 只有预制节点 "bloodBar" 及其子节点会被保存。
+2019-10-07T06:45:13.691Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T06:45:13.971Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T06:59:29.887Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T06:59:30.002Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T09:44:57.813Z - warn: Can not instantiate CCClass 'undefined' with arguments.
+2019-10-07T09:44:57.913Z - warn: Can not instantiate CCClass 'undefined' with arguments.

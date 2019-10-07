@@ -1,6 +1,5 @@
 import Monster from "./monster";
 import AnimationPath from "../../common/animationPath";
-import Utils from "../../common/module/utils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -33,6 +32,8 @@ export default class MonsterFactory extends cc.Component {
     }
 
     init() {
+        this.creMonList = [];
+        this.cT = 0;
     }
 
     createMonster(num: number) {
@@ -40,8 +41,11 @@ export default class MonsterFactory extends cc.Component {
     }
 
     clearMonsters() {
-        while (Monster.monstersOfAlive.length > 0)
-            Monster.monstersOfAlive[0].destroySelf();
+        while (Monster.monstersOfAlive.length > 0) {
+            let m: Monster = Monster.monstersOfAlive[0];
+            m.die(Monster.monstersOfAlive, m);
+            m.releaseSelf();
+        }
     }
 
     destroyMonster(m: Monster) {

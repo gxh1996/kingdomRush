@@ -1,6 +1,7 @@
 import FrameAnimation from "../common/frameAnimation";
 import CombatLogic from "./combatLogic";
 import Move from "../common/move";
+import Utils from "../common/module/utils";
 
 const { ccclass, property } = cc._decorator;
 
@@ -64,9 +65,9 @@ export default abstract class Creature extends cc.Component {
 
 
     /**
-     * 使用前更新帧动画,会移除当前的所有行为
+     * 播放死亡动画,会移除当前的所有行为
      */
-    protected die(frames: cc.SpriteFrame[], func: Function = null) {
+    protected playDie(frames: cc.SpriteFrame[], func: Function = null) {
         if (this.isNonComState)
             this.stopNonComLogic();
         else if (this.isAttacking)
@@ -80,6 +81,15 @@ export default abstract class Creature extends cc.Component {
             let f: cc.ActionInstant = cc.callFunc(func);
             this.node.runAction(cc.sequence(fOut, f));
         }.bind(this));
+    }
+
+    /**
+     * 设置该生物死亡并从存活记录集中移除
+     * @param creatures 该生物存在的集
+     */
+    die(creatures: any[], self) {
+        this.isAlive = false;
+        Utils.remvoeItemOfArray(creatures, self);
     }
 
     /**
@@ -122,7 +132,7 @@ export default abstract class Creature extends cc.Component {
 
     protected abstract refreshState();
 
-    abstract destroySelf();
+    abstract releaseSelf();
 
     /**
      * Tracks creature
@@ -139,8 +149,8 @@ export default abstract class Creature extends cc.Component {
         if (!this.isAlive)
             return;
 
-        this.refreshState();
         this.combatLogic.think();
         this._move.refreshMove(dt);
+        this.refreshState();
     }
 }

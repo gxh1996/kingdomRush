@@ -1,17 +1,21 @@
 import FrameAnimation from "../../../common/frameAnimation";
 import Monster from "../../monster/monster";
+import Artillery from "./artilleryTower";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class ArtilleryBullet extends cc.Component {
 
+    private level: number = null;
     private attack: number = 0;
     private harmRadian: number;
     private frameAnim: FrameAnimation = null;
+    private artilleryTower: Artillery = null;
 
     onLoad() {
         this.frameAnim = this.node.getComponent("frameAnimation");
+        this.artilleryTower = this.node.parent.getComponent("artilleryTower");
     }
 
     start() {
@@ -23,7 +27,8 @@ export default class ArtilleryBullet extends cc.Component {
      * @param attack 
      * @param bombRange 炸弹爆炸范围
      */
-    init(attack: number, bombRange: number) {
+    init(l: number, attack: number, bombRange: number) {
+        this.level = l;
         this.attack = attack;
         this.harmRadian = bombRange;
     }
@@ -80,8 +85,7 @@ export default class ArtilleryBullet extends cc.Component {
     }
 
     private destroySelf() {
-        this.node.removeFromParent();
-        this.node.destroy();
+        this.artilleryTower.releaseBullt(this.level, this.node);
     }
 
     // update (dt) {}

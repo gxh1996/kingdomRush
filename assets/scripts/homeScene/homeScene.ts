@@ -1,9 +1,9 @@
-import LoadingDoorAnim from "../common/loadingDoorAnim";
 import SoundsManager from "../common/module/soundsManager"
 import StartAnim from "./startAnim";
 import GameDataStorage from "../common/module/gameDataManager";
 import { User } from "../common/module/gameDataManager"
 import LevelDataManager from "../levelScene/levelInfo";
+import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
 
 const { ccclass, property } = cc._decorator;
 

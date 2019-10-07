@@ -139,93 +139,97 @@ export class GameConfig {
     /**
      * 初始游戏数据配置
      */
-    private initGameConfig = { //配置数据
-        currentUsernames: [], //存在的用户
-        initChip: 200, //每关的初始金币
-        initBlood: 4, //每关的初始血量
-        skillsUpNeedStar: [
-            [1, 1, 2, 2, 3],
-            [1, 1, 2, 2, 3],
-            [1, 1, 2, 2, 3],
-            [1, 1, 2, 2, 3],
-            [1, 1, 2, 3, 3],
-            [1, 1, 2, 3, 4]
-        ],
-        // { //tower升级需要的星星
-        //     arrow: [0, 1, 1, 2, 2, 3],
-        //     barrack: [0, 1, 1, 2, 2, 3],
-        //     magiclan: [0, 1, 1, 2, 2, 3],
-        //     artillery: [0, 1, 1, 2, 2, 3],
-        //     bomb: [0, 1, 1, 2, 3, 3], //炸弹技能
-        //     dispatchTroops: [0, 1, 1, 2, 3, 4],//出兵技能
-        // },
-        levelsSum: 19, //一共有多少关
-        starSum: 57, //一共最多得到57个星星
-        towerAttack: [
-            [8, 10, 14, 18, 22], //arrowTower 
-            [6, 8, 10, 15, 16], //artilleryTower
-        ],
-        soldierData: [
-            {
-                HP: 30,
-                speedOfMove: 50,
-                intervalOfAttack: 1,
-                aggressivity: 5,
-                rangeOfAttack: 15,
-                rangeOfInvestigate: 80,
-                intervalOfThink: 1
-            },
-            {
-                HP: 30,
-                speedOfMove: 50,
-                intervalOfAttack: 1,
-                aggressivity: 5,
-                rangeOfAttack: 15,
-                rangeOfInvestigate: 80,
-                intervalOfThink: 1
-            },
-            {
-                HP: 30,
-                speedOfMove: 50,
-                intervalOfAttack: 1,
-                aggressivity: 5,
-                rangeOfAttack: 15,
-                rangeOfInvestigate: 80,
-                intervalOfThink: 1
-            },
-            {
-                HP: 30,
-                speedOfMove: 50,
-                intervalOfAttack: 1,
-                aggressivity: 5,
-                rangeOfAttack: 15,
-                rangeOfInvestigate: 80,
-                intervalOfThink: 1
-            },
+    // private initGameConfig = { //配置数据
+    //     currentUsernames: [], //存在的用户
+    //     initChip: 200, //每关的初始金币
+    //     initBlood: 4, //每关的初始血量
+    //     skillsUpNeedStar: [
+    //         [1, 1, 2, 2, 3],
+    //         [1, 1, 2, 2, 3],
+    //         [1, 1, 2, 2, 3],
+    //         [1, 1, 2, 2, 3],
+    //         [1, 1, 2, 3, 3],
+    //         [1, 1, 2, 3, 4]
+    //     ],
+    //     // { //tower升级需要的星星
+    //     //     arrow: [0, 1, 1, 2, 2, 3],
+    //     //     barrack: [0, 1, 1, 2, 2, 3],
+    //     //     magiclan: [0, 1, 1, 2, 2, 3],
+    //     //     artillery: [0, 1, 1, 2, 2, 3],
+    //     //     bomb: [0, 1, 1, 2, 3, 3], //炸弹技能
+    //     //     dispatchTroops: [0, 1, 1, 2, 3, 4],//出兵技能
+    //     // },
+    //     levelsSum: 19, //一共有多少关
+    //     starSum: 57, //一共最多得到57个星星
+    //     towerAttack: [
+    //         [8, 10, 14, 18, 22], //arrowTower 
+    //         [6, 8, 10, 15, 16], //artilleryTower
+    //     ],
+    //     soldierData: [
+    //         {
+    //             HP: 30,
+    //             speedOfMove: 50,
+    //             intervalOfAttack: 1,
+    //             aggressivity: 5,
+    //             rangeOfAttack: 15,
+    //             rangeOfInvestigate: 80,
+    //             intervalOfThink: 1
+    //         },
+    //         {
+    //             HP: 30,
+    //             speedOfMove: 50,
+    //             intervalOfAttack: 1,
+    //             aggressivity: 5,
+    //             rangeOfAttack: 15,
+    //             rangeOfInvestigate: 80,
+    //             intervalOfThink: 1
+    //         },
+    //         {
+    //             HP: 30,
+    //             speedOfMove: 50,
+    //             intervalOfAttack: 1,
+    //             aggressivity: 5,
+    //             rangeOfAttack: 15,
+    //             rangeOfInvestigate: 80,
+    //             intervalOfThink: 1
+    //         },
+    //         {
+    //             HP: 30,
+    //             speedOfMove: 50,
+    //             intervalOfAttack: 1,
+    //             aggressivity: 5,
+    //             rangeOfAttack: 15,
+    //             rangeOfInvestigate: 80,
+    //             intervalOfThink: 1
+    //         },
 
-        ],
-        mosterData: [
-            {
-                HP: 30,
-                speedOfMove: 30,
-                intervalOfAttack: 1,
-                aggressivity: 10,
-                rangeOfAttack: 15,
-                rangeOfInvestigate: 50,
-                intervalOfThink: 1
-            },
-        ]
-    };
-    private ls = cc.sys.localStorage;
+    //     ],
+    //     mosterData: [
+    //         {
+    //             HP: 30,
+    //             speedOfMove: 30,
+    //             intervalOfAttack: 1,
+    //             aggressivity: 10,
+    //             rangeOfAttack: 15,
+    //             rangeOfInvestigate: 50,
+    //             intervalOfThink: 1
+    //         },
+    //     ]
+    // };
+    // private ls = cc.sys.localStorage;
     private gameConfig = null;
-
     constructor() {
-        this.gameConfig = this.ls.getItem("gameConfig");
-        if (this.gameConfig === null)
-            this.gameConfig = this.initGameConfig;
-        else
-            this.gameConfig = JSON.parse(this.gameConfig);
+
     }
+
+    // constructor() {
+
+    //     this.gameConfig = this.ls.getItem("gameConfig");
+    //     if (this.gameConfig === null)
+    //         this.gameConfig = this.initGameConfig;
+    //     else
+    //         this.gameConfig = JSON.parse(this.gameConfig);
+    // }
 
     setCurrentUsernames(usernames: string[]) {
         this.gameConfig.currentUsernames = usernames;
@@ -297,13 +301,6 @@ export class GameConfig {
         return this.gameConfig.towerAttack;
     }
 
-    /**
-     * 保存游戏配置数据
-     */
-    preserveData() {
-        this.ls.setItem("gameConfig", JSON.stringify(this.gameConfig));
-    }
-
 }
 
 export default class GameDataStorage {
@@ -371,7 +368,7 @@ export default class GameDataStorage {
     static preserveGameData() {
         for (let v of this.users)
             v.preseverData();
-        this.gameConfig.preserveData();
+        // this.gameConfig.preserveData();
     }
 }
 

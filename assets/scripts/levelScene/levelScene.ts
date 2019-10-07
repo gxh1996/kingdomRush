@@ -1,6 +1,5 @@
 import SoundsManager from "../common/module/soundsManager";
 import GameDataStorage, { GameConfig, User } from "../common/module/gameDataManager";
-import LoadingDoorAnim from "../common/loadingDoorAnim";
 import MonsterFactory from "./monster/monsterFactory";
 import V_gameState from "./V_gameState";
 import SettlementFace from "./settlementFace";
@@ -8,6 +7,7 @@ import Utils from "../common/module/utils";
 import Monster from "./monster/monster";
 import Builder from "./builder";
 import LevelDataManager, { Level } from "./levelInfo";
+import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
 
 const { ccclass, property } = cc._decorator;
 
@@ -93,7 +93,7 @@ export default class LevelScene extends cc.Component {
 
     onLoad() {
         // cc.sys.localStorage.clear();
-        // GameDataStorage.init();
+        GameDataStorage.init();
 
         this.settlementFace = cc.find("Canvas/centerUI/settlementFace").getComponent("settlementFace");
         this.soundsManager = new SoundsManager();
@@ -158,6 +158,9 @@ export default class LevelScene extends cc.Component {
         //初始化回合控制
         this.roundIndex = 1;
         this.cT = 0;
+
+        //初始化monsterFactory
+        this.monsterFactory.init();
     }
 
 
@@ -242,6 +245,7 @@ export default class LevelScene extends cc.Component {
 
         //重置游戏
         this.monsterFactory.clearMonsters();
+        this.monsterFactory.init();
         this.resetLand();
         this.init();
 

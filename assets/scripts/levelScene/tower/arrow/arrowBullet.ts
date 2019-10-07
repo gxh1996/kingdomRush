@@ -1,4 +1,5 @@
 import Monster from "../../monster/monster";
+import ArrowTower from "./arrowTower";
 
 const { ccclass, property } = cc._decorator;
 
@@ -14,6 +15,7 @@ export default class ArrowBullet extends cc.Component {
 
     /* 组件 */
     private sprite: cc.Sprite = null;
+    private arrowTower: ArrowTower = null;
 
     /* 属性 */
     private attack: number = null;
@@ -35,12 +37,13 @@ export default class ArrowBullet extends cc.Component {
 
     onLoad() {
         this.sprite = this.node.getComponent(cc.Sprite);
+        this.arrowTower = this.node.parent.parent.getComponent("arrowTower");
     }
 
     start() {
         this.curPos = this.node.getPosition();
         //更新方向
-        // this.schedule(this.updateDir, 0.07, cc.macro.REPEAT_FOREVER);
+        this.scheduleOnce(this.updateDir, 0.07);
     }
 
     /**
@@ -53,7 +56,7 @@ export default class ArrowBullet extends cc.Component {
         if (dir)
             this.node.rotation = 50;
         else
-            this.node.rotation = -50;
+            this.node.rotation = -230;
     }
 
     /**
@@ -112,39 +115,54 @@ export default class ArrowBullet extends cc.Component {
     private updateDir() {
         this.lastPos = this.curPos;
         this.curPos = this.node.getPosition();
-        let dir: cc.Vec2 = this.lastPos.sub(this.curPos);
+        let dir: cc.Vec2 = this.curPos.sub(this.lastPos);
         let degree: number = this.getDegree(dir);
-        this.node.rotation = this.offsetDegree - degree;
+        if (degree === null)
+            return;
+        this.node.rotation = -(this.offsetDegree + degree);
+
+        if (this.isUpdateDir)
+            this.scheduleOnce(this.updateDir.bind(this), 0.07);
     }
 
     /**
-     * 得到方向的度数
-     * @param dir 方向向量 
+     * Gets degree
+     * @param dir 方向向量
+     * @returns degree [0,360),null为没有角度变化
      */
     private getDegree(dir: cc.Vec2): number {
         let rot: number;
-        if (dir.x === 0 && dir.y > 0)
-            rot = 90;
-        else if (dir.x === 0 && dir.y < 0)
-            rot = -90;
-        else {
+        if (dir.x === 0 && dir.y === 0)
+            return null;
+        if (dir.x === 0 && dir.y > 0) //y上半轴
+            return 90;
+        else if (dir.x === 0 && dir.y < 0) //y下半轴
+            return 270;
+        else { //不在y轴上
             let r: number = Math.atan(dir.y / dir.x);
             let d: number = r * 180 / Math.PI;
             rot = d;
         }
-        if (dir.x < 0 && dir.y > 0 || dir.x < 0 && dir.y < 0)
+
+        if (rot === 0) //在x轴上
+            if (dir.x > 0)
+                rot = 0;
+            else
+                rot = 180;
+        else if (dir.x < 0 && dir.y > 0 || dir.x < 0 && dir.y < 0) //在第二三象限
             rot += 180;
+        else if (dir.x > 0 && dir.y < 0) //在第四象限
+            rot += 360;
         return rot;
     }
 
+
+
     private destroySelf() {
-        this.node.removeFromParent();
-        this.node.destroy();
+        this.arrowTower.releaseArrowBullt(this.node);
     }
 
     update(dt) {
-        if (this.isUpdateDir)
-            this.updateDir();
     }
 
 }

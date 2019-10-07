@@ -2,7 +2,6 @@ import FrameAnimation from "../../../common/frameAnimation";
 import ArtilleryBullet from "./artilleryBullet";
 import GameDataStorage, { GameConfig } from "../../../common/module/gameDataManager";
 import Monster from "../../monster/monster";
-import Walk from "../../../common/walk";
 
 const { ccclass, property } = cc._decorator;
 
@@ -80,6 +79,7 @@ export default class Artillery extends cc.Component {
      * 塔的世界坐标
      */
     private wPos: cc.Vec2 = null;
+    private poolsOfBullet: cc.NodePool[] = [];
 
     /* 塔的属性 */
     level: number = 1;
@@ -94,6 +94,7 @@ export default class Artillery extends cc.Component {
      * 攻击力
      */
     attack: number;
+    private readonly intervalOfShoot: number = 1;
 
     /* 控制 */
     private shootable: boolean = true;
@@ -103,7 +104,9 @@ export default class Artillery extends cc.Component {
         this.frameAnimation = this.bg.getComponent("frameAnimation");
         this.gameConfig = GameDataStorage.getGameConfig();
         this.attacks = this.gameConfig.getTowerAttackArray()[1];
-        this.monsterArray = cc.find("Canvas/towerMap").getComponent("monsterFactory").getMonsterArray();
+        this.monsterArray = Monster.monstersOfAlive;
+
+        this.createPoolsOfBullet();
     }
 
     start() {
@@ -120,12 +123,32 @@ export default class Artillery extends cc.Component {
         this.frameAnimation.setSpriteFrame(this.towers[this.level - 1].frames[0]);
         this.wPos = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
 
-        if (this.level === 4) {
-            return;
+        this.addBulletNodes[0].getComponent(cc.Sprite).spriteFrame = this.towers[this.level - 1].bullet[0];
+    }
+
+    /* 炮弹对象池 */
+    private createPoolsOfBullet() {
+        for (let i = 0; i < this.bulletPrefab.length; i++) {
+            this.poolsOfBullet.push(new cc.NodePool());
+            let p: cc.Prefab = this.bulletPrefab[i];
+            this.poolsOfBullet[i].put(cc.instantiate(p));
         }
-        else {
-            this.addBulletNodes[0].getComponent(cc.Sprite).spriteFrame = this.towers[this.level - 1].bullet[0];
-        }
+    }
+    getBullet(level: number): cc.Node {
+        let r: cc.Node = null;
+        if (this.poolsOfBullet[level - 1].size() > 0)
+            r = this.poolsOfBullet[level].get();
+        else
+            r = cc.instantiate(this.bulletPrefab[level - 1]);
+        r.opacity = 255;
+        return r;
+    }
+    releaseBullt(level: number, n: cc.Node) {
+        this.poolsOfBullet[level - 1].put(n);
+    }
+    private clearPoolsOfBullet() {
+        for (let i = 0; i < this.poolsOfBullet.length; i++)
+            this.poolsOfBullet[i].clear();
     }
 
     /**
@@ -133,16 +156,21 @@ export default class Artillery extends cc.Component {
      * @param des 世界坐标
      * @param time 子弹到des的时间
      */
-    private shoot(des: cc.Vec2, time: number) {
+    private shoot(des: cc.Vec2, time: number = null) {
         if (!this.shootable)
             return;
         this.shootable = false;
+
+        if (time === null) {
+            let l: number = this.wPos.sub(des).mag();
+            let time = l / this.speedOfBullet;
+        }
 
         this.frameAnimation.play(false);
         this.addBulletAnim();
         this.scheduleOnce(function () {
             this.shootBullet(des, time);
-            this.shootable = true;
+            this.scheduleOnce(function () { this.shootable = true; }.bind(this), this.intervalOfShoot)
         }.bind(this), this.addBulletData[this.level - 1].shootDelay);
     }
 
@@ -158,7 +186,7 @@ export default class Artillery extends cc.Component {
     private createBullet(): ArtilleryBullet {
         let artillery: ArtilleryBullet = cc.instantiate(this.bulletPrefab[this.level - 1]).getComponent("artilleryBullet");
         this.node.addChild(artillery.node);
-        artillery.init(this.attack, this.bombRange);
+        artillery.init(this.level, this.attack, this.bombRange);
         let bg: cc.Node = this.node.getChildByName("bg");
         return artillery;
     }
@@ -174,8 +202,7 @@ export default class Artillery extends cc.Component {
         let bulletStartPos: cc.Vec2 = this.bg.convertToWorldSpaceAR(this.addBulletData[this.level - 1].endPos);
         let time: number = cP.sub(bulletStartPos).mag() / this.speedOfBullet + this.addBulletData[this.level - 1].shootDelay;
 
-        let mP: cc.Vec2 = monster.getPosInTime(time);
-        let mWP: cc.Vec2 = monster.node.parent.convertToWorldSpaceAR(mP);
+        let mWP: cc.Vec2 = monster.getPosInTime(time);
         if (!this.inShootRange(mWP))
             return null;
         return [mWP.x, mWP.y, time - this.addBulletData[this.level - 1].shootDelay];
@@ -185,24 +212,18 @@ export default class Artillery extends cc.Component {
      * 播放填弹动画
      */
     private addBulletAnim() {
-        if (this.level === 4) {
-            return;
-        }
-        else {
-            this.addBulletNodes[0].scale = 1;
-            this.addBulletNodes[0].setPosition(this.addBulletData[this.level - 1].startPos);
-            let a: cc.ActionInterval = cc.bezierTo(0.5, [this.addBulletData[this.level - 1].startPos, this.addBulletData[this.level - 1].ctrlPos, this.addBulletData[this.level - 1].endPos]);
-            let func: cc.ActionInstant = cc.callFunc(function () {
-                this.addBulletNodes[0].scale = 0;
-            }, this);
-            let seq: cc.ActionInterval = cc.sequence(a, func);
-            this.addBulletNodes[0].runAction(seq);
-        }
-
+        this.addBulletNodes[0].scale = 1;
+        this.addBulletNodes[0].setPosition(this.addBulletData[this.level - 1].startPos);
+        let a: cc.ActionInterval = cc.bezierTo(0.5, [this.addBulletData[this.level - 1].startPos, this.addBulletData[this.level - 1].ctrlPos, this.addBulletData[this.level - 1].endPos]);
+        let func: cc.ActionInstant = cc.callFunc(function () {
+            this.addBulletNodes[0].scale = 0;
+        }, this);
+        let seq: cc.ActionInterval = cc.sequence(a, func);
+        this.addBulletNodes[0].runAction(seq);
     }
 
     destroySelf() {
-        this.node.removeFromParent();
+        this.clearPoolsOfBullet();
         this.node.destroy();
     }
 
@@ -233,10 +254,17 @@ export default class Artillery extends cc.Component {
                 let m: Monster = this.monsterArray[i];
                 let mP: cc.Vec2 = m.getWPos();
                 if (this.inShootRange(mP)) {
-                    let d: number[] = this.forecastMovePos(m, mP);
-                    if (d !== null)
-                        this.shoot(cc.v2(d[0], d[1]), d[2]);
-                    return;
+                    if (m.swiOfRecursionInPW) {
+                        let d: number[] = this.forecastMovePos(m, mP);
+                        if (d !== null) {
+                            this.shoot(cc.v2(d[0], d[1]), d[2]);
+                            return;
+                        }
+                    }
+                    else {
+                        this.shoot(m.getWPos());
+                        return;
+                    }
                 }
             }
         }

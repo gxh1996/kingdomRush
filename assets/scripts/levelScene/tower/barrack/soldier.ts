@@ -168,14 +168,16 @@ export default class Soldier extends Creature {
 
         //死亡    
         if (this.cHP === 0) {
-            Utils.remvoeItemOfArray(Soldier.soldiersOfAlive, this);
-            this.isAlive = false;
-            this.die(this.framesOfAnim[this.level][1], this.destroySelf.bind(this));
+            this.die(Soldier.soldiersOfAlive, this);
+            this.playDie(this.framesOfAnim[this.level][1], this.releaseSelf.bind(this));
         }
     }
 
-    destroySelf() {
-        this.barrack.soldierKilled(this);
+    /**
+     * 释放自身资源
+     */
+    releaseSelf() {
+        this.barrack.releaseSoldier(this);
     }
 
     /**

@@ -105,10 +105,10 @@ export default class Barrack extends cc.Component {
     }
 
     /**
-     * 士兵被杀
+     * 释放士兵资源
      * @param soldier 
      */
-    soldierKilled(soldier: Soldier) {
+    releaseSoldier(soldier: Soldier) {
         this.availableStationNo.push(soldier.stationNo);
         Utils.remvoeItemOfArray(this.createdSoldiers, soldier);
         this.soldierPool.put(soldier.node);
@@ -116,8 +116,11 @@ export default class Barrack extends cc.Component {
 
     destroySelf() {
         //删除塔生成的所有士兵
-        while (this.createdSoldiers.length > 0)
-            this.createdSoldiers[0].destroySelf();
+        while (this.createdSoldiers.length > 0) {
+            let s: Soldier = this.createdSoldiers[0];
+            s.die(Soldier.soldiersOfAlive, s);
+            s.releaseSelf();
+        }
 
         //清空对象池
         this.soldierPool.clear();

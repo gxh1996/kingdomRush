@@ -1,0 +1,116 @@
+{
+    "currentUsernames": [],
+    "initChip": 200,
+    "initBlood": 4,
+    "skillsUpNeedStar": [
+        [
+            1,
+            1,
+            2,
+            2,
+            3
+        ],
+        [
+            1,
+            1,
+            2,
+            2,
+            3
+        ],
+        [
+            1,
+            1,
+            2,
+            2,
+            3
+        ],
+        [
+            1,
+            1,
+            2,
+            2,
+            3
+        ],
+        [
+            1,
+            1,
+            2,
+            3,
+            3
+        ],
+        [
+            1,
+            1,
+            2,
+            3,
+            4
+        ]
+    ],
+    "levelsSum": 19,
+    "starSum": 57,
+    "towerAttack": [
+        [
+            8,
+            10,
+            14,
+            18,
+            22
+        ],
+        [
+            6,
+            8,
+            10,
+            15,
+            16
+        ]
+    ],
+    "soldierData": [
+        {
+            "HP": 30,
+            "speedOfMove": 50,
+            "intervalOfAttack": 1,
+            "aggressivity": 5,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 80,
+            "intervalOfThink": 1
+        },
+        {
+            "HP": 30,
+            "speedOfMove": 50,
+            "intervalOfAttack": 1,
+            "aggressivity": 5,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 80,
+            "intervalOfThink": 1
+        },
+        {
+            "HP": 30,
+            "speedOfMove": 50,
+            "intervalOfAttack": 1,
+            "aggressivity": 5,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 80,
+            "intervalOfThink": 1
+        },
+        {
+            "HP": 30,
+            "speedOfMove": 50,
+            "intervalOfAttack": 1,
+            "aggressivity": 5,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 80,
+            "intervalOfThink": 1
+        }
+    ],
+    "mosterData": [
+        {
+            "HP": 30,
+            "speedOfMove": 30,
+            "intervalOfAttack": 1,
+            "aggressivity": 10,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 50,
+            "intervalOfThink": 1
+        }
+    ]
+}

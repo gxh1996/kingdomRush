@@ -308,9 +308,6 @@
       "__id__": 5
     },
     "_enabled": true,
-    "arrowPrefab": {
-      "__uuid__": "d12e8f49-fa66-4c4e-8b5d-8bb3a3ae4015"
-    },
     "_id": ""
   },
   {
@@ -446,9 +443,6 @@
       "__id__": 10
     },
     "_enabled": true,
-    "arrowPrefab": {
-      "__uuid__": "d12e8f49-fa66-4c4e-8b5d-8bb3a3ae4015"
-    },
     "_id": ""
   },
   {
@@ -492,6 +486,9 @@
         "y": 40.5
       }
     ],
+    "arrowPrefab": {
+      "__uuid__": "d12e8f49-fa66-4c4e-8b5d-8bb3a3ae4015"
+    },
     "_id": ""
   },
   {

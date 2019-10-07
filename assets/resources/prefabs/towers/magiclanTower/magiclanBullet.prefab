@@ -120,7 +120,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "bombFrames": [],
+    "sprite": {
+      "__uuid__": "c6ec9f5e-3324-4788-8283-a6704dc23b53"
+    },
     "_id": ""
   },
   {
