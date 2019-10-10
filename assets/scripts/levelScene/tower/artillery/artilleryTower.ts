@@ -72,38 +72,35 @@ export default class Artillery extends cc.Component {
         },
     ]
     /**
-     * 各等级塔的攻击力
-     */
-    private attacks: number[];
-    /**
      * 塔的世界坐标
      */
     private wPos: cc.Vec2 = null;
     private poolsOfBullet: cc.NodePool[] = [];
+    private dataOfTower: any[];
 
     /* 塔的属性 */
     level: number = 1;
     maxLevel: number = 3;
-    private speedOfBullet: number = 300;
+    private speedOfBullet: number;
     /**
      * 炸弹爆炸范围
      */
-    private bombRange: number = 50;
-    private shootRange: number = 150;
+    private bombRange: number;
+    shootRange: number;
     /**
      * 攻击力
      */
     attack: number;
-    private readonly intervalOfShoot: number = 1;
+    private intervalOfShoot: number;
 
     /* 控制 */
-    private shootable: boolean = true;
+    private shootable: boolean = false;
 
     onLoad() {
         this.bg = this.node.getChildByName("bg");
         this.frameAnimation = this.bg.getComponent("frameAnimation");
         this.gameConfig = GameDataStorage.getGameConfig();
-        this.attacks = this.gameConfig.getTowerAttackArray()[1];
+        this.dataOfTower = this.gameConfig.getDataOfArtillery();
         this.monsterArray = Monster.monstersOfAlive;
 
         this.createPoolsOfBullet();
@@ -118,12 +115,20 @@ export default class Artillery extends cc.Component {
      * @returns  
      */
     init() {
-        this.attack = this.attacks[this.level - 1];
+        this.attack = this.dataOfTower[this.level - 1].attack;
+        this.speedOfBullet = this.dataOfTower[this.level - 1].speedOfBullet;
+        this.bombRange = this.dataOfTower[this.level - 1].bombRange;
+        this.shootRange = this.dataOfTower[this.level - 1].shootRange;
+        this.intervalOfShoot = this.dataOfTower[this.level - 1].intervalOfShoot;
+
         this.frameAnimation.setFrameArray(this.towers[this.level - 1].frames);
         this.frameAnimation.setSpriteFrame(this.towers[this.level - 1].frames[0]);
         this.wPos = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
 
         this.addBulletNodes[0].getComponent(cc.Sprite).spriteFrame = this.towers[this.level - 1].bullet[0];
+
+        this.addBulletAnim();
+        this.scheduleOnce((() => { this.shootable = true; }).bind(this), this.intervalOfShoot);
     }
 
     /* 炮弹对象池 */
@@ -166,12 +171,11 @@ export default class Artillery extends cc.Component {
             let time = l / this.speedOfBullet;
         }
 
-        this.frameAnimation.play(false);
-        this.addBulletAnim();
-        this.scheduleOnce(function () {
+        this.frameAnimation.play(false, function () {
             this.shootBullet(des, time);
-            this.scheduleOnce(function () { this.shootable = true; }.bind(this), this.intervalOfShoot)
-        }.bind(this), this.addBulletData[this.level - 1].shootDelay);
+            this.addBulletAnim();
+            this.scheduleOnce((() => { this.shootable = true; }).bind(this), this.intervalOfShoot);
+        }.bind(this));
     }
 
     /**
@@ -217,6 +221,7 @@ export default class Artillery extends cc.Component {
         let a: cc.ActionInterval = cc.bezierTo(0.5, [this.addBulletData[this.level - 1].startPos, this.addBulletData[this.level - 1].ctrlPos, this.addBulletData[this.level - 1].endPos]);
         let func: cc.ActionInstant = cc.callFunc(function () {
             this.addBulletNodes[0].scale = 0;
+
         }, this);
         let seq: cc.ActionInterval = cc.sequence(a, func);
         this.addBulletNodes[0].runAction(seq);

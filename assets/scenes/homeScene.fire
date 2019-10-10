@@ -5669,8 +5669,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -48.959,
+      "y": 14.581,
       "z": 0
     },
     "_scale": {
@@ -5791,8 +5791,8 @@
       }
     ],
     "_useOriginalSize": true,
-    "_string": "Enter text here...",
-    "_N$string": "Enter text here...",
+    "_string": "用户名",
+    "_N$string": "用户名",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": false,
@@ -7378,6 +7378,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "conFigFiles": {
+      "__id__": 157
+    },
     "loadingDoorAnim": {
       "__id__": 154
     },
@@ -7385,5 +7388,14 @@
       "__id__": 138
     },
     "_id": "8d86YRl2hGe4hkXwjgwq9K"
+  },
+  {
+    "__type__": "ConfigFiles",
+    "gameConfig": {
+      "__uuid__": "60e23684-77c7-4115-9074-845b5761bc50"
+    },
+    "levelConfig": {
+      "__uuid__": "1cd1b3ce-c7cb-479c-892b-f6b7b2b39820"
+    }
   }
 ]

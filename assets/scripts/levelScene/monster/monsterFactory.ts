@@ -62,8 +62,8 @@ export default class MonsterFactory extends cc.Component {
             m = cc.instantiate(this.monsterPrefab[num]);
 
         let mScr: Monster = m.getComponent("monster");
-        Monster.monstersOfAlive.push(mScr);
         this.node.addChild(m);
+        Monster.monstersOfAlive.push(mScr);
 
         mScr.init(num, this.animationPath.getWorldPath("road" + this.getRandomNumber(1, 3).toString()))
     }

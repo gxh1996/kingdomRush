@@ -1,3 +1,5 @@
+import Utils from "./utils";
+
 export class User {
     /**
      * 初始用户数据
@@ -34,10 +36,6 @@ export class User {
         }
         else
             this.userData = JSON.parse(this.userData);
-    }
-
-    delUser() {
-        this.ls.removeItem(this.userData.username);
     }
 
     getUsername(): string {
@@ -132,125 +130,17 @@ export class User {
 
     preseverData() {
         this.ls.setItem("userData:" + this.userData.username, JSON.stringify(this.userData));
+        console.log("保存用户数据:", this.userData.username);
     }
 }
 
 export class GameConfig {
-    /**
-     * 初始游戏数据配置
-     */
-    // private initGameConfig = { //配置数据
-    //     currentUsernames: [], //存在的用户
-    //     initChip: 200, //每关的初始金币
-    //     initBlood: 4, //每关的初始血量
-    //     skillsUpNeedStar: [
-    //         [1, 1, 2, 2, 3],
-    //         [1, 1, 2, 2, 3],
-    //         [1, 1, 2, 2, 3],
-    //         [1, 1, 2, 2, 3],
-    //         [1, 1, 2, 3, 3],
-    //         [1, 1, 2, 3, 4]
-    //     ],
-    //     // { //tower升级需要的星星
-    //     //     arrow: [0, 1, 1, 2, 2, 3],
-    //     //     barrack: [0, 1, 1, 2, 2, 3],
-    //     //     magiclan: [0, 1, 1, 2, 2, 3],
-    //     //     artillery: [0, 1, 1, 2, 2, 3],
-    //     //     bomb: [0, 1, 1, 2, 3, 3], //炸弹技能
-    //     //     dispatchTroops: [0, 1, 1, 2, 3, 4],//出兵技能
-    //     // },
-    //     levelsSum: 19, //一共有多少关
-    //     starSum: 57, //一共最多得到57个星星
-    //     towerAttack: [
-    //         [8, 10, 14, 18, 22], //arrowTower 
-    //         [6, 8, 10, 15, 16], //artilleryTower
-    //     ],
-    //     soldierData: [
-    //         {
-    //             HP: 30,
-    //             speedOfMove: 50,
-    //             intervalOfAttack: 1,
-    //             aggressivity: 5,
-    //             rangeOfAttack: 15,
-    //             rangeOfInvestigate: 80,
-    //             intervalOfThink: 1
-    //         },
-    //         {
-    //             HP: 30,
-    //             speedOfMove: 50,
-    //             intervalOfAttack: 1,
-    //             aggressivity: 5,
-    //             rangeOfAttack: 15,
-    //             rangeOfInvestigate: 80,
-    //             intervalOfThink: 1
-    //         },
-    //         {
-    //             HP: 30,
-    //             speedOfMove: 50,
-    //             intervalOfAttack: 1,
-    //             aggressivity: 5,
-    //             rangeOfAttack: 15,
-    //             rangeOfInvestigate: 80,
-    //             intervalOfThink: 1
-    //         },
-    //         {
-    //             HP: 30,
-    //             speedOfMove: 50,
-    //             intervalOfAttack: 1,
-    //             aggressivity: 5,
-    //             rangeOfAttack: 15,
-    //             rangeOfInvestigate: 80,
-    //             intervalOfThink: 1
-    //         },
-
-    //     ],
-    //     mosterData: [
-    //         {
-    //             HP: 30,
-    //             speedOfMove: 30,
-    //             intervalOfAttack: 1,
-    //             aggressivity: 10,
-    //             rangeOfAttack: 15,
-    //             rangeOfInvestigate: 50,
-    //             intervalOfThink: 1
-    //         },
-    //     ]
-    // };
-    // private ls = cc.sys.localStorage;
     private gameConfig = null;
-    constructor() {
 
-    }
+    constructor(gameConfig: any) {
+        this.gameConfig = gameConfig;
+        console.log("新建一个GameConfig对象，显示json对象:\n", this.gameConfig);
 
-    // constructor() {
-
-    //     this.gameConfig = this.ls.getItem("gameConfig");
-    //     if (this.gameConfig === null)
-    //         this.gameConfig = this.initGameConfig;
-    //     else
-    //         this.gameConfig = JSON.parse(this.gameConfig);
-    // }
-
-    setCurrentUsernames(usernames: string[]) {
-        this.gameConfig.currentUsernames = usernames;
-    }
-
-    /**
-     * 得到当前所有的用户的名字
-     * @returns current usernames 
-     */
-    getCurrentUsernames(): string[] {
-        return this.gameConfig.currentUsernames;
-    }
-
-    addUsername(username: string) {
-        this.gameConfig.currentUsernames.push(username);
-    }
-
-    delUsername(username) {
-        let usernames: string[] = this.gameConfig.currentUsernames;
-        let i: number = usernames.indexOf(username);
-        usernames.splice(i, 1);
     }
 
     getInitChip(): number {
@@ -297,8 +187,17 @@ export class GameConfig {
         return this.gameConfig.mosterData;
     }
 
-    getTowerAttackArray() {
-        return this.gameConfig.towerAttack;
+    getDataOfArrowTower(): any[] {
+        return this.gameConfig.dataOfTower.arrowTower;
+    }
+    getDataOfArtillery(): any[] {
+        return this.gameConfig.dataOfTower.artillery;
+    }
+    getDataOfBarrack(): any[] {
+        return this.gameConfig.dataOfTower.barrack;
+    }
+    getDataOfMagiclan(): any[] {
+        return this.gameConfig.dataOfTower.magiclan;
     }
 
 }
@@ -306,16 +205,39 @@ export class GameConfig {
 export default class GameDataStorage {
     private static gameConfig: GameConfig;
     private static users: User[] = [];
+    private static usernames: string[] = null;
     private static currentUser: User = null;
+    private static ls = cc.sys.localStorage;
 
     /**
      * 游戏打开时必须执行一次
+     * @param gameConfig json对象
      */
-    static init() {
-        this.gameConfig = new GameConfig();
-        let usernames: string[] = this.gameConfig.getCurrentUsernames();
-        for (let i = 0; i < usernames.length; i++)
-            this.users.push(new User(usernames[i]));
+    static init(gameConfig: any) {
+        this.gameConfig = new GameConfig(gameConfig);
+        this.usernames = this.getNamesOfAllUser();
+        for (let i = 0; i < this.usernames.length; i++)
+            this.users.push(new User(this.usernames[i]));
+    }
+
+    private static getNamesOfAllUser(): string[] {
+        let r = this.ls.getItem("namesOfAllUser");
+        if (r === null)
+            return [];
+        else
+            return JSON.parse(r);
+
+    }
+
+    /**
+     * 保存所有用户的名字
+     */
+    private static preserveNamesOfAllUser() {
+        if (this.users.length > 0) {
+            let json: string = JSON.stringify(this.users);
+            this.ls.setItem("namesOfAllUser", json);
+            console.log("所有用户名保存成功!");
+        }
     }
 
     static getGameConfig() {
@@ -349,17 +271,23 @@ export default class GameDataStorage {
     static createUser(username: string) {
         let newUser: User = new User(username);
         this.users.push(newUser);
-        this.gameConfig.addUsername(username);
+        this.usernames.push(username);
+        this.preserveNamesOfAllUser();
+        newUser.preseverData();
     }
 
     static delUser(username: string) {
-        this.gameConfig.delUsername(username);
+        //从所有用户名中移除
+        Utils.remvoeItemOfArray(this.users, username);
+        //从用户数组中移除
         for (let i = 0; i < this.users.length; i++)
             if (this.users[i].getUsername() === username) {
-                this.users[i].delUser();
                 this.users.splice(i, 1);
-                return;
+                break;
             }
+
+        this.ls.removeItem("userData:" + username);
+        this.preserveNamesOfAllUser();
     }
 
     /**
@@ -368,7 +296,7 @@ export default class GameDataStorage {
     static preserveGameData() {
         for (let v of this.users)
             v.preseverData();
-        // this.gameConfig.preserveData();
+        this.preserveNamesOfAllUser();
     }
 }
 

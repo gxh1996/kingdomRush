@@ -2,13 +2,34 @@ import SoundsManager from "../common/module/soundsManager"
 import StartAnim from "./startAnim";
 import GameDataStorage from "../common/module/gameDataManager";
 import { User } from "../common/module/gameDataManager"
-import LevelDataManager from "../levelScene/levelInfo";
+import LevelDataManager from "../common/module/levelDataManager"
 import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
 
 const { ccclass, property } = cc._decorator;
 
+@ccclass("ConfigFiles")
+class ConfigFiles {
+    @property({
+        type: cc.JsonAsset,
+        displayName: "游戏配置"
+    })
+    gameConfig: cc.JsonAsset = null;
+
+    @property({
+        type: cc.JsonAsset,
+        displayName: "关卡配置"
+    })
+    levelConfig: cc.JsonAsset = null;
+}
+
 @ccclass
 export default class HomeScene extends cc.Component {
+
+    @property({
+        type: ConfigFiles,
+        displayName: "游戏配置文件"
+    })
+    private conFigFiles: ConfigFiles = new ConfigFiles();
 
     @property({ type: LoadingDoorAnim })
     private loadingDoorAnim: LoadingDoorAnim = null;
@@ -28,22 +49,21 @@ export default class HomeScene extends cc.Component {
     fristEntry: boolean = true;
     private clips: cc.AnimationClip[] = null;
     onLoad() {
+
         //初始化 模块
+        cc.sys.localStorage.clear();
+        GameDataStorage.init(this.conFigFiles.gameConfig.json);
         this.soundsManager = new SoundsManager();
-        LevelDataManager.initLevelData();
+        LevelDataManager.initLevelData(this.conFigFiles.levelConfig.json);
 
         this.clips = this.startAnim.node.getComponent(cc.Animation).getClips();
     }
 
     start() {
-        // cc.sys.localStorage.clear();
-        // GameDataStorage.init();
 
-        console.log(cc.sys.localStorage);
         this.soundsManager.playBGM("sounds/home_scene_bg");
         if (this.fristEntry) {
             this.startAnim.logoDown();
-            GameDataStorage.init();
         }
 
     }

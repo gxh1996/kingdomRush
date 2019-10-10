@@ -29,13 +29,12 @@ export default class ArrowTower extends cc.Component {
     /**
      * 箭的速度
      */
-    private speedOfArrow: number = 200;
-    shootRange: number = 150;
+    private speedOfArrow: number;
+    shootRange: number;
     /**
      * 射手射速
      */
-    private speedOfShoot: number = 1;
-
+    private speedOfShoot: number;
 
     private leftArrower: Arrower = null;
     private rightArrower: Arrower = null;
@@ -54,7 +53,7 @@ export default class ArrowTower extends cc.Component {
 
     /* 数据 */
     private wPos: cc.Vec2;
-    private attacks: number[];
+    private dataOfTower: any[] = null;
     private poolOfArrow: cc.NodePool = null;
 
     onLoad() {
@@ -66,7 +65,8 @@ export default class ArrowTower extends cc.Component {
         this.rightArrower = r.getComponent("arrower")
         this.towerBG = this.node.getChildByName("bg").getComponent(cc.Sprite);
         this.gameConfig = GameDataStorage.getGameConfig();
-        this.attacks = this.gameConfig.getTowerAttackArray()[0];
+        this.dataOfTower = this.gameConfig.getDataOfArrowTower();
+
 
         this.createPoolOfArrow();
     }
@@ -77,6 +77,11 @@ export default class ArrowTower extends cc.Component {
     }
 
     private init() {
+        this.attack = this.dataOfTower[this.level - 1].attack;
+        this.speedOfArrow = this.dataOfTower[this.level - 1].speedOfArrow;
+        this.shootRange = this.dataOfTower[this.level - 1].shootRange;
+        this.speedOfShoot = this.dataOfTower[this.level - 1].speedOfShoot;
+
         this.initArrower();
     }
 
@@ -109,7 +114,6 @@ export default class ArrowTower extends cc.Component {
         //设置位置和图片
         this.frameAnimations[0].node.y = this.offsetY[this.level - 1].y;
         this.frameAnimations[1].node.y = this.offsetY[this.level - 1].y;
-        this.attack = this.attacks[this.level - 1];
         let dir: string = "textures/levelScene/tower/" + "arrowTower/" + "arrow" + this.level.toString()
         cc.loader.loadResDir(dir, cc.SpriteFrame, function (e, res, url: string[]) {
             //设置塔的皮肤
@@ -119,8 +123,8 @@ export default class ArrowTower extends cc.Component {
         }.bind(this));
 
         //传参
-        this.leftArrower.init(this.wPos, this.speedOfArrow, this.shootRange, this.speedOfShoot);
-        this.rightArrower.init(this.wPos, this.speedOfArrow, this.shootRange, this.speedOfShoot);
+        this.leftArrower.init(this.wPos, this.speedOfArrow, this.shootRange, this.speedOfShoot, this.attack);
+        this.rightArrower.init(this.wPos, this.speedOfArrow, this.shootRange, this.speedOfShoot, this.attack);
     }
 
 

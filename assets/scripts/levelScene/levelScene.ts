@@ -6,7 +6,7 @@ import SettlementFace from "./settlementFace";
 import Utils from "../common/module/utils";
 import Monster from "./monster/monster";
 import Builder from "./builder";
-import LevelDataManager, { Level } from "./levelInfo";
+import LevelDataManager, { Level } from "../common/module/levelDataManager";
 import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
 
 const { ccclass, property } = cc._decorator;
@@ -92,9 +92,6 @@ export default class LevelScene extends cc.Component {
     private settlementFace: SettlementFace = null;
 
     onLoad() {
-        // cc.sys.localStorage.clear();
-        GameDataStorage.init();
-
         this.settlementFace = cc.find("Canvas/centerUI/settlementFace").getComponent("settlementFace");
         this.soundsManager = new SoundsManager();
         this.gameConfig = GameDataStorage.getGameConfig();
@@ -110,7 +107,7 @@ export default class LevelScene extends cc.Component {
             this.levelData = LevelDataManager.getLevelData(this.levelNum);
 
             //添加空地（用于建塔）
-            let posArr: cc.Vec2[] = this.levelData.builders;
+            let posArr: cc.Vec2[] = this.levelData.posOfBuilders;
             for (let i = 0; i < posArr.length; i++) {
                 let n: cc.Node = cc.instantiate(this.builderPrefab);
                 let b: Builder = n.getComponent("builder");

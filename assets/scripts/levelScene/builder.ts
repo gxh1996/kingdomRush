@@ -164,7 +164,7 @@ export default class Builder extends cc.Component {
 
         this.land.opacity = 0;
         this.hiddenBuildFaceImmediately();
-        this.drawShootRange();
+        this.scheduleOnce(this.drawShootRange.bind(this), 0.5);
     }
 
     saleTower() {
@@ -206,6 +206,9 @@ export default class Builder extends cc.Component {
     * 绘制射程范围
     */
     private drawShootRange() {
+        if (this.tower.shootRange === undefined)
+            return;
+
         this.g.clear();
         this.g.circle(0, 0, this.tower.shootRange);
         this.g.stroke();

@@ -22,15 +22,17 @@ export default class Arrower extends cc.Component {
      * 箭的射出点 世界坐标
      */
     private wPosOfArrower: cc.Vec2;
-    private speedOfArrow: number;
     /**
      * 射箭动画播放时间
      */
     private playTimeOfshootArrow: number;
     private arrowTower: ArrowTower = null;
+    private monsterArray: Monster[];
+
+    private attack: number;
+    private speedOfArrow: number;
     private shootRange: number;
     private speedOfShoot: number;
-    private monsterArray: Monster[];
 
     onLoad() {
         this.frameAnimation = this.node.getComponent("frameAnimation");
@@ -52,11 +54,12 @@ export default class Arrower extends cc.Component {
      * @param shootRange 射程
      * @param speedOfShoot 射速
      */
-    init(wPosOfTower: cc.Vec2, speedOfArrow: number, shootRange: number, speedOfShoot: number) {
+    init(wPosOfTower: cc.Vec2, speedOfArrow: number, shootRange: number, speedOfShoot: number, attack: number) {
         this.wPosOfTower = wPosOfTower;
         this.speedOfArrow = speedOfArrow;
         this.shootRange = shootRange;
         this.speedOfShoot = speedOfShoot;
+        this.attack = attack;
     }
 
     /**
@@ -82,7 +85,7 @@ export default class Arrower extends cc.Component {
                 dir = true;
             else
                 dir = false;
-            arrowBullet.init(10, 100, dir);
+            arrowBullet.init(this.attack, this.speedOfArrow, dir);
             arrowBullet.moveTo(this.wPosOfArrower, des, time);
             this.coolingShoot();
         }.bind(this));

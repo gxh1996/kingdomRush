@@ -1,5 +1,4 @@
 {
-    "currentUsernames": [],
     "initChip": 200,
     "initBlood": 4,
     "skillsUpNeedStar": [
@@ -48,57 +47,133 @@
     ],
     "levelsSum": 19,
     "starSum": 57,
-    "towerAttack": [
-        [
-            8,
-            10,
-            14,
-            18,
-            22
+    "direction": "tower的攻击力分别为箭塔",
+    "dataOfTower": {
+        "arrowTower": [
+            {
+                "attack": 4,
+                "speedOfArrow": 180,
+                "shootRange": 150,
+                "speedOfShoot": 2
+            },
+            {
+                "attack": 5,
+                "speedOfArrow": 185,
+                "shootRange": 150,
+                "speedOfShoot": 2
+            },
+            {
+                "attack": 6,
+                "speedOfArrow": 190,
+                "shootRange": 150,
+                "speedOfShoot": 1.5
+            },
+            {
+                "attack": 7,
+                "speedOfArrow": 200,
+                "shootRange": 150,
+                "speedOfShoot": 1
+            }
         ],
-        [
-            6,
-            8,
-            10,
-            15,
-            16
+        "artillery": [
+            {
+                "attack": 6,
+                "speedOfBullet": 160,
+                "bombRange": 45,
+                "shootRange": 150,
+                "intervalOfShoot": 1.5
+            },
+            {
+                "attack": 7,
+                "speedOfBullet": 170,
+                "bombRange": 50,
+                "shootRange": 150,
+                "intervalOfShoot": 1.5
+            },
+            {
+                "attack": 9,
+                "speedOfBullet": 180,
+                "bombRange": 55,
+                "shootRange": 150,
+                "intervalOfShoot": 1
+            }
+        ],
+        "barrack": [
+            {
+                "tOfCreateSoldier": 4
+            },
+            {
+                "tOfCreateSoldier": 4
+            },
+            {
+                "tOfCreateSoldier": 3.5
+            },
+            {
+                "tOfCreateSoldier": 3
+            }
+        ],
+        "magiclan": [
+            {
+                "attack": 8,
+                "speedOfShoot": 2,
+                "speedOfBullet": 100,
+                "shootRange": 140
+            },
+            {
+                "attack": 9,
+                "speedOfShoot": 1.5,
+                "speedOfBullet": 100,
+                "shootRange": 140
+            },
+            {
+                "attack": 10,
+                "speedOfShoot": 1,
+                "speedOfBullet": 110,
+                "shootRange": 140
+            },
+            {
+                "attack": 11,
+                "speedOfShoot": 1,
+                "speedOfBullet": 110,
+                "shootRange": 150
+            }
         ]
-    ],
+    },
     "soldierData": [
         {
-            "HP": 30,
-            "speedOfMove": 50,
+            "HP": 20,
+            "speedOfMove": 40,
             "intervalOfAttack": 1,
             "aggressivity": 5,
             "rangeOfAttack": 15,
-            "rangeOfInvestigate": 80,
+            "rangeOfInvestigate": 70,
+            "intervalOfThink": 1
+        },
+        {
+            "HP": 20,
+            "speedOfMove": 40,
+            "intervalOfAttack": 1,
+            "aggressivity": 6,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 70,
+            "intervalOfThink": 1
+        },
+        {
+            "HP": 25,
+            "speedOfMove": 50,
+            "intervalOfAttack": 1,
+            "aggressivity": 8,
+            "rangeOfAttack": 15,
+            "rangeOfInvestigate": 70,
             "intervalOfThink": 1
         },
         {
             "HP": 30,
-            "speedOfMove": 50,
+            "speedOfMove": 10,
             "intervalOfAttack": 1,
             "aggressivity": 5,
             "rangeOfAttack": 15,
-            "rangeOfInvestigate": 80,
-            "intervalOfThink": 1
-        },
-        {
-            "HP": 30,
-            "speedOfMove": 50,
-            "intervalOfAttack": 1,
-            "aggressivity": 5,
-            "rangeOfAttack": 15,
-            "rangeOfInvestigate": 80,
-            "intervalOfThink": 1
-        },
-        {
-            "HP": 30,
-            "speedOfMove": 50,
-            "intervalOfAttack": 1,
-            "aggressivity": 5,
-            "rangeOfAttack": 15,
-            "rangeOfInvestigate": 80,
+            "rangeOfInvestigate": 70,
             "intervalOfThink": 1
         }
     ],

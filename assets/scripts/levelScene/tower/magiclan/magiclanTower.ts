@@ -1,6 +1,7 @@
 import FrameAnimation from "../../../common/frameAnimation";
 import MagiclanBullet from "./magiclanBullet";
 import Monster from "../../monster/monster";
+import GameDataStorage, { GameConfig } from "../../../common/module/gameDataManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -61,10 +62,10 @@ export default class MagiclanTower extends cc.Component {
      */
     level: number = 1;
     maxLevel: number = 4;
-    private speedOfshoot: number = 1.5;
-    private speedOfBullet: number = 100;
-    private attack: number = 250;
-    private shootRange: number = 150;
+    private speedOfShoot: number;
+    private speedOfBullet: number;
+    private attack: number;
+    shootRange: number;
 
 
     /* 控制 */
@@ -88,12 +89,15 @@ export default class MagiclanTower extends cc.Component {
      */
     private playTOfShoot: number;
     private poolOfBullet: cc.NodePool = null;
+    private dataOfTower: any[];
 
     onLoad() {
         this.magiclanAF = this.node.getChildByName("magiclan").getComponent("frameAnimation");
         this.towerAF = this.node.getChildByName("bg").getComponent("frameAnimation");
         this.bg = this.node.getChildByName("bg");
         this.monsterArray = Monster.monstersOfAlive;
+        let gc: GameConfig = GameDataStorage.getGameConfig();
+        this.dataOfTower = gc.getDataOfMagiclan();
         this.createPoolOfBullet();
     }
 
@@ -105,9 +109,13 @@ export default class MagiclanTower extends cc.Component {
 
     /**
      * 根据塔的等级 设置塔的图片和骨骼动画
-     * @param level 塔的等级
      */
     private init() {
+        this.attack = this.dataOfTower[this.level - 1].attack;
+        this.speedOfShoot = this.dataOfTower[this.level - 1].speedOfShoot;
+        this.speedOfBullet = this.dataOfTower[this.level - 1].speedOfBullet;
+        this.shootRange = this.dataOfTower[this.level - 1].shootRange;
+
         this.initMagiclanAF();
         this.initTowerAF();
     }
@@ -214,7 +222,7 @@ export default class MagiclanTower extends cc.Component {
     private coolingShoot() {
         this.scheduleOnce(function () {
             this.isShoot = false;
-        }.bind(this), this.speedOfshoot);
+        }.bind(this), this.speedOfShoot);
     }
 
     private createBullet(): MagiclanBullet {

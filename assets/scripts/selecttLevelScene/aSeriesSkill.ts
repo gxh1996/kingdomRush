@@ -7,7 +7,6 @@ const { ccclass, property } = cc._decorator;
 //技能图标有3个状态：可以升级并且星星够、可以升级但星星不够、不能升级的灰色、已升级
 export enum SkillState { Upgradable, StarShort, Upgraded, UnUpgrade };
 
-// @ccclass("SkillIcon")
 export class SkillIcon {
     private state: SkillState;
     private node: cc.Node;
@@ -22,6 +21,7 @@ export class SkillIcon {
     /**
      * Creates an instance of skill icon.
      * @param node 图标节点
+     * @param state 该技能状态
      */
     constructor(node: cc.Node, state: SkillState, upNeedStarNum: number) {
         this.node = node;
@@ -116,7 +116,7 @@ export default class AseriesSkill extends cc.Component {
 
     private initskillIcons() {
         for (let i = 0; i < 5; i++) { //技能等级
-            let skillIcon: SkillIcon = new SkillIcon(this.skillNode[i], this.judgeSkillState(i + 1), this.gameConfig.getSkillsUpNeedStar()[this.skillNum][i]);
+            let skillIcon: SkillIcon = new SkillIcon(this.skillNode[i], this.judgeSkillState(i + 1), this.skillsUpNeedStar[this.skillNum - 1][i]);
             this.skillIcons.push(skillIcon);
 
             //绑定按钮事件

@@ -91,8 +91,12 @@ export default class FrameAnimation extends cc.Component {
             this.sprite.spriteFrame = this.idle;
     }
 
+    pause() {
+        this.isPlay = false;
+    }
+
     continue() {
-        this.play(this.isLoop);
+        this.isPlay = true;
     }
 
     /**
