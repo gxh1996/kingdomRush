@@ -34,8 +34,8 @@ export default class AboutScene extends cc.Component {
                 let loadingDoorAnimScr: LoadingDoorAnim = loadingDoorAnim.getComponent("loadingDoorAnim");
                 loadingDoorAnimScr.setState(false);
 
-                let homeScene: HomeScene = cc.find("Canvas").getComponent("homeScene");
-                homeScene.fristEntry = false;
+                // let homeScene: HomeScene = cc.find("Canvas").getComponent("homeScene");
+                // homeScene.fristEntry = false;
                 loadingDoorAnimScr.openDoor();
             });
         }, this);

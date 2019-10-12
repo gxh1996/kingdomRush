@@ -27,7 +27,7 @@ export default class SkillsBoard extends cc.Component {
 
     start() {
         this.updateStarNum();
-
+        this.updateAllSkills();
     }
 
     /**
@@ -42,6 +42,15 @@ export default class SkillsBoard extends cc.Component {
     }
 
     /**
+     * 更新所有技能树的显示
+     */
+    updateAllSkills() {
+        let i: AseriesSkill;
+        for (i of this.aSeriesSkillArray)
+            i.updateSkillIcons();
+    }
+
+    /**
      * 重置技能
      */
     resetSkills() {
@@ -51,8 +60,7 @@ export default class SkillsBoard extends cc.Component {
         this.updateStarNum();
         this.selectLevelScene.updateScoreLabel();
         //更新技能树
-        for (let aSeriesSkill of this.aSeriesSkillArray)
-            aSeriesSkill.updateSkillIcons();
+        this.updateAllSkills();
     }
     // update (dt) {}
 }

@@ -4,7 +4,9 @@ import SkillsBoard from "./skillsBoard";
 
 const { ccclass, property } = cc._decorator;
 
-//技能图标有3个状态：可以升级并且星星够、可以升级但星星不够、不能升级的灰色、已升级
+/**
+ * 技能图标有3个状态：可以升级并且星星够、可以升级但星星不够、不能升级的灰色、已升级
+ */
 export enum SkillState { Upgradable, StarShort, Upgraded, UnUpgrade };
 
 export class SkillIcon {
@@ -143,7 +145,7 @@ export default class AseriesSkill extends cc.Component {
 
     /**
      * 升级技能等级
-     * @param levelNum 升级到等级几，1开始 
+     * @param levelNum 该技能升级到几级。1开始
      */
     upSkill(e, levelNum) {
         levelNum = Number(levelNum);
@@ -157,7 +159,7 @@ export default class AseriesSkill extends cc.Component {
         //更新内部数据
         this.user.subHavedStar(needStarN);
         this.skillLevel[this.skillNum - 1] = levelNum;
-        //更新技能板
+        //更新技能树显示
         this.skillIcons[levelNum - 1].setState(SkillState.Upgraded);
         this.skillIcons[levelNum].setState(this.judgeSkillState(levelNum + 1));
         //更新显示的星星数

@@ -13,6 +13,12 @@ export default class ArrowBullet extends cc.Component {
     })
     private decalArrow: cc.SpriteFrame = null;
 
+    @property({
+        type: cc.SpriteFrame,
+        tooltip: "完整的箭图片"
+    })
+    private completedArrow: cc.SpriteFrame = null;
+
     /* 组件 */
     private sprite: cc.Sprite = null;
     private arrowTower: ArrowTower = null;
@@ -54,9 +60,11 @@ export default class ArrowBullet extends cc.Component {
     init(attack: number, speed: number, dir: boolean) {
         this.attack = attack;
         if (dir)
-            this.node.rotation = 50;
+            this.node.rotation = -50;
         else
-            this.node.rotation = -230;
+            this.node.rotation = 230;
+
+        this.sprite.spriteFrame = this.completedArrow;
     }
 
     /**

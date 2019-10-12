@@ -43,7 +43,7 @@ export class User {
     }
 
     /**
-     * 重置技能
+     * 重置技能，归回星星
      */
     resetSkill() {
         this.userData.skillsLevel.fill(0);
@@ -65,9 +65,8 @@ export class User {
         this.userData.currentHaveStarNum -= n;
     }
 
-    addHavedStar(n: number) {
+    private addHavedStar(n: number) {
         this.userData.currentHaveStarNum += n;
-        this.userData.currentStarSum += n;
     }
 
     /**
@@ -113,8 +112,18 @@ export class User {
     setLevelReview(levelN: number, review: number) {
         if (levelN > this.userData.rushLevelsSum)
             this.userData.rushLevelsSum = levelN;
-        if (this.userData.levelsReview[levelN] === undefined || this.userData.levelsReview[levelN] < review)
-            this.userData.levelsReview[levelN] = review;
+        else {
+            if (this.userData.levelsReview[levelN] === undefined) {
+                this.userData.levelsReview[levelN] = review;
+                this.addHavedStar(review);
+            }
+            else if (this.userData.levelsReview[levelN] < review) {
+                let add: number = review - this.userData.levelsReview[levelN];
+                this.userData.levelsReview[levelN] = review;
+                this.addHavedStar(add);
+            }
+            this.preseverData();
+        }
     }
 
     /**
@@ -130,7 +139,7 @@ export class User {
 
     preseverData() {
         this.ls.setItem("userData:" + this.userData.username, JSON.stringify(this.userData));
-        console.log("保存用户数据:", this.userData.username);
+        console.log("保存用户数据:", this.userData);
     }
 }
 
@@ -141,6 +150,10 @@ export class GameConfig {
         this.gameConfig = gameConfig;
         console.log("新建一个GameConfig对象，显示json对象:\n", this.gameConfig);
 
+    }
+
+    getRateOfSale(): number {
+        return this.gameConfig.rateOfSale;
     }
 
     getInitChip(): number {
@@ -183,7 +196,7 @@ export class GameConfig {
         return this.gameConfig.soldierData;
     }
 
-    getMonsterData() {
+    getMonsterData(): any[] {
         return this.gameConfig.mosterData;
     }
 
@@ -203,7 +216,7 @@ export class GameConfig {
 }
 
 export default class GameDataStorage {
-    private static gameConfig: GameConfig;
+    private static gameConfig: GameConfig = null;
     private static users: User[] = [];
     private static usernames: string[] = null;
     private static currentUser: User = null;
@@ -233,8 +246,8 @@ export default class GameDataStorage {
      * 保存所有用户的名字
      */
     private static preserveNamesOfAllUser() {
-        if (this.users.length > 0) {
-            let json: string = JSON.stringify(this.users);
+        if (this.usernames.length > 0) {
+            let json: string = JSON.stringify(this.usernames);
             this.ls.setItem("namesOfAllUser", json);
             console.log("所有用户名保存成功!");
         }
@@ -278,14 +291,14 @@ export default class GameDataStorage {
 
     static delUser(username: string) {
         //从所有用户名中移除
-        Utils.remvoeItemOfArray(this.users, username);
+        Utils.remvoeItemOfArray(this.usernames, username);
         //从用户数组中移除
         for (let i = 0; i < this.users.length; i++)
             if (this.users[i].getUsername() === username) {
                 this.users.splice(i, 1);
                 break;
             }
-
+        //从本地存储数据中删除
         this.ls.removeItem("userData:" + username);
         this.preserveNamesOfAllUser();
     }

@@ -35,6 +35,7 @@ export default class ArrowTower extends cc.Component {
      * 射手射速
      */
     private speedOfShoot: number;
+    price: number;
 
     private leftArrower: Arrower = null;
     private rightArrower: Arrower = null;
@@ -81,6 +82,7 @@ export default class ArrowTower extends cc.Component {
         this.speedOfArrow = this.dataOfTower[this.level - 1].speedOfArrow;
         this.shootRange = this.dataOfTower[this.level - 1].shootRange;
         this.speedOfShoot = this.dataOfTower[this.level - 1].speedOfShoot;
+        this.price = this.dataOfTower[this.level - 1].price;
 
         this.initArrower();
     }
@@ -166,7 +168,13 @@ export default class ArrowTower extends cc.Component {
         this.init();
     }
 
+    getPriceOfUpgrade(): number {
+        return this.dataOfTower[this.level].price;
+    }
 
+    getDataOfTower(): any[] {
+        return this.dataOfTower;
+    }
 
     update(dt) {
 

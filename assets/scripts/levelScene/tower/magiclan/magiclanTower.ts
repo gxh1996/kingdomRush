@@ -66,6 +66,7 @@ export default class MagiclanTower extends cc.Component {
     private speedOfBullet: number;
     private attack: number;
     shootRange: number;
+    price: number;
 
 
     /* 控制 */
@@ -115,6 +116,7 @@ export default class MagiclanTower extends cc.Component {
         this.speedOfShoot = this.dataOfTower[this.level - 1].speedOfShoot;
         this.speedOfBullet = this.dataOfTower[this.level - 1].speedOfBullet;
         this.shootRange = this.dataOfTower[this.level - 1].shootRange;
+        this.price = this.dataOfTower[this.level - 1].price;
 
         this.initMagiclanAF();
         this.initTowerAF();
@@ -246,6 +248,14 @@ export default class MagiclanTower extends cc.Component {
             return;
         this.level++;
         this.init();
+    }
+
+    getPriceOfUpgrade(): number {
+        return this.dataOfTower[this.level].price;
+    }
+
+    getDataOfTower(): any[] {
+        return this.dataOfTower;
     }
 
     /**

@@ -45,6 +45,7 @@ export default class Barrack extends cc.Component {
      * 出兵时间
      */
     private tOfCreateSoldier: number;
+    price: number;
 
     /* 数据 */
     /**
@@ -58,7 +59,7 @@ export default class Barrack extends cc.Component {
     stationOfSoldier: cc.Vec2[];
     private soldierPool: cc.NodePool;
     private createdSoldiers: Soldier[] = [];
-    private dataOfBarrack: any[];
+    private dataOfTower: any[];
 
     /* 控制 */
     /**
@@ -77,7 +78,7 @@ export default class Barrack extends cc.Component {
         this.createSoldierPool();
 
         let gc: GameConfig = GameDataStorage.getGameConfig();
-        this.dataOfBarrack = gc.getDataOfBarrack();
+        this.dataOfTower = gc.getDataOfBarrack();
     }
 
     start() {
@@ -90,7 +91,8 @@ export default class Barrack extends cc.Component {
      * 根据等级设置 动画。
      */
     init() {
-        this.tOfCreateSoldier = this.dataOfBarrack[this.level - 1].tOfCreateSoldier;
+        this.tOfCreateSoldier = this.dataOfTower[this.level - 1].tOfCreateSoldier;
+        this.price = this.dataOfTower[this.level - 1].price;
         this.availableStationNo = [0, 1, 2];
         this.refreshFrameAnim();
     }
@@ -142,8 +144,17 @@ export default class Barrack extends cc.Component {
         if (this.level === 4)
             return;
         this.level++;
-        this.tOfCreateSoldier = this.dataOfBarrack[this.level - 1];
+        this.tOfCreateSoldier = this.dataOfTower[this.level - 1];
+        this.price = this.dataOfTower[this.level - 1].price;
         this.refreshFrameAnim();
+    }
+
+    getPriceOfUpgrade(): number {
+        return this.dataOfTower[this.level].price;
+    }
+
+    getDataOfTower(): any[] {
+        return this.dataOfTower;
     }
 
     private autoOutSoldier() {

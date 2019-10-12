@@ -1,4 +1,5 @@
 import LevelScene from "./levelScene";
+import GameDataStorage, { GameConfig } from "../common/module/gameDataManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -51,6 +52,14 @@ export default class Builder extends cc.Component {
     private towerMap: cc.Node = null;
     private levelScene: LevelScene = null;
 
+    private priceOfArrow: cc.Label = null;
+    private priceOfBarrack: cc.Label = null;
+    private priceOfMagiclan: cc.Label = null;
+    private priceOfArtillery: cc.Label = null;
+    private priceOfUpgrade: cc.Label = null;
+    private priceOfSale: cc.Label = null;
+
+
     /* 数据 */
     /**
      * buildFace面板弹出和隐藏的时间
@@ -61,6 +70,15 @@ export default class Builder extends cc.Component {
      */
     private num: number;
     private stationOfSoldier: cc.Vec2[][];
+    /**
+     * 各种塔的数据
+     * arrowTower,artillery,barrack,magiclan
+     */
+    private dataOfTower: any[] = [];
+    /**
+     * 卖塔金币回收率
+     */
+    private rateOfSale: number;
 
     /* 控制 */
     private playingOutBuildFace: boolean = false;
@@ -76,6 +94,22 @@ export default class Builder extends cc.Component {
         this.towerMap = cc.find("Canvas/towerMap");
         this.levelScene = cc.find("Canvas").getComponent("levelScene");
         this.stationOfSoldier = this.levelScene.levelData.stationOfSoldier;
+
+        let gc: GameConfig = GameDataStorage.getGameConfig();
+
+        this.dataOfTower.push(gc.getDataOfArrowTower());
+        this.dataOfTower.push(gc.getDataOfArtillery());
+        this.dataOfTower.push(gc.getDataOfBarrack());
+        this.dataOfTower.push(gc.getDataOfMagiclan());
+
+        this.priceOfArrow = this.g1.getChildByName("arrow").getChildByName("price").getComponent(cc.Label);
+        this.priceOfBarrack = this.g1.getChildByName("barrack").getChildByName("price").getComponent(cc.Label);
+        this.priceOfMagiclan = this.g1.getChildByName("magiclan").getChildByName("price").getComponent(cc.Label);
+        this.priceOfArtillery = this.g1.getChildByName("artillery").getChildByName("price").getComponent(cc.Label);
+        this.priceOfUpgrade = this.g2.getChildByName("upgrade").getChildByName("price").getComponent(cc.Label);
+        this.priceOfSale = this.g2.getChildByName("sale").getChildByName("price").getComponent(cc.Label);
+
+        this.rateOfSale = gc.getRateOfSale();
     }
 
     start() {
@@ -103,9 +137,11 @@ export default class Builder extends cc.Component {
 
         this.buildFace.active = true;
         if (this.tower === null) {
+            this.refreshPriceOfBuild();
             this.g1.active = true;
         }
         else { //有塔
+            this.refreshPriceOfUpOrSele();
             if (this.tower.level === this.tower.maxLevel) //满级了
                 this.upgrade.interactable = false;
             else
@@ -118,6 +154,48 @@ export default class Builder extends cc.Component {
         let seq: cc.ActionInterval = cc.sequence(a, func);
         this.buildFace.runAction(seq);
 
+    }
+
+    /**
+     * 刷新各塔的建造价格
+     */
+    private refreshPriceOfBuild() {
+        this.setLabelInCase(this.priceOfArrow, this.dataOfTower[0][0].price);
+        this.setLabelInCase(this.priceOfArtillery, this.dataOfTower[1][0].price);
+        this.setLabelInCase(this.priceOfBarrack, this.dataOfTower[2][0].price);
+        this.setLabelInCase(this.priceOfMagiclan, this.dataOfTower[3][0].price);
+    }
+    /**
+     * 刷新升级塔和卖塔的价格
+     */
+    private refreshPriceOfUpOrSele() {
+        if (this.tower === null) {
+            cc.error("[ERROR] 升级或卖塔时，发现塔为null。请处理！");
+            return;
+        }
+
+        let d: any = this.tower.getDataOfTower();
+
+        //升级按钮
+        if (this.tower.level < d.length)
+            this.setLabelInCase(this.priceOfUpgrade, d[this.tower.level].price);
+
+        //出售按钮
+        let p: number = d[this.tower.level - 1].price;
+        this.priceOfSale.string = Math.floor(p * this.rateOfSale).toString();
+    }
+    /**
+     * 根据操作价格与已有金币设置label
+     * @param l Label
+     * @param p 建筑价格
+     */
+    private setLabelInCase(l: cc.Label, p: number) {
+        let havedCash: number = this.levelScene.cash;
+        l.string = p.toString();
+        if (p > havedCash)
+            l.node.color = cc.Color.RED;
+        else
+            l.node.color = cc.Color.WHITE;
     }
 
     /**
@@ -141,23 +219,37 @@ export default class Builder extends cc.Component {
     }
 
     buildArrowTower() {
-        this.buildTower(this.arrowTower, "arrowTower");
+        let cost: number = this.dataOfTower[0][0].price;
+        this.buildTower(this.arrowTower, "arrowTower", cost);
     }
 
     buildArtilleryTower() {
-        this.buildTower(this.artilleryTower, "artilleryTower");
+        let cost: number = this.dataOfTower[1][0].price;
+        this.buildTower(this.artilleryTower, "artilleryTower", cost);
     }
 
     buildMagiclanTower() {
-        this.buildTower(this.magiclanTower, "magiclanTower");
+        let cost: number = this.dataOfTower[3][0].price;
+        this.buildTower(this.magiclanTower, "magiclanTower", cost);
     }
 
     buildBarrackTower() {
-        this.buildTower(this.barrackTower, "barrack");
-        this.tower.stationOfSoldier = this.stationOfSoldier[this.num];
+        let cost: number = this.dataOfTower[2][0].price;
+        if (this.buildTower(this.barrackTower, "barrack", cost))
+            this.tower.stationOfSoldier = this.stationOfSoldier[this.num];
     }
 
-    private buildTower(towerPrefab: cc.Prefab, component: string) {
+    /**
+     * Builds tower
+     * @param towerPrefab 
+     * @param component 
+     * @param cost 花费金币
+     * @returns 金币不够，创建失败返回false
+     */
+    private buildTower(towerPrefab: cc.Prefab, component: string, cost: number): boolean {
+        if (!this.levelScene.subCash(cost))
+            return false;
+
         this.tower = cc.instantiate(towerPrefab).getComponent(component);
         this.towerMap.addChild(this.tower.node);
         this.tower.node.setPosition(this.node.getPosition());
@@ -165,19 +257,32 @@ export default class Builder extends cc.Component {
         this.land.opacity = 0;
         this.hiddenBuildFaceImmediately();
         this.scheduleOnce(this.drawShootRange.bind(this), 0.5);
+        return true;
     }
 
     saleTower() {
+        this.levelScene.addCash(this.tower.price * this.rateOfSale);
+
         this.deleteTower();
         this.hiddenBuildFaceImmediately();
         this.g.clear();
     }
 
     upTower() {
+        let havedCash: number = this.levelScene.cash;
+        let cost: number = this.tower.getPriceOfUpgrade();
+        if (havedCash < cost)
+            return;
+
+        this.levelScene.subCash(cost);
         this.tower.upgrade();
         this.drawShootRange();
-        if (this.tower.level === this.tower.maxLevel) //满级了
+        if (this.tower.level === this.tower.maxLevel) {
             this.upgrade.interactable = false;
+            return;
+        }
+
+        this.refreshPriceOfUpOrSele();
     }
 
     /**

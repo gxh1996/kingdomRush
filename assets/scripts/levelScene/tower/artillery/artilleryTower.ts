@@ -92,6 +92,7 @@ export default class Artillery extends cc.Component {
      */
     attack: number;
     private intervalOfShoot: number;
+    price: number;
 
     /* 控制 */
     private shootable: boolean = false;
@@ -120,6 +121,7 @@ export default class Artillery extends cc.Component {
         this.bombRange = this.dataOfTower[this.level - 1].bombRange;
         this.shootRange = this.dataOfTower[this.level - 1].shootRange;
         this.intervalOfShoot = this.dataOfTower[this.level - 1].intervalOfShoot;
+        this.price = this.dataOfTower[this.level - 1].price;
 
         this.frameAnimation.setFrameArray(this.towers[this.level - 1].frames);
         this.frameAnimation.setSpriteFrame(this.towers[this.level - 1].frames[0]);
@@ -171,10 +173,12 @@ export default class Artillery extends cc.Component {
             let time = l / this.speedOfBullet;
         }
 
-        this.frameAnimation.play(false, function () {
+        this.frameAnimation.play(false, false, false, function () {
             this.shootBullet(des, time);
             this.addBulletAnim();
-            this.scheduleOnce((() => { this.shootable = true; }).bind(this), this.intervalOfShoot);
+            this.scheduleOnce((() => {
+                this.shootable = true;
+            }).bind(this), this.intervalOfShoot);
         }.bind(this));
     }
 
@@ -221,7 +225,6 @@ export default class Artillery extends cc.Component {
         let a: cc.ActionInterval = cc.bezierTo(0.5, [this.addBulletData[this.level - 1].startPos, this.addBulletData[this.level - 1].ctrlPos, this.addBulletData[this.level - 1].endPos]);
         let func: cc.ActionInstant = cc.callFunc(function () {
             this.addBulletNodes[0].scale = 0;
-
         }, this);
         let seq: cc.ActionInterval = cc.sequence(a, func);
         this.addBulletNodes[0].runAction(seq);
@@ -240,6 +243,14 @@ export default class Artillery extends cc.Component {
             return;
         this.level++;
         this.init();
+    }
+
+    getPriceOfUpgrade(): number {
+        return this.dataOfTower[this.level].price;
+    }
+
+    getDataOfTower(): any[] {
+        return this.dataOfTower;
     }
 
     /**

@@ -49,21 +49,24 @@ export default class HomeScene extends cc.Component {
     fristEntry: boolean = true;
     private clips: cc.AnimationClip[] = null;
     onLoad() {
-
-        //初始化 模块
-        cc.sys.localStorage.clear();
-        GameDataStorage.init(this.conFigFiles.gameConfig.json);
         this.soundsManager = new SoundsManager();
-        LevelDataManager.initLevelData(this.conFigFiles.levelConfig.json);
+        //初始化 模块
+        if (GameDataStorage.getGameConfig() === null) {
+            // cc.sys.localStorage.clear();
+            GameDataStorage.init(this.conFigFiles.gameConfig.json);
+            LevelDataManager.initLevelData(this.conFigFiles.levelConfig.json);
+        }
 
         this.clips = this.startAnim.node.getComponent(cc.Animation).getClips();
     }
 
     start() {
+        console.log("本地数据:", cc.sys.localStorage);
 
         this.soundsManager.playBGM("sounds/home_scene_bg");
         if (this.fristEntry) {
             this.startAnim.logoDown();
+            // this.fristEntry = false;
         }
 
     }

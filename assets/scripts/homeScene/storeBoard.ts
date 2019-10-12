@@ -35,22 +35,28 @@ export default class Store extends cc.Component {
      * 更新存档面板
      */
     private updateStoreBoard() {
-        for (let i = 0; i < 3; i++)
-            if (this.users[i] === undefined) {
-                this.updateStore(this.storeNode[i], new User("无"));
-            }
+        for (let i = 0; i < 3; i++) {
+            if (this.users[i] === undefined)
+                this.updateStore(this.storeNode[i], null);
             else
                 this.updateStore(this.storeNode[i], this.users[i])
+        }
     }
 
     /**
      * 更新存档节点
      * @param storeNode 存档节点 
-     * @param user 用户数据
+     * @param user 用户数据，为null表示此存档为空
      */
     private updateStore(storeNode: cc.Node, user: User) {
         let nameLabel: cc.Label = storeNode.getChildByName("nameLabel").getComponent(cc.Label);
         let startNum: cc.Label = storeNode.getChildByName("startNum").getComponent(cc.Label);
+
+        if (user === null) {
+            nameLabel.string = "无";
+            startNum.string = `0/${this.gameConfig.getStarSum()}`;
+            return;
+        }
 
         nameLabel.string = user.getUsername();
         startNum.string = `${user.getStarSum()}/${this.gameConfig.getStarSum()}`;
@@ -58,7 +64,7 @@ export default class Store extends cc.Component {
 
     /**
      * 点击存档
-     * @param storeNum 存档几
+     * @param storeNum 存档几,1开始
      */
     storeButton(e, storeNum: string) {
         if (this.clickStoreButton)
@@ -101,8 +107,11 @@ export default class Store extends cc.Component {
         let i: number = parseInt(storeNum);
         if (this.users.length < i)  //存档为空
             return;
-        GameDataStorage.delUser(this.users[i - 1].getUsername());
+        let name: string = this.users[i - 1].getUsername();
+        GameDataStorage.delUser(name);
         this.updateStoreBoard();
+
+        console.log("删除存档", name);
     }
 
 

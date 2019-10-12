@@ -47,7 +47,7 @@ export default class SelectLevelScene extends cc.Component {
      */
     updateScoreLabel() {
         let max: number = this.gameConfig.getStarSum();
-        let num: number = this.user.getStarSum();
+        let num: number = this.user.getCurrentHaveStarNum();
         this.scoreLabel.string = num.toString() + "/" + max.toString();
     }
 
@@ -59,8 +59,8 @@ export default class SelectLevelScene extends cc.Component {
         this.soundsManager.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("homeScene", function () {
-                let homeScene: HomeScene = cc.find("Canvas").getComponent("homeScene");
-                homeScene.fristEntry = false;
+                // let homeScene: HomeScene = cc.find("Canvas").getComponent("homeScene");
+                // homeScene.fristEntry = false;
 
                 let loadingDoorAnim: cc.Node = cc.find("Canvas/centerAnchor/loadingDoorAnim");
                 let loadingDoorAnimScr: LoadingDoorAnim = loadingDoorAnim.getComponent("loadingDoorAnim");

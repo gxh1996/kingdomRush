@@ -2966,7 +2966,7 @@
     "component": "",
     "_componentId": "b4e39Usi6RNBY7exBtleB5L",
     "handler": "storeButton",
-    "customEventData": "1"
+    "customEventData": "2"
   },
   {
     "__type__": "cc.Node",
@@ -3521,7 +3521,7 @@
     "component": "",
     "_componentId": "b4e39Usi6RNBY7exBtleB5L",
     "handler": "deleteStore",
-    "customEventData": "1"
+    "customEventData": "2"
   },
   {
     "__type__": "cc.Node",
@@ -4068,7 +4068,7 @@
     "component": "",
     "_componentId": "b4e39Usi6RNBY7exBtleB5L",
     "handler": "storeButton",
-    "customEventData": "1"
+    "customEventData": "3"
   },
   {
     "__type__": "cc.Node",
@@ -4623,7 +4623,7 @@
     "component": "",
     "_componentId": "b4e39Usi6RNBY7exBtleB5L",
     "handler": "deleteStore",
-    "customEventData": "1"
+    "customEventData": "3"
   },
   {
     "__type__": "cc.Node",

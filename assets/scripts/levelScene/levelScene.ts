@@ -37,15 +37,15 @@ export default class LevelScene extends cc.Component {
 
 
     /* 关卡信息 */
-    levelNum: number = 1;
+    levelNum: number;
     /**
      * 在进行第几波
      */
-    private roundIndex = 1;
+    private roundIndex;
     /**
      * 最大回合数
      */
-    private maxRound: number = 0;
+    private maxRound: number;
     /**
      * 关卡信息
      */
@@ -53,15 +53,15 @@ export default class LevelScene extends cc.Component {
 
     /* 玩家信息 */
     private maxHP: number;
-    private HP: number = 1;
+    private HP: number;
     /**
      * 金币数
      */
-    private cash: number = 1;
+    cash: number;
     /**
      * 游戏得分
      */
-    private gameReview: number = 0;
+    private gameReview: number;
     private user: User = null;
 
     /* 控制 */
@@ -146,6 +146,7 @@ export default class LevelScene extends cc.Component {
         this.HP = this.maxHP = this.gameConfig.getInitBlood();
         this.cash = this.gameConfig.getInitChip();
         this.maxRound = this.levelData.noOfRound.length;
+        this.gameReview = 0;
 
         //更新界面显示
         this.V_gameState.setHP(this.HP);
@@ -168,6 +169,24 @@ export default class LevelScene extends cc.Component {
             this.startGame = false;
             this.settlementFace.outFailFace();
         }
+    }
+
+    /**
+     * Subs cash
+     * @param n 减的数量
+     * @returns 不够返回false 
+     */
+    subCash(n: number): boolean {
+        if (this.cash < n)
+            return false;
+        this.cash -= n;
+        this.V_gameState.setGold(this.cash);
+        return true;
+    }
+
+    addCash(n: number) {
+        this.cash += n;
+        this.V_gameState.setGold(this.cash);
     }
 
 
@@ -313,7 +332,7 @@ export default class LevelScene extends cc.Component {
                 this.gameReview = 1;
             this.settlementFace.outPassFace(this.gameReview);
             this.startGame = false;
-            // this.user.setLevelReview(this.levelNum - 1, this.gameReview);
+            this.user.setLevelReview(this.levelNum - 1, this.gameReview);
         }
     }
 

@@ -50,9 +50,9 @@ export default class Monster extends Creature {
     /* 数据 */
     public static monstersOfAlive: Monster[] = [];
     /**
-     * {HP,speedOfMove,intervalOfAttack,aggressivity,rangeOfAttack,rangeOfInvestigate}
+     * [怪物编号]{HP,speedOfMove,intervalOfAttack,aggressivity,rangeOfAttack,rangeOfInvestigate,price}
      */
-    private monsterData: any = null;
+    private monsterData: any[] = null;
     /**
      * 移动路径 世界
      */
@@ -254,6 +254,7 @@ export default class Monster extends Creature {
         if (this.cHP === 0) {
             this.die(Monster.monstersOfAlive, this);
             this.playDie(this.deadFrame, this.releaseSelf.bind(this));
+            this.levelScene.addCash(this.monsterData[this.monsterNo].price);
         }
     }
 

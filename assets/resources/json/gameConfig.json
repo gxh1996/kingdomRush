@@ -1,6 +1,8 @@
 {
+    "direction": "rateOfSale:卖塔的金币回收率.",
     "initChip": 200,
     "initBlood": 4,
+    "rateOfSale": 0.7,
     "skillsUpNeedStar": [
         [
             1,
@@ -47,32 +49,35 @@
     ],
     "levelsSum": 19,
     "starSum": 57,
-    "direction": "tower的攻击力分别为箭塔",
     "dataOfTower": {
         "arrowTower": [
             {
                 "attack": 4,
                 "speedOfArrow": 180,
                 "shootRange": 150,
-                "speedOfShoot": 2
+                "speedOfShoot": 2,
+                "price": 50
             },
             {
                 "attack": 5,
                 "speedOfArrow": 185,
                 "shootRange": 150,
-                "speedOfShoot": 2
+                "speedOfShoot": 2,
+                "price": 50
             },
             {
                 "attack": 6,
                 "speedOfArrow": 190,
                 "shootRange": 150,
-                "speedOfShoot": 1.5
+                "speedOfShoot": 1.5,
+                "price": 50
             },
             {
                 "attack": 7,
                 "speedOfArrow": 200,
                 "shootRange": 150,
-                "speedOfShoot": 1
+                "speedOfShoot": 1,
+                "price": 50
             }
         ],
         "artillery": [
@@ -81,35 +86,42 @@
                 "speedOfBullet": 160,
                 "bombRange": 45,
                 "shootRange": 150,
-                "intervalOfShoot": 1.5
+                "intervalOfShoot": 3,
+                "price": 50
             },
             {
                 "attack": 7,
                 "speedOfBullet": 170,
                 "bombRange": 50,
                 "shootRange": 150,
-                "intervalOfShoot": 1.5
+                "intervalOfShoot": 2.5,
+                "price": 50
             },
             {
                 "attack": 9,
                 "speedOfBullet": 180,
                 "bombRange": 55,
                 "shootRange": 150,
-                "intervalOfShoot": 1
+                "intervalOfShoot": 2,
+                "price": 50
             }
         ],
         "barrack": [
             {
-                "tOfCreateSoldier": 4
+                "tOfCreateSoldier": 4,
+                "price": 50
             },
             {
-                "tOfCreateSoldier": 4
+                "tOfCreateSoldier": 4,
+                "price": 50
             },
             {
-                "tOfCreateSoldier": 3.5
+                "tOfCreateSoldier": 3.5,
+                "price": 50
             },
             {
-                "tOfCreateSoldier": 3
+                "tOfCreateSoldier": 3,
+                "price": 50
             }
         ],
         "magiclan": [
@@ -117,25 +129,29 @@
                 "attack": 8,
                 "speedOfShoot": 2,
                 "speedOfBullet": 100,
-                "shootRange": 140
+                "shootRange": 140,
+                "price": 50
             },
             {
                 "attack": 9,
                 "speedOfShoot": 1.5,
                 "speedOfBullet": 100,
-                "shootRange": 140
+                "shootRange": 140,
+                "price": 50
             },
             {
                 "attack": 10,
                 "speedOfShoot": 1,
                 "speedOfBullet": 110,
-                "shootRange": 140
+                "shootRange": 140,
+                "price": 50
             },
             {
                 "attack": 11,
                 "speedOfShoot": 1,
                 "speedOfBullet": 110,
-                "shootRange": 150
+                "shootRange": 150,
+                "price": 50
             }
         ]
     },
@@ -185,7 +201,8 @@
             "aggressivity": 10,
             "rangeOfAttack": 15,
             "rangeOfInvestigate": 50,
-            "intervalOfThink": 1
+            "intervalOfThink": 1,
+            "price": 20
         }
     ]
 }
