@@ -1,4 +1,3 @@
-import FrameAnimation from "../../../common/frameAnimation";
 import Monster from "../../monster/monster";
 import MagiclanTower from "./magiclanTower";
 
@@ -7,21 +6,11 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class MagiclanBullet extends cc.Component {
 
-    // @property({
-    //     type: [cc.SpriteFrame]
-    // })
-    // private bombFrames: cc.SpriteFrame[] = [];
-
-    @property({ type: cc.SpriteFrame })
-    private sprite: cc.SpriteFrame = null;
-
-    private attack: number = 0;
-    private frameAnimation: FrameAnimation = null;
+    private attack: number;
     private isFallFloor: boolean = false;
     private tower: MagiclanTower = null;
 
     onLoad() {
-        this.frameAnimation = this.node.getComponent("frameAnimation");
         this.tower = this.node.parent.getComponent("magiclanTower");
     }
 
@@ -31,7 +20,6 @@ export default class MagiclanBullet extends cc.Component {
 
     init(attack: number) {
         this.attack = attack;
-        this.frameAnimation.setSpriteFrame(this.sprite);
     }
 
     /**
@@ -53,21 +41,11 @@ export default class MagiclanBullet extends cc.Component {
         let move: cc.ActionInterval = cc.bezierTo(time, [nodeStart, c, nodeEnd]);
 
         let func1: cc.ActionInstant = cc.callFunc(function () {
-            this.playBombAnim();
+            this.destroySelf();
         }.bind(this))
 
         let seq: cc.ActionInterval = cc.sequence(move, func1);
         this.node.runAction(seq);
-    }
-
-    /**
-     * 播放爆炸动画
-     */
-    private playBombAnim() {
-        this.frameAnimation.play(false, false, false, function () {
-            this.isFallFloor = true;
-            this.destroySelf();
-        }.bind(this));
     }
 
     private destroySelf() {
@@ -86,7 +64,7 @@ export default class MagiclanBullet extends cc.Component {
             let m: Monster = node.getComponent("monster");
             m.injure(this.attack);
 
-            this.playBombAnim();
+            this.destroySelf();
         }
     }
 

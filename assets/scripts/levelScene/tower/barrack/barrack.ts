@@ -144,7 +144,7 @@ export default class Barrack extends cc.Component {
         if (this.level === 4)
             return;
         this.level++;
-        this.tOfCreateSoldier = this.dataOfTower[this.level - 1];
+        this.tOfCreateSoldier = this.dataOfTower[this.level - 1].tOfCreateSoldier;
         this.price = this.dataOfTower[this.level - 1].price;
         this.refreshFrameAnim();
     }

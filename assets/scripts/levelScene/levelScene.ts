@@ -35,6 +35,11 @@ export default class LevelScene extends cc.Component {
     @property({})
     private isDebug: boolean = false;
 
+    @property({
+        type: cc.Sprite,
+        displayName: "地图"
+    })
+    private spriteOfMap: cc.Sprite = null;
 
     /* 关卡信息 */
     levelNum: number;
@@ -81,10 +86,7 @@ export default class LevelScene extends cc.Component {
 
     private gameConfig: GameConfig = null;
     private soundsManager: SoundsManager = null;
-    /**
-     * 放置动画路径的根节点
-     */
-    private VPMap: cc.Node = null;
+    private animOfVPMap: cc.Animation = null;
     /**
      * 放置空地的根节点
      */
@@ -95,15 +97,31 @@ export default class LevelScene extends cc.Component {
         this.settlementFace = cc.find("Canvas/centerUI/settlementFace").getComponent("settlementFace");
         this.soundsManager = new SoundsManager();
         this.gameConfig = GameDataStorage.getGameConfig();
-        this.VPMap = cc.find("Canvas/VPMap");
+        this.animOfVPMap = cc.find("Canvas/VPMap").getComponent(cc.Animation);
         this.builderMap = cc.find("Canvas/builderMap");
         this.monsterArray = Monster.monstersOfAlive;
+        this.user = GameDataStorage.getCurrentUser();
+    }
 
-        cc.loader.loadResDir("levelInfo/level" + this.levelNum + "/VPMap", cc.Prefab, function (e, res: any[]) {
-            //添加地图路径
-            for (let i = 0; i < res.length; i++) {
-                this.VPMap.addChild(cc.instantiate(res[i]));
-            }
+    start() {
+        this.buildScene();
+
+        console.log(`#进入关卡${this.levelNum}`);
+        this.soundsManager.playBGM("sounds/gameBGM/game_bg" + Utils.getRandomInterger(1, 5));
+
+        //打开碰撞检测系统
+        let manager: cc.CollisionManager = cc.director.getCollisionManager();
+        manager.enabled = true;
+        if (this.isDebug) {
+            manager.enabledDebugDraw = true;
+            manager.enabledDrawBoundingBox = true;
+        }
+    }
+
+    private buildScene() {
+        cc.loader.loadRes("levelData/level" + this.levelNum + "/roadData", cc.AnimationClip, function (e, res: any) {
+            //添加移动路径的动画
+            this.animOfVPMap.addClip(res);
             this.levelData = LevelDataManager.getLevelData(this.levelNum);
 
             //添加空地（用于建塔）
@@ -116,26 +134,15 @@ export default class LevelScene extends cc.Component {
                 b.init(i);
             }
 
-            this.init();
+            cc.loader.loadRes("levelData/level" + this.levelNum + "/map" + this.levelNum, cc.SpriteFrame, function (e, res: any) {
+                //设置地图
+                this.spriteOfMap.spriteFrame = res;
 
-            this.loadingDoorAnim.openDoor();
-            this.startGame = true;
+                this.init();
+                this.loadingDoorAnim.openDoor();
+                this.startGame = true;
+            }.bind(this))
         }.bind(this));
-
-        this.user = GameDataStorage.getCurrentUser();
-    }
-
-    start() {
-        console.log(`#进入关卡${this.levelNum}`);
-        this.soundsManager.playBGM("sounds/gameBGM/game_bg" + Utils.getRandomInterger(1, 5));
-
-        //打开碰撞检测系统
-        let manager: cc.CollisionManager = cc.director.getCollisionManager();
-        manager.enabled = true;
-        if (this.isDebug) {
-            manager.enabledDebugDraw = true;
-            manager.enabledDrawBoundingBox = true;
-        }
     }
 
     /**
@@ -158,7 +165,7 @@ export default class LevelScene extends cc.Component {
         this.cT = 0;
 
         //初始化monsterFactory
-        this.monsterFactory.init();
+        this.monsterFactory.init(this.levelData.roadNum);
     }
 
 
@@ -261,7 +268,7 @@ export default class LevelScene extends cc.Component {
 
         //重置游戏
         this.monsterFactory.clearMonsters();
-        this.monsterFactory.init();
+        this.monsterFactory.init(this.levelData.roadNum);
         this.resetLand();
         this.init();
 

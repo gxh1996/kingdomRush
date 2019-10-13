@@ -32,7 +32,7 @@ export default class ArrowBullet extends cc.Component {
     /**
      * 修正箭的初始方向为正右
      */
-    private offsetDegree: number = 180;
+    private readonly offsetDegree: number = 180;
 
     /* 控制 */
     private isUpdateDir: boolean = true;
@@ -47,24 +47,32 @@ export default class ArrowBullet extends cc.Component {
     }
 
     start() {
-        this.curPos = this.node.getPosition();
-        //更新方向
-        this.scheduleOnce(this.updateDir, 0.07);
     }
 
     /**
-     * 设置箭的攻击力和速度
+     * 初始化
      * @param attack 
      * @param dir 箭的朝向，true为左
      */
     init(attack: number, speed: number, dir: boolean) {
         this.attack = attack;
         if (dir)
-            this.node.rotation = -50;
+            this.node.rotation = 50;
         else
-            this.node.rotation = 230;
+            this.node.rotation = -230;
 
+        //显示
         this.sprite.spriteFrame = this.completedArrow;
+
+        //记录
+        this.lastPos = null;
+        this.curPos = this.node.getPosition();
+
+        //控制
+        this.isUpdateDir = true;
+        this.isFallFloor = false;
+
+        this.scheduleOnce(this.updateDir, 0.07);
     }
 
     /**
@@ -164,13 +172,8 @@ export default class ArrowBullet extends cc.Component {
         return rot;
     }
 
-
-
     private destroySelf() {
         this.arrowTower.releaseArrowBullt(this.node);
-    }
-
-    update(dt) {
     }
 
 }

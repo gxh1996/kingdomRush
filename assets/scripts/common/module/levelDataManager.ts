@@ -19,6 +19,7 @@ export default class LevelDataManager {
 
     private static initLevel(jsonObj: any): Level {
         let level: Level = new Level();
+        level.roadNum = jsonObj.roadNum;
         level.posOfBuilders = jsonObj.posOfBuilders;
         level.noOfRound = jsonObj.noOfRound;
         level.timeOfRound = jsonObj.timeOfRound;
@@ -33,6 +34,7 @@ export default class LevelDataManager {
 }
 
 export class Level {
+    roadNum: number;
     /**
      * 建筑点的坐标 buildMap坐标
      */

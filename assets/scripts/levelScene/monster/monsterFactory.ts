@@ -22,6 +22,10 @@ export default class MonsterFactory extends cc.Component {
      * 每次删除monster是将其回收到对象池中
      */
     private poolOfMonster: cc.NodePool[] = null;
+    /**
+     * 路径条数
+     */
+    private roadNum: number = null;
 
     onLoad() {
         //初始化怪物对象池
@@ -29,11 +33,18 @@ export default class MonsterFactory extends cc.Component {
         for (let i = 0; i < this.monsterPrefab.length; i++) {
             this.poolOfMonster[i] = new cc.NodePool();
         }
+
+
     }
 
-    init() {
+    /**
+     * Inits monster factory
+     * @param roadNum 路径条数
+     */
+    init(roadNum: number) {
         this.creMonList = [];
         this.cT = 0;
+        this.roadNum = roadNum;
     }
 
     createMonster(num: number) {
@@ -65,7 +76,7 @@ export default class MonsterFactory extends cc.Component {
         this.node.addChild(m);
         Monster.monstersOfAlive.push(mScr);
 
-        mScr.init(num, this.animationPath.getWorldPath("road" + this.getRandomNumber(1, 3).toString()))
+        mScr.init(num, this.animationPath.getWorldPath("road" + this.getRandomNumber(1, this.roadNum).toString()))
     }
 
     private getRandomNumber(min, max): number {

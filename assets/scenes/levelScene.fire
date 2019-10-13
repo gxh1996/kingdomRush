@@ -327,7 +327,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "cf953b1b-98ca-414b-961b-cbb3f1fd9963"
+      "__uuid__": "7b3f4e92-8cf7-47a4-916c-c35914c9baf1"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -352,17 +352,7 @@
     },
     "_enabled": true,
     "_defaultClip": null,
-    "_clips": [
-      {
-        "__uuid__": "7aab056b-453f-4659-8c22-901298bdfe32"
-      },
-      {
-        "__uuid__": "2becb2b6-4db9-4b61-bf0c-85c0eef49018"
-      },
-      {
-        "__uuid__": "224577aa-5787-4b42-9462-2bc72de2672e"
-      }
-    ],
+    "_clips": [],
     "playOnLoad": false,
     "_id": "79dtESCdlFEITLyAKVAG0P"
   },
@@ -557,6 +547,18 @@
     "monsterPrefab": [
       {
         "__uuid__": "d81a6db8-5134-4680-9175-257c523a1d3b"
+      },
+      {
+        "__uuid__": "037c8f53-d948-49bf-9443-3b052f7241a1"
+      },
+      {
+        "__uuid__": "97d4e2e1-410d-4f07-91f9-4ed6cb50bfba"
+      },
+      {
+        "__uuid__": "8a304a57-c461-419b-be46-91db65d3e094"
+      },
+      {
+        "__uuid__": "591f87c3-e933-40bd-8019-b40fbc68c126"
       }
     ],
     "animationPath": {
@@ -567,7 +569,7 @@
   {
     "__type__": "cc.Node",
     "_name": "leftUpUI",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -1087,7 +1089,7 @@
   {
     "__type__": "cc.Node",
     "_name": "bottomUI",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -2198,7 +2200,7 @@
   {
     "__type__": "cc.Node",
     "_name": "rightUpUI",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -2811,7 +2813,7 @@
   {
     "__type__": "cc.Node",
     "_name": "centerUI",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -7455,7 +7457,7 @@
   {
     "__type__": "cc.Node",
     "_name": "loadingDoorAnim",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 2
     },
@@ -7758,6 +7760,9 @@
       "__id__": 23
     },
     "isDebug": false,
+    "spriteOfMap": {
+      "__id__": 6
+    },
     "_id": "b6J0xuQ6hH7a0MdhdfEAI5"
   }
 ]

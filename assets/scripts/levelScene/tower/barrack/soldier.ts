@@ -60,6 +60,22 @@ export default class Soldier extends Creature {
     })
     private soldier3Walk: cc.SpriteFrame[] = [];
 
+    @property({
+        type: [cc.SpriteFrame],
+        tooltip: "等级4的士兵攻击帧动画图片"
+    })
+    private soldier4Attack: cc.SpriteFrame[] = [];
+    @property({
+        type: [cc.SpriteFrame],
+        tooltip: "等级4的士兵死亡帧动画图片"
+    })
+    private soldier4Dead: cc.SpriteFrame[] = [];
+    @property({
+        type: [cc.SpriteFrame],
+        tooltip: "等级4的士兵行走帧动画图片"
+    })
+    private soldier4Walk: cc.SpriteFrame[] = [];
+
     /* 属性 */
     private level: number = null;
 
@@ -98,7 +114,7 @@ export default class Soldier extends Creature {
 
     onLoad() {
         //整理帧动画集
-        this.framesOfAnim = [[this.soldier1Attack, this.soldier1Dead, this.soldier1Walk], [this.soldier2Attack, this.soldier2Dead, this.soldier2Walk], [this.soldier3Attack, this.soldier3Dead, this.soldier3Walk]];
+        this.framesOfAnim = [[this.soldier1Attack, this.soldier1Dead, this.soldier1Walk], [this.soldier2Attack, this.soldier2Dead, this.soldier2Walk], [this.soldier3Attack, this.soldier3Dead, this.soldier3Walk], [this.soldier4Attack, this.soldier4Dead, this.soldier4Walk]];
 
         //士兵数据
         let gameConfig: GameConfig = GameDataStorage.getGameConfig();

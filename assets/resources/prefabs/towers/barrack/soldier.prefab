@@ -601,6 +601,63 @@
         "__uuid__": "7c004cdf-55ba-4338-959f-aee0d14e7b02"
       }
     ],
+    "soldier4Attack": [
+      {
+        "__uuid__": "3e4e63f1-9e7a-46e5-b07f-82665f7fdcc5"
+      },
+      {
+        "__uuid__": "1cf40801-0fed-4833-8641-88007ce387b0"
+      },
+      {
+        "__uuid__": "0445ec46-ae40-4015-bf50-944861bbd4f0"
+      },
+      {
+        "__uuid__": "ee07461f-4745-4eff-b526-70517ffeead2"
+      }
+    ],
+    "soldier4Dead": [
+      {
+        "__uuid__": "56731e2d-51b8-49c1-bc91-856f041dfeb7"
+      },
+      {
+        "__uuid__": "d3c59d08-3195-4aeb-85a0-0ad8924d43fc"
+      },
+      {
+        "__uuid__": "ee958201-a62a-4ad8-ad50-1af8a39f66d1"
+      },
+      {
+        "__uuid__": "0501990e-5890-4fe0-82bb-5190b6011256"
+      },
+      {
+        "__uuid__": "95b948a0-9edf-4a4f-8a7a-c709cdd4f8cd"
+      },
+      {
+        "__uuid__": "627d718b-08cb-4623-ac38-6f77e280dbec"
+      },
+      {
+        "__uuid__": "d6fbb80f-93f9-4be5-a63d-2de3e53a16de"
+      }
+    ],
+    "soldier4Walk": [
+      {
+        "__uuid__": "9c78c543-a825-46a7-a3c8-129fb756adce"
+      },
+      {
+        "__uuid__": "8025f363-368e-4fa5-ac38-ce50130bc60f"
+      },
+      {
+        "__uuid__": "34b84ec8-6a89-45a2-81a4-ff132d5f33f6"
+      },
+      {
+        "__uuid__": "5a7d30c4-70b3-4cc1-95c9-4b5a3dd1372b"
+      },
+      {
+        "__uuid__": "211ae25e-9435-45da-9dd8-ac9d31954fe7"
+      },
+      {
+        "__uuid__": "be0d117a-35b1-4054-b574-bc2d6c8bcec9"
+      }
+    ],
     "_id": ""
   },
   {
