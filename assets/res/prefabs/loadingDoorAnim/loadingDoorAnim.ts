@@ -1,4 +1,4 @@
-import SoundsManager from "./module/soundsManager";
+import SoundsManager from "../../../scripts/common/module/soundsManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -17,12 +17,10 @@ export default class LoadingDoorAnim extends cc.Component {
      */
     isDoorOpen: boolean = true;
     private viewSize: cc.Size = null;
-    private soundsManager: SoundsManager = null;
     onLoad() {
         this.lDoor = this.node.getChildByName("lDoor");
         this.rDoor = this.node.getChildByName("rDoor");
         this.viewSize = cc.view.getVisibleSize();
-        this.soundsManager = new SoundsManager();
 
         this.setState(true)
     }
@@ -78,7 +76,7 @@ export default class LoadingDoorAnim extends cc.Component {
         let la: cc.ActionInterval = cc.moveTo(this.time, cc.v2(2, 0)).easing(cc.easeIn(2));
         let ra: cc.ActionInterval = cc.moveTo(this.time, cc.v2(-2, 0)).easing(cc.easeIn(2));
         let f1: cc.ActionInstant = cc.callFunc(function () {
-            this.soundsManager.playEffect("sounds/close_door");
+            SoundsManager.ins.playEffect("sounds/close_door");
         }, this);
 
         let seq: cc.ActionInterval = cc.sequence(ra, f1, func);

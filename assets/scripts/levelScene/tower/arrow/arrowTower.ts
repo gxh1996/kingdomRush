@@ -19,6 +19,9 @@ export default class ArrowTower extends cc.Component {
     })
     private arrowPrefab: cc.Prefab = null;
 
+    @property([cc.SpriteAtlas])
+    private atlas: cc.SpriteAtlas[] = [];
+
     /* 塔的属性 */
     /**
      * 塔的等级
@@ -116,13 +119,13 @@ export default class ArrowTower extends cc.Component {
         //设置位置和图片
         this.frameAnimations[0].node.y = this.offsetY[this.level - 1].y;
         this.frameAnimations[1].node.y = this.offsetY[this.level - 1].y;
-        let dir: string = "textures/levelScene/tower/" + "arrowTower/" + "arrow" + this.level.toString()
-        cc.loader.loadResDir(dir, cc.SpriteFrame, function (e, res, url: string[]) {
-            //设置塔的皮肤
-            this.towerBG.spriteFrame = res[0];
-            this.setSkin(this.frameAnimations[0], res);
-            this.setSkin(this.frameAnimations[1], res);
-        }.bind(this));
+        let atlas: cc.SpriteAtlas = this.atlas[this.level - 1];
+        let spriteArr: cc.SpriteFrame[] = atlas.getSpriteFrames();
+
+        //设置塔的皮肤
+        this.towerBG.spriteFrame = spriteArr[0];
+        this.setSkin(this.frameAnimations[0], spriteArr);
+        this.setSkin(this.frameAnimations[1], spriteArr);
 
         //传参
         this.leftArrower.init(this.wPos, this.speedOfArrow, this.shootRange, this.speedOfShoot, this.attack);
@@ -135,7 +138,7 @@ export default class ArrowTower extends cc.Component {
      * @param frameAnimation 
      * @param res 图片资源
      */
-    private setSkin(frameAnimation: FrameAnimation, res) {
+    private setSkin(frameAnimation: FrameAnimation, res: cc.SpriteFrame[]) {
         //设置士兵等待时的皮肤
         let i: number = 5; //朝下
         if (this.toward)

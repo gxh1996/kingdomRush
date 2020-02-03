@@ -34,7 +34,7 @@ export default class MonsterFactory extends cc.Component {
             this.poolOfMonster[i] = new cc.NodePool();
         }
 
-
+        Monster.monstersOfAlive = [];
     }
 
     /**

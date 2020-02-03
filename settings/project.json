@@ -25,6 +25,14 @@
   "design-resolution-height": 600,
   "design-resolution-width": 700,
   "excluded-modules": [
+    "ParticleSystem",
+    "TiledMap",
+    "Spine Skeleton",
+    "DragonBones",
+    "RichText",
+    "MotionStreak",
+    "Toggle",
+    "VideoPlayer",
     "Geom Utils",
     "3D",
     "3D Primitive"
@@ -47,11 +55,11 @@
     "Enemy",
     "Soldier"
   ],
-  "last-module-event-record-time": 0,
+  "last-module-event-record-time": 1580698198644,
   "simulator-orientation": true,
   "simulator-resolution": {
-    "height": 600,
-    "width": 700
+    "height": 700,
+    "width": 600
   },
   "start-scene": "0421ea6a-5b9e-4114-b568-bb4aaded12a3",
   "use-customize-simulator": true,

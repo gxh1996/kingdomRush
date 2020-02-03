@@ -1,68 +1,78 @@
+import StorageManager from "./storageManager";
+
 export default class SoundsManager {
-    /**
-     * cc.sys.localStorage
-     */
-    private ls = cc.sys.localStorage;
-    /**
-     * 是否初始化本地存储对象
-     * @param inited 
-     */
-    constructor() {
-        let v: string = this.ls.getItem("isBGMMute");
-        if (v === null) { //不存在本地数据
-            this.ls.setItem("isBGMMute", 0);
-            this.ls.setItem("isEffectMute", 0);
-        }
-        else {
-            if (this.getIsBGMMute())
-                cc.audioEngine.setMusicVolume(0);
-            if (this.getIsEffectMute())
-                cc.audioEngine.setEffectsVolume(0);
+
+    static ins: SoundsManager = null;
+
+    static init() {
+        this.ins = new SoundsManager();
+
+    }
+
+    private isBGMMute: boolean = false;
+    private isEffectMute: boolean = false;
+
+    curBGM: string = null;
+
+    get IsBGMMute(): boolean {
+        return this.isBGMMute;
+    }
+    get IsEffectMute(): boolean {
+        return this.isEffectMute;
+    }
+
+    private constructor() {
+        this.isBGMMute = StorageManager.ins.getData("isBGMMute")
+        if (this.isBGMMute === null)
+            this.isBGMMute = false;
+
+        this.isEffectMute = StorageManager.ins.getData("isEffectMute")
+        if (this.isEffectMute === null)
+            this.isEffectMute = false;
+    }
+
+    openBGM() {
+        if (this.isBGMMute) {
+            this.isBGMMute = false;
+            StorageManager.ins.storageData("isBGMMute", false);
+
+            if (this.curBGM)
+                this.playBGM(this.curBGM);
         }
     }
 
-    setIsBGMMute(v: boolean) {
-        if (v) {
-            this.ls.setItem("isBGMMute", 1);
-            cc.audioEngine.setMusicVolume(0);
-        }
-        else {
-            this.ls.setItem("isBGMMute", 0);
-            cc.audioEngine.setMusicVolume(1);
+    closeBGM() {
+        if (!this.isBGMMute) {
+            this.isBGMMute = true;
+            StorageManager.ins.storageData("isBGMMute", true);
+
+            cc.audioEngine.pauseMusic();
         }
     }
 
-    getIsBGMMute(): boolean {
-        let r: string = this.ls.getItem("isBGMMute");
-        if (r === "1")
-            return true;
-        return false;
-    }
-
-    setIsEffectMute(v: boolean) {
-        if (v) {
-            this.ls.setItem("isEffectMute", 1);
-            cc.audioEngine.setEffectsVolume(0);
-        }
-        else {
-            this.ls.setItem("isEffectMute", 0);
-            cc.audioEngine.setEffectsVolume(1);
+    openEffect() {
+        if (this.isEffectMute) {
+            this.isEffectMute = false;
+            StorageManager.ins.storageData("isEffectMute", false);
         }
     }
 
-    getIsEffectMute(): boolean {
-        let r: string = this.ls.getItem("isEffectMute");
-        if (r === "1")
-            return true;
-        return false;
+    closeEffect() {
+        if (!this.isEffectMute) {
+            this.isEffectMute = true;
+            StorageManager.ins.storageData("isEffectMute", true);
+            cc.audioEngine.stopAllEffects();
+        }
     }
-
 
     /**
      * 播放背景音乐
      * @param url 文件路径
      */
     playBGM(url: string) {
+        if (this.isBGMMute)
+            return;
+
         cc.loader.loadRes(url, cc.AudioClip, function (e, clip) {
             cc.audioEngine.playMusic(clip, true);
         }.bind(this))
@@ -73,10 +83,9 @@ export default class SoundsManager {
      * @param url 文件路径
      */
     playEffect(url: string) {
-        let isEffectMute: string = this.ls.getItem("isEffectMute");
-
-        if (isEffectMute === "1")
+        if (this.isEffectMute)
             return;
+
         cc.loader.loadRes(url, cc.AudioClip, function (e, clip) {
             cc.audioEngine.playEffect(clip, false);
         })

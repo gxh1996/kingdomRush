@@ -9,13 +9,12 @@ export default class LevelManager extends cc.Component {
 
     private levels: cc.Node[] = null;
     private isLevelButton: boolean = false;
-    private soundsManager: SoundsManager = null;
     private selectLevelScene: SelectLevelScene = null;
     private levelEntry: cc.Node = null;
     /**
      * 最大关数
      */
-    private MaxLevelNum: number = 19;
+    private MaxLevelNum: number = null;
     /**
      * 最新解锁的关卡
      */
@@ -23,9 +22,9 @@ export default class LevelManager extends cc.Component {
 
     onLoad() {
         this.levels = this.node.children;
-        this.soundsManager = new SoundsManager();
         this.selectLevelScene = cc.find("Canvas").getComponent("selectLevelScene");
         this.levelEntry = this.levels[this.levels.length - 1];
+        this.MaxLevelNum = GameDataStorage.getGameConfig().getLevelsSum();
     }
 
     start() {
@@ -55,7 +54,7 @@ export default class LevelManager extends cc.Component {
         if (this.isLevelButton)
             return;
         this.isLevelButton = true;
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
 
         if (level > this.MaxLevelNum) { //最新关
             this.selectLevelScene.toLevelScene(this.newLevel);
@@ -83,6 +82,10 @@ export default class LevelManager extends cc.Component {
             }
             level.active = true;
         }
+
+        if (visitedN + 1 > GameDataStorage.getGameConfig().getLevelsSum())
+            return;
+
         //更新没有闯的第一个新关
         let nextLevel: cc.Node = this.levels[visitedN];
         let pos: cc.Vec2 = nextLevel.getPosition();

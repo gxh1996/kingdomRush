@@ -48,7 +48,7 @@ export default class Monster extends Creature {
     monsterNo: number = null;
 
     /* 数据 */
-    public static monstersOfAlive: Monster[] = [];
+    public static monstersOfAlive: Monster[] = null;
     /**
      * [怪物编号]{HP,speedOfMove,intervalOfAttack,aggressivity,rangeOfAttack,rangeOfInvestigate,price}
      */

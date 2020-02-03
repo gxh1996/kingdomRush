@@ -135,6 +135,8 @@ export default class Builder extends cc.Component {
             return;
         this.playingOutBuildFace = true;
 
+        this.node.zIndex = 10;
+
         this.buildFace.active = true;
         if (this.tower === null) {
             this.refreshPriceOfBuild();
@@ -205,6 +207,8 @@ export default class Builder extends cc.Component {
         if (this.playingHiddenBuildFace)
             return;
         this.playingHiddenBuildFace = true;
+
+        this.node.zIndex = 0;
 
         let a: cc.ActionInterval = cc.scaleTo(this.timeOfFaceAction, 0);
         this.buildFace.runAction(a);

@@ -99,7 +99,7 @@ export default class Soldier extends Creature {
      * 用于给敌人遍历场上士兵用
      * 士兵加到节点上时push,士兵死亡时pop
      */
-    static soldiersOfAlive: Soldier[] = [];
+    static soldiersOfAlive: Soldier[] = null;
 
     /* 引用对象 */
     private barrack: Barrack = null;

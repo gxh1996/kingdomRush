@@ -1,7 +1,7 @@
-import SoundsManager from "../common/module/soundsManager";
 import HomeScene from "../homeScene/homeScene";
 import GameDataStorage from "../common/module/gameDataManager";
 import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
+import SoundsManager from "../common/module/soundsManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -12,9 +12,7 @@ export default class AboutScene extends cc.Component {
     private loadingDoorAnim: LoadingDoorAnim = null;
 
     private isBackButton: boolean = false;
-    private soundsManager: SoundsManager = null;
     onLoad() {
-        this.soundsManager = new SoundsManager();
     }
 
     start() {
@@ -27,7 +25,7 @@ export default class AboutScene extends cc.Component {
             return;
         this.isBackButton = true;
 
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("homeScene", function () {
                 let loadingDoorAnim: cc.Node = cc.find("Canvas/centerAnchor/loadingDoorAnim");

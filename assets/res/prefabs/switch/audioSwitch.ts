@@ -1,4 +1,4 @@
-import SoundsManager from "./module/soundsManager";
+import SoundsManager from "../../../scripts/common/module/soundsManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -32,9 +32,7 @@ export default class AudioSwitch extends cc.Component {
     })
     private effectSwitch: cc.Sprite = null;
 
-    private soundsManager: SoundsManager = null;
     onLoad() {
-        this.soundsManager = new SoundsManager();
     }
 
     start() {
@@ -42,8 +40,8 @@ export default class AudioSwitch extends cc.Component {
     }
 
     private initSwitch() {
-        let isMusicMute: boolean = this.soundsManager.getIsBGMMute();
-        let isEffectMute: boolean = this.soundsManager.getIsEffectMute();
+        let isMusicMute: boolean = SoundsManager.ins.IsBGMMute;
+        let isEffectMute: boolean = SoundsManager.ins.IsEffectMute;
         if (isMusicMute)
             this.musicSwitch.spriteFrame = this.musicOff;
         else
@@ -56,28 +54,28 @@ export default class AudioSwitch extends cc.Component {
     }
 
     musicSwitchButton() {
-        let state: boolean = this.soundsManager.getIsBGMMute();
+        let state: boolean = SoundsManager.ins.IsBGMMute;
         if (state) {
-            this.soundsManager.setIsBGMMute(false);
+            SoundsManager.ins.openBGM();
             this.musicSwitch.spriteFrame = this.musicOn;
 
         }
         else { //有声
-            this.soundsManager.setIsBGMMute(true);
+            SoundsManager.ins.closeBGM();
             this.musicSwitch.spriteFrame = this.musicOff;
 
         }
     }
 
     effecttSwitchButton() {
-        let state: boolean = this.soundsManager.getIsEffectMute();
+        let state: boolean = SoundsManager.ins.IsEffectMute;
         if (state) { //无音效
-            this.soundsManager.setIsEffectMute(false);
+            SoundsManager.ins.openEffect();
             this.effectSwitch.spriteFrame = this.effectOn;
 
         }
         else {
-            this.soundsManager.setIsEffectMute(true);
+            SoundsManager.ins.closeEffect()
             this.effectSwitch.spriteFrame = this.effectOff;
 
         }

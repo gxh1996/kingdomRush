@@ -1,8 +1,5 @@
 import Creature from "./creature";
 
-const { ccclass, property } = cc._decorator;
-
-@ccclass
 export default class CombatLogic {
 
     private host: Creature = null;

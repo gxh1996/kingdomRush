@@ -1,4 +1,3 @@
-import SoundsManager from "../common/module/soundsManager";
 import GameDataStorage, { GameConfig, User } from "../common/module/gameDataManager";
 import MonsterFactory from "./monster/monsterFactory";
 import V_gameState from "./V_gameState";
@@ -8,6 +7,8 @@ import Monster from "./monster/monster";
 import Builder from "./builder";
 import LevelDataManager, { Level } from "../common/module/levelDataManager";
 import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
+import SoundsManager from "../common/module/soundsManager";
+import Soldier from "./tower/barrack/soldier";
 
 const { ccclass, property } = cc._decorator;
 
@@ -85,7 +86,6 @@ export default class LevelScene extends cc.Component {
     private monsterArray: Monster[] = null;
 
     private gameConfig: GameConfig = null;
-    private soundsManager: SoundsManager = null;
     private animOfVPMap: cc.Animation = null;
     /**
      * 放置空地的根节点
@@ -95,19 +95,22 @@ export default class LevelScene extends cc.Component {
 
     onLoad() {
         this.settlementFace = cc.find("Canvas/centerUI/settlementFace").getComponent("settlementFace");
-        this.soundsManager = new SoundsManager();
         this.gameConfig = GameDataStorage.getGameConfig();
         this.animOfVPMap = cc.find("Canvas/VPMap").getComponent(cc.Animation);
         this.builderMap = cc.find("Canvas/builderMap");
         this.monsterArray = Monster.monstersOfAlive;
         this.user = GameDataStorage.getCurrentUser();
+
+        Soldier.soldiersOfAlive = [];
+        console.log("士兵数组", Soldier.soldiersOfAlive);
     }
 
     start() {
         this.buildScene();
 
         console.log(`#进入关卡${this.levelNum}`);
-        this.soundsManager.playBGM("sounds/gameBGM/game_bg" + Utils.getRandomInterger(1, 5));
+        SoundsManager.ins.curBGM = "sounds/gameBGM/game_bg" + Utils.getRandomInterger(1, 5);
+        SoundsManager.ins.playBGM(SoundsManager.ins.curBGM);
 
         //打开碰撞检测系统
         let manager: cc.CollisionManager = cc.director.getCollisionManager();
@@ -203,7 +206,7 @@ export default class LevelScene extends cc.Component {
             return;
         this.isBackButton = true;
 
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("selectLevelScene", function () {
                 let loadingDoorAnim: cc.Node = cc.find("Canvas/loadingDoorAnim");
@@ -269,6 +272,7 @@ export default class LevelScene extends cc.Component {
         //重置游戏
         this.monsterFactory.clearMonsters();
         this.monsterFactory.init(this.levelData.roadNum);
+
         this.resetLand();
         this.init();
 
@@ -287,7 +291,7 @@ export default class LevelScene extends cc.Component {
             return;
         this.isExitButton = true;
 
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("selectLevelScene");
         }, this);

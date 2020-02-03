@@ -1,4 +1,5 @@
 import Utils from "./utils";
+import StorageManager from "./storageManager";
 
 export class User {
     /**
@@ -29,7 +30,7 @@ export class User {
      * @param username 
      */
     constructor(username: string) {
-        this.userData = this.ls.getItem("userData:" + username);
+        this.userData = StorageManager.ins.getData("userData:" + username);
         if (this.userData === null) {
             this.userData = this.initUserData;
             this.userData.username = username;
@@ -138,7 +139,7 @@ export class User {
     }
 
     preseverData() {
-        this.ls.setItem("userData:" + this.userData.username, JSON.stringify(this.userData));
+        StorageManager.ins.storageData("userData:" + this.userData.username, JSON.stringify(this.userData))
         console.log("保存用户数据:", this.userData);
     }
 }
@@ -185,7 +186,7 @@ export class GameConfig {
      * @returns start sum 
      */
     getStarSum(): number {
-        return this.gameConfig.starSum;
+        return this.gameConfig.levelsSum * 3;
     }
 
     /**
@@ -234,7 +235,7 @@ export default class GameDataStorage {
     }
 
     private static getNamesOfAllUser(): string[] {
-        let r = this.ls.getItem("namesOfAllUser");
+        let r = StorageManager.ins.getData("namesOfAllUser");
         if (r === null)
             return [];
         else
@@ -248,7 +249,7 @@ export default class GameDataStorage {
     private static preserveNamesOfAllUser() {
         if (this.usernames.length > 0) {
             let json: string = JSON.stringify(this.usernames);
-            this.ls.setItem("namesOfAllUser", json);
+            StorageManager.ins.storageData("namesOfAllUser", json);
             console.log("所有用户名保存成功!");
         }
     }
@@ -299,7 +300,7 @@ export default class GameDataStorage {
                 break;
             }
         //从本地存储数据中删除
-        this.ls.removeItem("userData:" + username);
+        StorageManager.ins.removeData("userData:" + username);
         this.preserveNamesOfAllUser();
     }
 

@@ -6,12 +6,10 @@ const { ccclass, property } = cc._decorator;
 export default class StartAnim extends cc.Component {
 
     private animation: cc.Animation = null;
-    private soundsManager: SoundsManager = null;
     private isButtonDown: boolean = false;
     private clips: cc.AnimationClip[] = null;
     onLoad() {
         this.animation = this.node.getComponent(cc.Animation);
-        this.soundsManager = new SoundsManager();
         this.clips = this.animation.getClips();
     }
 
@@ -37,7 +35,7 @@ export default class StartAnim extends cc.Component {
             return;
         this.isButtonDown = true;
 
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         this.animation.play("buttonDown");
 
         let d: cc.ActionInterval = cc.delayTime(this.clips[2].duration);

@@ -1,9 +1,9 @@
-import SoundsManager from "../common/module/soundsManager";
 import GameDataStorage, { User, GameConfig } from "../common/module/gameDataManager";
 import HomeScene from "../homeScene/homeScene";
 import LevelManager from "./levelManager";
 import LevelScene from "../levelScene/levelScene";
 import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
+import SoundsManager from "../common/module/soundsManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -24,11 +24,9 @@ export default class SelectLevelScene extends cc.Component {
 
 
     private user: User = null;
-    private soundsManager: SoundsManager = null;
     private isBackButton: boolean = false;
     private gameConfig: GameConfig = null;
     onLoad() {
-        this.soundsManager = new SoundsManager();
         this.gameConfig = GameDataStorage.getGameConfig();
     }
 
@@ -36,7 +34,8 @@ export default class SelectLevelScene extends cc.Component {
         this.user = GameDataStorage.getCurrentUser();
         this.loadingDoorAnim.setState(false);
         this.loadingDoorAnim.openDoor();
-        this.soundsManager.playBGM("sounds/selectLevelsceneBGM");
+        SoundsManager.ins.curBGM = "sounds/selectLevelsceneBGM";
+        SoundsManager.ins.playBGM(SoundsManager.ins.curBGM);
 
         this.updateScoreLabel();
         this.levelManager.updateLevelMap(this.user);
@@ -56,7 +55,7 @@ export default class SelectLevelScene extends cc.Component {
             return;
         this.isBackButton = true;
 
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("homeScene", function () {
                 // let homeScene: HomeScene = cc.find("Canvas").getComponent("homeScene");

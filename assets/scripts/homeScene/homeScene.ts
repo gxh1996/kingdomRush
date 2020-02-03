@@ -4,6 +4,7 @@ import GameDataStorage from "../common/module/gameDataManager";
 import { User } from "../common/module/gameDataManager"
 import LevelDataManager from "../common/module/levelDataManager"
 import LoadingDoorAnim from "../../res/prefabs/loadingDoorAnim/loadingDoorAnim";
+import StorageManager from "../common/module/storageManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -42,17 +43,17 @@ export default class HomeScene extends cc.Component {
      * 是否点击了这个按钮
      */
     private isAboutButton: boolean = false;
-    private soundsManager: SoundsManager = null;
     /**
      * 第一次进入游戏
      */
     fristEntry: boolean = true;
     private clips: cc.AnimationClip[] = null;
     onLoad() {
-        this.soundsManager = new SoundsManager();
         //初始化 模块
         if (GameDataStorage.getGameConfig() === null) {
             // cc.sys.localStorage.clear();
+            StorageManager.init();
+            SoundsManager.init();
             GameDataStorage.init(this.conFigFiles.gameConfig.json);
             LevelDataManager.initLevelData(this.conFigFiles.levelConfig.json);
         }
@@ -63,7 +64,8 @@ export default class HomeScene extends cc.Component {
     start() {
         console.log("本地数据:", cc.sys.localStorage);
 
-        this.soundsManager.playBGM("sounds/home_scene_bg");
+        SoundsManager.ins.curBGM = "sounds/home_scene_bg";
+        SoundsManager.ins.playBGM("sounds/home_scene_bg");
         if (this.fristEntry) {
             this.startAnim.logoDown();
             // this.fristEntry = false;
@@ -78,7 +80,7 @@ export default class HomeScene extends cc.Component {
         if (this.isStartGame) //保证播放开门动画期间，按开始游戏按钮 不重复开门
             return;
         this.isStartGame = true;
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         this.startAnim.buttonUp();
 
         let d: cc.ActionInterval = cc.delayTime(this.clips[1].duration);
@@ -94,7 +96,7 @@ export default class HomeScene extends cc.Component {
             return;
         this.isAboutButton = true;
 
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("aboutScene");
         }, this);
@@ -109,7 +111,7 @@ export default class HomeScene extends cc.Component {
     selectLevelScene(usersI: number) {
         let users: User[] = GameDataStorage.getUsers();
         GameDataStorage.setCurrentUser(users[usersI])
-        this.soundsManager.playEffect("sounds/click");
+        SoundsManager.ins.playEffect("sounds/click");
         let func: cc.ActionInstant = cc.callFunc(function () {
             cc.director.loadScene("selectLevelScene");
         }, this);
